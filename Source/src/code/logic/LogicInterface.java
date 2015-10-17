@@ -1,9 +1,9 @@
-package java.logic;
+package code.logic;
 
 /**
  *
  * @author Link162534
  */
 public interface LogicInterface {
-    void logic(long tick);
+    void doLogic(long tick);
 }
