@@ -1,4 +1,4 @@
-package code.graphic;
+package code.graphics;
 
 import java.awt.Graphics2D;
 
@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
  *
  * @author Link162534
  */
-public interface GraphicInterface {
+public interface GraphicsInterface {
 
     void doGraphic();
 

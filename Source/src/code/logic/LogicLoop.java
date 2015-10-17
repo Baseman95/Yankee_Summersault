@@ -14,7 +14,7 @@ public class LogicLoop extends Thread {
     public final static long TICK_LENGTH = 50000000L;
     public final static int SLEEP_LENGTH = 10;
 
-    private final ArrayList<LogicInterface> logicList = new ArrayList<>();
+    private LogicInterface logic;
     private boolean running = false;
     private boolean paused = false;
     private long tickCount = 0;
@@ -41,21 +41,7 @@ public class LogicLoop extends Thread {
 
                     while (deltaTime > TICK_LENGTH) {
                         deltaTime -= TICK_LENGTH;
-
-                        /*
-                         for (int i = 0; i < logicList.size(); i++) {
-                         LogicInterface li = logicList.get(i);
-                         li.doLogic(tickCount);
-                         }
-                         */
-                        /*
-                         logicList.stream().forEach((li) -> {
-                         li.doLogic(tickCount);
-                         });
-                         */
-                        for (LogicInterface li : logicList) {
-                            li.doLogic(tickCount);
-                        }
+                        logic.doLogic(tickCount);
                         tickCount++;
                     }
 
@@ -72,16 +58,8 @@ public class LogicLoop extends Thread {
         }
     }
 
-    public void addLogic(LogicInterface li) {
-        logicList.add(li);
-    }
-
-    public void removeLogic(LogicInterface li) {
-        logicList.remove(li);
-    }
-
-    public Stream<LogicInterface> stream() {
-        return logicList.stream();
+    public void setLogic(LogicInterface logic) {
+        this.logic = logic;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package code;
 
-import code.graphic.GraphicInterface;
+import code.graphics.GraphicsInterface;
 import code.logic.LogicInterface;
 import code.logic.LogicLoop;
 
@@ -24,7 +24,7 @@ public class Main {
 
         };
 
-        GraphicInterface panzerGraphic = new GraphicInterface() {
+        GraphicsInterface panzerGraphic = new GraphicsInterface() {
 
             @Override
             public void doGraphic() {
@@ -33,7 +33,7 @@ public class Main {
 
         };
 
-        GraphicInterface heliGraphic = new GraphicInterface() {
+        GraphicsInterface heliGraphic = new GraphicsInterface() {
 
             @Override
             public void doGraphic() {
