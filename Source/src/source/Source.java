@@ -16,6 +16,7 @@ public class Source {
      */
     public static void main(String[] args) {
         System.out.println("HALLO ICH BIN PETER > eph");
+        System.out.println("HALLO ICH BIN PETER > Jos");
     }
     
 }
