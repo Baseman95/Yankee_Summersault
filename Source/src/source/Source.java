@@ -15,7 +15,7 @@ public class Source {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("HALLO ICH BIN PETER");
+        System.out.println("HALLO ICH BIN PETER > Joseph");
     }
     
 }
