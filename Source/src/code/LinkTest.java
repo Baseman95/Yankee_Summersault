@@ -37,7 +37,7 @@ public class LinkTest {
 
         BufferedImage panzerGraphic = ImageIO.read(new File("panzer.png"));
 
-        GameObject playerPanzer = new GameObject(12, 45, movingObject, panzerGraphic, null);
+        GameObject playerPanzer = new GameObject(12, 45, movingObject, panzerGraphic);
 
         world.getGameObjects().add(playerPanzer);
         /*

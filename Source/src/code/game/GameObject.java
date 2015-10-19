@@ -20,13 +20,13 @@ public class GameObject {
     public GameObject() {
     }
 
-    public GameObject(DataInterface dataInterface, LogicInterface logicInterface, BufferedImage img, PhysicsInterface physicsInterface) {
+    public GameObject(DataInterface dataInterface, LogicInterface logicInterface, BufferedImage img) {
         this(dataInterface, logicInterface, (DataInterface data, Graphics2D g2d) -> {
             g2d.drawImage(img, (int) data.getX(), (int) data.getY(), null);
-        }, physicsInterface);
+        });
     }
-    
-    public GameObject(float x, float y, LogicInterface logicInterface, BufferedImage img, PhysicsInterface physicsInterface) {
+
+    public GameObject(float x, float y, LogicInterface logicInterface, BufferedImage img) {
         this(x, y, logicInterface, (DataInterface data, Graphics2D g2d) -> {
             g2d.drawImage(img, (int) data.getX(), (int) data.getY(), null);
         });
@@ -64,14 +64,6 @@ public class GameObject {
 
     public void setGraphicsInterface(GraphicsInterface graphicsInterface) {
         this.graphicsInterface = graphicsInterface;
-    }
-
-    public PhysicsInterface getPhysicsInterface() {
-        return physicsInterface;
-    }
-
-    public void setPhysicsInterface(PhysicsInterface physicsInterface) {
-        this.physicsInterface = physicsInterface;
     }
 
 }
