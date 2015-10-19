@@ -1,5 +1,6 @@
 package code.graphics;
 
+import code.data.DataInterface;
 import java.awt.Graphics2D;
 
 /**
@@ -8,6 +9,6 @@ import java.awt.Graphics2D;
  */
 public interface GraphicsInterface {
 
-    void doGraphic();
+    void render(DataInterface data, Graphics2D g2d);
 
 }

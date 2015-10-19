@@ -1,9 +1,7 @@
 package code.logic;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 /**
  *
@@ -11,16 +9,18 @@ import java.util.stream.Stream;
  */
 public class LogicLoop extends Thread {
 
-    public final static long TICK_LENGTH = 50000000L;
-    public final static int SLEEP_LENGTH = 10;
+    private final long tickLength;
+    private final int sleepTime;
 
-    private LogicInterface logic;
+    private LogicLooper looper;
     private boolean running = false;
     private boolean paused = false;
     private long tickCount = 0;
 
-    public LogicLoop() {
-        //setDaemon(true);
+    public LogicLoop(long tickLength, int sleepTime) {
+        this.tickLength = tickLength;
+        this.sleepTime = sleepTime;
+        setDaemon(true);
     }
 
     @Override
@@ -33,15 +33,15 @@ public class LogicLoop extends Thread {
             while (!paused) {
                 try {
 
-                    Thread.sleep(SLEEP_LENGTH);
+                    Thread.sleep(sleepTime);
 
                     newTime = System.nanoTime();
                     deltaTime += newTime - time;
                     time = newTime;
 
-                    while (deltaTime > TICK_LENGTH) {
-                        deltaTime -= TICK_LENGTH;
-                        logic.doLogic(tickCount);
+                    while (deltaTime > tickLength) {
+                        deltaTime -= tickLength;
+                        looper.onLogicLoop(tickCount);
                         tickCount++;
                     }
 
@@ -58,8 +58,8 @@ public class LogicLoop extends Thread {
         }
     }
 
-    public void setLogic(LogicInterface logic) {
-        this.logic = logic;
+    public void setLogic(LogicLooper logic) {
+        this.looper = logic;
     }
 
     @Override
