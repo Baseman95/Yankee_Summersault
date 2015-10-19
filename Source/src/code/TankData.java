@@ -5,8 +5,8 @@
  */
 package code;
 
-import code.data.DataInterface;
 import code.data.DataObject;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -16,8 +16,8 @@ public class TankData extends DataObject {
 
     protected int dir = 0;
 
-    public TankData(float x, float y, int dir) {
-        super(x, y);
+    public TankData(float x, float y, float w, float h, BufferedImage img, int dir) {
+        super(x, y, w, h, img);
         this.dir = dir;
     }
 

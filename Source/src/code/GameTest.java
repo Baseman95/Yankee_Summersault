@@ -30,7 +30,7 @@ public class GameTest {
     public static void main(String[] args) throws IOException {
         LogicLoop ll = new LogicLoop(50000000L, 10);
         GraphicsLoop gl = new GraphicsLoop(33);
-        World world = new World();
+        World world = new World(null);
         Screen screen = new Screen(world);
 
         ll.setLogic(world);
@@ -51,6 +51,7 @@ public class GameTest {
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) shoot = false;
 
             }
+
         });
 
         LogicInterface movingObject = (DataInterface data, long tick) -> {
@@ -60,8 +61,8 @@ public class GameTest {
 
             //data.setX(data.getX() + 1);
             /*if (shoot) {
-                tankData.setX(tankData.getX() + 1);
-            }*/
+             tankData.setX(tankData.getX() + 1);
+             }*/
         };
         LogicInterface projectile = (DataInterface data, long tick) -> {
             //data.setX(data.getX() + 1);
@@ -73,13 +74,11 @@ public class GameTest {
                 tankData.setX(tankData.getX() + 1);
             }
         };
-        
-        
 
         BufferedImage panzerGraphic = ImageIO.read(new File("panzer.png"));
 
-        GameObject playerPanzer0 = new GameObject(new TankData(10, 10, 1), movingObject, panzerGraphic);
-        
+        GameObject playerPanzer0 = new GameObject(new TankData(10, 10, 100, 100, 1), movingObject, panzerGraphic, null);
+
         world.getGameObjects().add(playerPanzer0);
 
     }
