@@ -1,10 +1,10 @@
 package code.game;
 
+import code.controller.ControllerInterface;
 import code.data.DataInterface;
 import code.data.DataObject;
 import code.graphics.GraphicsInterface;
 import code.logic.LogicInterface;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -16,30 +16,30 @@ public class GameObject {
     protected DataInterface dataObject;
     protected LogicInterface logicInterface;
     protected GraphicsInterface graphicsInterface;
+    protected ControllerInterface controllerInterface;
 
     public GameObject() {
     }
 
-    public GameObject(DataInterface dataInterface, LogicInterface logicInterface, BufferedImage img) {
-        this(dataInterface, logicInterface, (DataInterface data, Graphics2D g2d) -> {
-            g2d.drawImage(img, (int) data.getX(), (int) data.getY(), null);
-        });
+    /**
+     Width and height are taken from the img.
+     */
+    public GameObject(float x, float y, BufferedImage img, LogicInterface logicInterface,
+                      GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+        this(x, y, img.getWidth(), img.getHeight(), img, logicInterface, graphicsInterface, controllerInterface);
     }
 
-    public GameObject(float x, float y, LogicInterface logicInterface, BufferedImage img) {
-        this(x, y, logicInterface, (DataInterface data, Graphics2D g2d) -> {
-            g2d.drawImage(img, (int) data.getX(), (int) data.getY(), null);
-        });
+    public GameObject(float x, float y, float w, float h, BufferedImage img, LogicInterface logicInterface,
+                      GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+        this((DataInterface) (new DataObject(x, y, w, h, img)), logicInterface, graphicsInterface, controllerInterface);
     }
 
-    public GameObject(float x, float y, LogicInterface logicInterface, GraphicsInterface graphicsInterface) {
-        this((DataInterface) (new DataObject(x, y)), logicInterface, graphicsInterface);
-    }
-
-    public GameObject(DataInterface dataInterface, LogicInterface logicInterface, GraphicsInterface graphicsInterface) {
-        this.dataObject = dataInterface;
+    public GameObject(DataInterface dataObject, LogicInterface logicInterface,
+                      GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+        this.dataObject = dataObject;
         this.logicInterface = logicInterface;
         this.graphicsInterface = graphicsInterface;
+        this.controllerInterface = controllerInterface;
     }
 
     public DataInterface getDataObject() {
@@ -64,6 +64,14 @@ public class GameObject {
 
     public void setGraphicsInterface(GraphicsInterface graphicsInterface) {
         this.graphicsInterface = graphicsInterface;
+    }
+
+    public ControllerInterface getControllerInterface() {
+        return controllerInterface;
+    }
+
+    public void setControllerInterface(ControllerInterface controllerInterface) {
+        this.controllerInterface = controllerInterface;
     }
 
 }
