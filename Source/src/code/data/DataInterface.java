@@ -10,8 +10,16 @@ public interface DataInterface {
 
     public void setX(float x);
 
+    public void setWidth(float w);
+
+    public void setHeight(float h);
+
     public float getY();
 
     public float getX();
+
+    public float getWidth();
+
+    public float getHeight();
 
 }
