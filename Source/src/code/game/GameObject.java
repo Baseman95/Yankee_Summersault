@@ -22,6 +22,12 @@ public class GameObject {
     public GameObject() {
     }
 
+    public GameObject(DataInterface dataInterface, LogicInterface logicInterface, BufferedImage img, PhysicsInterface physicsInterface) {
+        this(dataInterface, logicInterface, (DataInterface data, Graphics2D g2d) -> {
+            g2d.drawImage(img, (int) data.getX(), (int) data.getY(), null);
+        }, physicsInterface);
+    }
+    
     public GameObject(float x, float y, LogicInterface logicInterface, BufferedImage img, PhysicsInterface physicsInterface) {
         this(x, y, logicInterface, (DataInterface data, Graphics2D g2d) -> {
             g2d.drawImage(img, (int) data.getX(), (int) data.getY(), null);
