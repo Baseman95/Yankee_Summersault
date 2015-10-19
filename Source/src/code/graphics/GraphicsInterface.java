@@ -9,6 +9,6 @@ import java.awt.Graphics2D;
  */
 public interface GraphicsInterface {
 
-    void render(DataInterface data, Graphics2D g2d);
+    void render(DataInterface data, Camera camera, Graphics2D g2d);
 
 }
