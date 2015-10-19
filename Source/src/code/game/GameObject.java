@@ -4,7 +4,6 @@ import code.data.DataInterface;
 import code.data.DataObject;
 import code.graphics.GraphicsInterface;
 import code.logic.LogicInterface;
-import code.physics.PhysicsInterface;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -17,26 +16,24 @@ public class GameObject {
     protected DataInterface dataObject;
     protected LogicInterface logicInterface;
     protected GraphicsInterface graphicsInterface;
-    protected PhysicsInterface physicsInterface;
 
     public GameObject() {
     }
 
-    public GameObject(float x, float y, LogicInterface logicInterface, BufferedImage img, PhysicsInterface physicsInterface) {
+    public GameObject(float x, float y, LogicInterface logicInterface, BufferedImage img) {
         this(x, y, logicInterface, (DataInterface data, Graphics2D g2d) -> {
             g2d.drawImage(img, (int) data.getX(), (int) data.getY(), null);
-        }, physicsInterface);
+        });
     }
 
-    public GameObject(float x, float y, LogicInterface logicInterface, GraphicsInterface graphicsInterface, PhysicsInterface physicsInterface) {
-        this((DataInterface) (new DataObject(x, y)), logicInterface, graphicsInterface, physicsInterface);
+    public GameObject(float x, float y, LogicInterface logicInterface, GraphicsInterface graphicsInterface) {
+        this((DataInterface) (new DataObject(x, y)), logicInterface, graphicsInterface);
     }
 
-    public GameObject(DataInterface dataInterface, LogicInterface logicInterface, GraphicsInterface graphicsInterface, PhysicsInterface physicsInterface) {
+    public GameObject(DataInterface dataInterface, LogicInterface logicInterface, GraphicsInterface graphicsInterface) {
         this.dataObject = dataInterface;
         this.logicInterface = logicInterface;
         this.graphicsInterface = graphicsInterface;
-        this.physicsInterface = physicsInterface;
     }
 
     public DataInterface getDataObject() {

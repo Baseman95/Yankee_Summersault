@@ -43,7 +43,8 @@ public class LinkTest {
         /*
          GameObject heli = new GameObject(flyingObject, heliGraphic, aiController);
          GameObject panzer = new GameObject(movingObject, panzerGraphic, aiController);
-         heli.setController(noController);*/
+         heli.setController(noController);
+        */
     }
 
 }
