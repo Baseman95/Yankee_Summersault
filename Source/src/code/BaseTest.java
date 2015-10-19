@@ -64,9 +64,15 @@ public class BaseTest {
         BufferedImage panzerGraphic = ImageIO.read(new File("mypanzer.png"));
         //BufferedImage panzerGraphic = ImageIO.read(new File("panzer.png"));
 
-        GameObject playerPanzer = new GameObject(new TankData(10, 10, 0), movingObject, panzerGraphic, null);
+        GameObject playerPanzer0 = new GameObject(new TankData(10, 10, 0), movingObject, panzerGraphic, null);
+        GameObject playerPanzer1 = new GameObject(new TankData(10, 450, 0), movingObject, panzerGraphic, null);
+        GameObject playerPanzer2 = new GameObject(new TankData(650, 450, 0), movingObject, panzerGraphic, null);
+        GameObject playerPanzer3 = new GameObject(new TankData(650, 10, 0), movingObject, panzerGraphic, null);
 
-        world.getGameObjects().add(playerPanzer);
+        world.getGameObjects().add(playerPanzer0);
+        world.getGameObjects().add(playerPanzer1);
+        world.getGameObjects().add(playerPanzer2);
+        world.getGameObjects().add(playerPanzer3);
         /*
          GameObject heli = new GameObject(flyingObject, heliGraphic, aiController);
          GameObject panzer = new GameObject(movingObject, panzerGraphic, aiController);
