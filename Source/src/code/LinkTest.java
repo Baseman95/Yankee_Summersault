@@ -37,13 +37,14 @@ public class LinkTest {
 
         BufferedImage panzerGraphic = ImageIO.read(new File("panzer.png"));
 
-        GameObject playerPanzer = new GameObject(12, 45, movingObject, panzerGraphic, null);
+        GameObject playerPanzer = new GameObject(12, 45, movingObject, panzerGraphic);
 
         world.getGameObjects().add(playerPanzer);
         /*
          GameObject heli = new GameObject(flyingObject, heliGraphic, aiController);
          GameObject panzer = new GameObject(movingObject, panzerGraphic, aiController);
-         heli.setController(noController);*/
+         heli.setController(noController);
+        */
     }
 
 }
