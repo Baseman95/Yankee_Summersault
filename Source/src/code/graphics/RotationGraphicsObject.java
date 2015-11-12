@@ -15,7 +15,7 @@ import java.awt.image.VolatileImage;
  *
  * @author Link162534
  */
-public class DefaultGraphicsObject implements GraphicsInterface {
+public class RotationGraphicsObject implements GraphicsInterface {
 
     int rendering = 2;
 
@@ -42,6 +42,7 @@ public class DefaultGraphicsObject implements GraphicsInterface {
             case -1:
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                 g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
+
             case 0:
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);

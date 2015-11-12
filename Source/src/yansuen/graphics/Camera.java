@@ -1,5 +1,5 @@
 
-package code.graphics;
+package yansuen.graphics;
 
 /**
  *

@@ -1,6 +1,6 @@
-package code.graphics;
+package yansuen.graphics;
 
-import code.logic.LogicLoop;
+import yansuen.logic.LogicLoop;
 import java.awt.Component;
 import java.util.logging.Level;
 import java.util.logging.Logger;

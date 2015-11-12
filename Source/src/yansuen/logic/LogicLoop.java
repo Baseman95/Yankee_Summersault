@@ -1,4 +1,4 @@
-package code.logic;
+package yansuen.logic;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

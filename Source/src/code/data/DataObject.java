@@ -1,6 +1,6 @@
 package code.data;
 
-import java.awt.image.BufferedImage;
+import yansuen.data.DataInterface;
 
 /**
  *
@@ -8,89 +8,64 @@ import java.awt.image.BufferedImage;
  */
 public class DataObject implements DataInterface {
 
-    protected float x;
-    protected float y;
-    protected float width;
-    protected float height;
-    protected double rotation;
-    protected BufferedImage image;
+    protected Object[] dataList = new Object[3];
 
-    public DataObject(float x, float y, float width, float height, BufferedImage image) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.rotation = 0;
-        this.image = image;
+    protected PositionData positionData;
+    protected ImageData imageData;
+    protected MovementData movementData;
+
+    public DataObject(PositionData positionData, ImageData imageData, MovementData movementData) {
+        this.positionData = positionData;
+        this.imageData = imageData;
+        this.movementData = movementData;
+        setPositionData(positionData);
+        setImageData(imageData);
+        setMovementData(movementData);
     }
 
-    public DataObject(DataInterface dataObject) {
-        x = dataObject.getX();
-        y = dataObject.getY();
-        width = dataObject.getWidth();
-        height = dataObject.getHeight();
-        rotation = dataObject.getRotation();
-        image = dataObject.getImage();
+    public final void setPositionData(PositionData positionData) {
+        this.positionData = positionData;
+        dataList[0] = positionData;
     }
 
-    @Override
-    public void setY(float y) {
-        this.y = y;
+    public final void setImageData(ImageData imageData) {
+        this.imageData = imageData;
+        dataList[1] = imageData;
     }
 
-    @Override
-    public void setX(float x) {
-        this.x = x;
+    public final void setMovementData(MovementData movementData) {
+        this.movementData = movementData;
+        dataList[2] = movementData;
     }
 
-    @Override
-    public void setWidth(float width) {
-        this.width = width;
+    public final PositionData getPositionData() {
+        return positionData;
     }
 
-    @Override
-    public void setHeight(float height) {
-        this.height = height;
+    public final ImageData getImageData() {
+        return imageData;
+    }
+
+    public final MovementData getMovementData() {
+        return movementData;
     }
 
     @Override
-    public void setRotation(double rotation) {
-        this.rotation = rotation;
+    public Object getData(int i) {
+        if (i < 0 || i >= dataList.length)
+            return null;
+        return dataList[i];
     }
 
-    @Override
-    public void setImage(BufferedImage image) {
-        this.image = image;
+    public Object getData(Class c) {
+        return getData(getDataClassInt(c));
     }
 
-    @Override
-    public float getY() {
-        return y;
+    public int getDataClassInt(Class c) {
+        for (int i = 0; i < dataList.length; i++) {
+            if (dataList[i].getClass() == c)
+                return i;
+        }
+        return -1;
     }
-
-    @Override
-    public float getX() {
-        return x;
-    }
-
-    @Override
-    public float getWidth() {
-        return width;
-    }
-
-    @Override
-    public float getHeight() {
-        return height;
-    }
-
-    @Override
-    public double getRotation() {
-        return rotation;
-    }
-
-    @Override
-    public BufferedImage getImage() {
-        return image;
-    }
-
 }

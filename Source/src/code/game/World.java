@@ -1,11 +1,14 @@
 package code.game;
 
-import code.controller.ControllerInterface;
-import code.graphics.Camera;
-import code.graphics.GraphicsInterface;
-import code.key.KeyManager;
-import code.logic.LogicInterface;
-import code.logic.LogicLooper;
+import code.data.DataObject;
+import code.data.MovementData;
+import code.data.PositionData;
+import yansuen.controller.ControllerInterface;
+import yansuen.graphics.Camera;
+import yansuen.graphics.GraphicsInterface;
+import yansuen.key.KeyManager;
+import yansuen.logic.LogicInterface;
+import yansuen.logic.LogicLooper;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
@@ -16,6 +19,9 @@ import java.util.ArrayList;
 public class World implements LogicLooper {
 
     protected ArrayList<GameObject> gameObjects = new ArrayList<>();
+    protected ArrayList<GameObject> addObjects = new ArrayList<>();
+    protected ArrayList<GameObject> removeObjects = new ArrayList<>();
+
     protected KeyManager keyManager;
     protected Camera camera;
 
@@ -24,18 +30,34 @@ public class World implements LogicLooper {
     }
 
     @Override
-    public void onLogicLoop(long tick) {
+    public synchronized void onLogicLoop(long tick) {
         for (GameObject gameObject : gameObjects) {
             LogicInterface li = gameObject.getLogicInterface();
             if (li != null)
-                li.doLogic(gameObject.dataObject, tick);
+                li.doLogic(gameObject.dataObject, tick, this, keyManager);
             ControllerInterface ci = gameObject.getControllerInterface();
             if (ci != null && keyManager != null)
-                ci.move(gameObject.dataObject, tick, this, keyManager);
+                ci.control(gameObject.dataObject, tick, this, keyManager);
+            moveGameObject(gameObject);
+        }
+        gameObjects.addAll(addObjects);
+        addObjects.clear();
+        gameObjects.removeAll(removeObjects);
+        removeObjects.clear();
+    }
+
+    protected void moveGameObject(GameObject gameObject) {
+        if (gameObject.getDataObject() instanceof DataObject) {
+            PositionData pos = ((DataObject) gameObject.getDataObject()).getPositionData();
+            MovementData move = ((DataObject) gameObject.getDataObject()).getMovementData();
+            if (pos != null && move != null) {
+                pos.increaseX(move.getMovementX());
+                pos.increaseY(move.getMovementY());
+            }
         }
     }
 
-    public void repaint(Graphics2D g2d) {
+    public synchronized void repaint(Graphics2D g2d) {
         for (GameObject gameObject : gameObjects) {
             GraphicsInterface gi = gameObject.getGraphicsInterface();
             if (gi != null)
@@ -49,6 +71,14 @@ public class World implements LogicLooper {
 
     public synchronized ArrayList<GameObject> getGameObjects() {
         return gameObjects;
+    }
+
+    public void addGameObject(GameObject gameObject) {
+        addObjects.add(gameObject);
+    }
+
+    public void removeGameObject(GameObject gameObject) {
+        removeObjects.add(gameObject);
     }
 
 }

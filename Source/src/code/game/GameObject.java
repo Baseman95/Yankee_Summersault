@@ -1,17 +1,23 @@
 package code.game;
 
-import code.controller.ControllerInterface;
-import code.data.DataInterface;
+import yansuen.controller.ControllerInterface;
+import yansuen.data.DataInterface;
 import code.data.DataObject;
-import code.graphics.GraphicsInterface;
-import code.logic.LogicInterface;
+import code.data.ImageData;
+import code.data.MovementData;
+import code.data.PositionData;
+import yansuen.graphics.GraphicsInterface;
+import yansuen.logic.LogicInterface;
 import java.awt.image.BufferedImage;
+import yansuen.game.GameInterface;
 
 /**
  *
  * @author Link162534
  */
-public class GameObject {
+public class GameObject implements GameInterface {
+
+    protected Object[] list = new Object[4];
 
     protected DataInterface dataObject;
     protected LogicInterface logicInterface;
@@ -31,7 +37,8 @@ public class GameObject {
 
     public GameObject(float x, float y, float w, float h, BufferedImage img, LogicInterface logicInterface,
                       GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
-        this((DataInterface) (new DataObject(x, y, w, h, img)), logicInterface, graphicsInterface, controllerInterface);
+        this((DataInterface) (new DataObject(new PositionData(x, y, w, h), new ImageData(img), new MovementData())),
+             logicInterface, graphicsInterface, controllerInterface);
     }
 
     public GameObject(DataInterface dataObject, LogicInterface logicInterface,
@@ -40,6 +47,11 @@ public class GameObject {
         this.logicInterface = logicInterface;
         this.graphicsInterface = graphicsInterface;
         this.controllerInterface = controllerInterface;
+        list[0] = this.dataObject;
+        list[1] = this.logicInterface;
+        list[2] = this.graphicsInterface;
+        list[3] = this.controllerInterface;
+
     }
 
     public DataInterface getDataObject() {
@@ -74,4 +86,22 @@ public class GameObject {
         this.controllerInterface = controllerInterface;
     }
 
+    @Override
+    public Object get(int i) {
+        if (i < 0 || i >= list.length)
+            return null;
+        return list[i];
+    }
+
+    public Object get(Class c) {
+        return get(getClassInt(c));
+    }
+
+    public int getClassInt(Class c) {
+        for (int i = 0; i < list.length; i++) {
+            if (list[i].getClass() == c)
+                return i;
+        }
+        return -1;
+    }
 }

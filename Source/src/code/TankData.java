@@ -6,6 +6,8 @@
 package code;
 
 import code.data.DataObject;
+import code.data.ImageData;
+import code.data.PositionData;
 import java.awt.image.BufferedImage;
 
 /**
@@ -17,12 +19,12 @@ public class TankData extends DataObject {
     protected int dir = 0;
 
     public TankData(float x, float y, float w, float h, BufferedImage img, int dir) {
-        super(x, y, w, h, img);
+        super(new PositionData(x, y, w, h), new ImageData(img));
         this.dir = dir;
     }
 
     public TankData(TankData tankData) {
-        super(tankData);
+        super(new PositionData(tankData.positionData), tankData.getImageData());
         this.dir = tankData.getDir();
     }
 

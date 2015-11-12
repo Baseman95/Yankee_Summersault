@@ -1,12 +1,13 @@
 package code;
 
-import code.data.DataInterface;
+import yansuen.data.DataInterface;
+import code.data.DataObject;
 import code.game.GameObject;
 import code.game.World;
-import code.graphics.GraphicsLoop;
-import code.key.KeyManager;
-import code.logic.LogicInterface;
-import code.logic.LogicLoop;
+import yansuen.graphics.GraphicsLoop;
+import yansuen.key.KeyManager;
+import yansuen.logic.LogicInterface;
+import yansuen.logic.LogicLoop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -31,8 +32,9 @@ public class LinkTest {
         gl.start();
         screen.setVisible(true);
 
-        LogicInterface movingObject = (DataInterface data, long tick) -> {
-            data.setX(data.getX() + 1);
+        LogicInterface movingObject = (DataInterface di, long tick) -> {
+            DataObject data = (DataObject) di;
+            data.getPositionData().setX(data.getPositionData().getX() + 1);
         };
 
         BufferedImage panzerGraphic = ImageIO.read(new File("panzer.png"));

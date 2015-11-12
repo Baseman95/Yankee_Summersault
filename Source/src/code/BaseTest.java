@@ -1,12 +1,12 @@
 package code;
 
-import code.data.DataInterface;
+import yansuen.data.DataInterface;
 import code.data.DataObject;
 import code.game.GameObject;
 import code.game.World;
-import code.graphics.GraphicsLoop;
-import code.logic.LogicInterface;
-import code.logic.LogicLoop;
+import yansuen.graphics.GraphicsLoop;
+import yansuen.logic.LogicInterface;
+import yansuen.logic.LogicLoop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;

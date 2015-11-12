@@ -1,6 +1,6 @@
-package code.graphics;
+package yansuen.graphics;
 
-import code.data.DataInterface;
+import yansuen.data.DataInterface;
 import java.awt.Graphics2D;
 
 /**

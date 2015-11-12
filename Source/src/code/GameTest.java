@@ -5,12 +5,12 @@
  */
 package code;
 
-import code.data.DataInterface;
+import yansuen.data.DataInterface;
 import code.game.GameObject;
 import code.game.World;
-import code.graphics.GraphicsLoop;
-import code.logic.LogicInterface;
-import code.logic.LogicLoop;
+import yansuen.graphics.GraphicsLoop;
+import yansuen.logic.LogicInterface;
+import yansuen.logic.LogicLoop;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

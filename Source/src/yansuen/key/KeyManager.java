@@ -1,4 +1,4 @@
-package code.key;
+package yansuen.key;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

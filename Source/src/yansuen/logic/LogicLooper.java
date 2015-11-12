@@ -1,4 +1,4 @@
-package code.logic;
+package yansuen.logic;
 
 /**
  *
