@@ -49,7 +49,7 @@ public class KeyTest {
         BufferedImage bulletImg = ImageIO.read(new File("mypanzer.png"));
 
         LogicInterface tankLogic = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-            DataObject data = (DataObject) gameObject.getDataObject();
+            DataObject data = (DataObject) gameObject.getData();
             if (manager.isKeyPressed(KeyEvent.VK_SPACE) && tick - bulletTick > 100) {
                 DataObject dataO = new DataObject(new PositionData(data.getPositionData().getX()
                         + data.getPositionData().getWidth() / 2
@@ -81,7 +81,7 @@ public class KeyTest {
         BufferedImage tankImg = ImageIO.read(new File("cool_tank.png"));
 
         ControllerInterface playerController = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-            DataObject data = (DataObject) gameObject.getDataObject();
+            DataObject data = (DataObject) gameObject.getData();
             MovementData mData = data.getMovementData();
             double ang = data.getPositionData().getRotation();
 

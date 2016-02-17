@@ -9,12 +9,14 @@ import code.data.DataObject;
 import code.data.ImageData;
 import code.data.MovementData;
 import code.data.PositionData;
+import code.game.World;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import yansuen.controller.ControllerInterface;
 import yansuen.data.Data;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
+import yansuen.key.KeyManager;
 import yansuen.logic.LogicInterface;
 
 /**
@@ -52,6 +54,12 @@ public class Chassis extends GameObject {
 
     public void setDrive(Drive drive) {
         this.drive = drive;
+        setLogicInterface((GameObject gameObject, long tick, World world, KeyManager manager) -> {
+            if (drive != null) {
+                drive.doLogic(gameObject, tick, world, manager);
+            }
+        }
+        );
     }
 
     public Drive getDrive() {
