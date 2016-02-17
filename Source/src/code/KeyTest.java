@@ -46,7 +46,8 @@ public class KeyTest {
 
         screen.setVisible(true);
         GraphicsInterface defaultGraphics = new RotationGraphicsObject();
-        BufferedImage bulletImg = ImageIO.read(new File("mypanzer.png"));
+        BufferedImage bulletImg = ImageIO.read(new File("cool_tank"
+                + ".png"));
 
         LogicInterface tankLogic = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
             DataObject data = (DataObject) gameObject.getData();

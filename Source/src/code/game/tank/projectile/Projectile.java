@@ -5,12 +5,13 @@
  */
 package code.game.tank.projectile;
 
-import code.data.DataObject;
+import code.game.World;
+import code.game.tank.Weapon;
 import java.awt.image.BufferedImage;
 import yansuen.controller.ControllerInterface;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
-import yansuen.logic.LogicInterface;
+import yansuen.key.KeyManager;
 
 /**
  *
@@ -18,13 +19,55 @@ import yansuen.logic.LogicInterface;
  */
 public class Projectile extends GameObject {
 
-    protected LogicInterface impactBehavior;
+    protected Weapon weapon;
+    protected long deathtick;
+    protected ImpactInterface impactInterface;
 
-    public Projectile(float x, float y, BufferedImage img, LogicInterface logicInterface,
-            GraphicsInterface graphicsInterface, ControllerInterface controllerInterface,
-            LogicInterface impactBehavior) {
-        super(x, y, img, logicInterface, graphicsInterface, controllerInterface);
-        this.impactBehavior = impactBehavior;
+    protected boolean impact = false;
+
+    public Projectile(Weapon weapon, long deathtick, ImpactInterface impactInterface, float x, float y, BufferedImage img,
+            GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+        super(x, y, img, graphicsInterface, controllerInterface);
+        this.weapon = weapon;
+        this.impactInterface = impactInterface;
+        this.deathtick = deathtick;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public ImpactInterface getImpactBehavior() {
+        return impactInterface;
+    }
+
+    public void setImpactInterface(ImpactInterface impactInterface) {
+        this.impactInterface = impactInterface;
+    }
+
+    public void setDeathtick(long deathtick) {
+        this.deathtick = deathtick;
+    }
+
+    public long getDeathtick() {
+        return deathtick;
+    }
+
+    public ImpactInterface getImpactInterface() {
+        return impactInterface;
+    }
+
+    public void setImpact(boolean impact) {
+        this.impact = impact;
+    }
+
+    @Override
+    public void doLogic(GameObject gameObject, long tick, World world, KeyManager manager) {
+        super.doLogic(gameObject, tick, world, manager);
+        if (deathtick != 0 && tick > deathtick)
+            world.removeGameObject(gameObject);
+        else if (impact)
+            impactInterface.doImpact(this, weapon, tick, world, manager);
     }
 
 }
