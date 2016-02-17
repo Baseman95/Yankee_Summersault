@@ -6,21 +6,25 @@
 package code.game.tank.projectile;
 
 import code.data.DataObject;
+import java.awt.image.BufferedImage;
+import yansuen.controller.ControllerInterface;
+import yansuen.game.GameObject;
+import yansuen.graphics.GraphicsInterface;
+import yansuen.logic.LogicInterface;
 
 /**
  *
  * @author Eris
  */
-public class Projectile {
+public class Projectile extends GameObject {
 
-    protected ProjectileBehavior projectileBehavior;
-    protected ImpactBehavior impactBehavior;
-    protected DataObject dataObject;
+    protected LogicInterface impactBehavior;
 
-    public Projectile(ProjectileBehavior projectileBehavior, ImpactBehavior impactBehavior, DataObject dataObject) {
-        this.projectileBehavior = projectileBehavior;
+    public Projectile(float x, float y, BufferedImage img, LogicInterface logicInterface,
+            GraphicsInterface graphicsInterface, ControllerInterface controllerInterface,
+            LogicInterface impactBehavior) {
+        super(x, y, img, logicInterface, graphicsInterface, controllerInterface);
         this.impactBehavior = impactBehavior;
-        this.dataObject = dataObject;
     }
 
 }
