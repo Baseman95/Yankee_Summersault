@@ -6,6 +6,7 @@
 package code.game.tank;
 
 import code.game.World;
+import code.game.tank.projectile.ImpactInterface;
 import java.awt.image.BufferedImage;
 import yansuen.controller.ControllerInterface;
 import yansuen.game.GameObject;
@@ -22,13 +23,13 @@ public class Weapon extends GameObject {
     protected Chassis chassis;
     protected LogicInterface shootFunction;
     protected LogicInterface reloadFunction;
-    protected LogicInterface impactBehavior;
+    protected ImpactInterface impactBehavior;
     protected ControllerInterface projectileBehavior;
 
     protected boolean shoot = false;
     protected boolean reload = false;
 
-    public Weapon(Chassis chassis, LogicInterface shootFunction, LogicInterface reloadFunction, LogicInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y, BufferedImage img, GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+    public Weapon(Chassis chassis, LogicInterface shootFunction, LogicInterface reloadFunction, ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y, BufferedImage img, GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         super(x, y, img, graphicsInterface, controllerInterface);
         this.chassis = chassis;
         this.shootFunction = shootFunction;
@@ -70,11 +71,11 @@ public class Weapon extends GameObject {
         this.reloadFunction = reloadFunction;
     }
 
-    public LogicInterface getImpactBehavior() {
+    public ImpactInterface getImpactBehavior() {
         return impactBehavior;
     }
 
-    public void setImpactBehavior(LogicInterface impactBehavior) {
+    public void setImpactBehavior(ImpactInterface impactBehavior) {
         this.impactBehavior = impactBehavior;
     }
 

@@ -5,6 +5,11 @@ import code.data.ImageData;
 import code.data.MovementData;
 import code.data.PositionData;
 import code.game.World;
+import code.game.tank.Chassis;
+import code.game.tank.Drive;
+import code.game.tank.Weapon;
+import code.game.tank.projectile.ImpactInterface;
+import code.game.tank.projectile.Projectile;
 import code.graphics.RotationGraphicsObject;
 import java.awt.event.KeyEvent;
 import yansuen.graphics.GraphicsLoop;
@@ -29,7 +34,6 @@ public class BaseTest {
 
     static long bulletTick1 = 0;
     static long bulletTick2 = 0;
-    
 
     public static void main(String[] args) throws IOException {
         LogicLoop ll = new LogicLoop(5000000L, 1);
@@ -78,6 +82,7 @@ public class BaseTest {
         
          };*/
 //</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc="outdated">
         /*
         LogicInterface movingObject = (DataInterface data, long tick) -> {
             //data.setX(data.getX() + 1);
@@ -90,29 +95,25 @@ public class BaseTest {
 
         };         
          */
-        BufferedImage tankIMG = ImageIO.read(new File("tank2.png"));
-        BufferedImage weap1IMG = ImageIO.read(new File("gun_plasma_shot.png"));
-        BufferedImage weap2IMG = ImageIO.read(new File("gun_magnum_shot.png"));
-        GraphicsInterface defaultGraphics = new RotationGraphicsObject();
         // Weapon weapon = new Weapon(GameObject, GameObject);
 
-        LogicInterface weapon1 = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+        /*LogicInterface weapon1 = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
             DataObject data = (DataObject) gameObject.getData();
             if (manager.isKeyPressed(KeyEvent.VK_1) && tick - bulletTick1 > 100) {
                 DataObject dataO = new DataObject(new PositionData(data.getPositionData().getX()
                         + data.getPositionData().getWidth() / 2
                         - 8,
                         data.getPositionData().getY()
-                        + data.getPositionData().getHeight() / 2
-                        - 8, 16, 16),
+                                + data.getPositionData().getHeight() / 2
+                                - 8, 16, 16),
                         new ImageData(weap1IMG),
                         new MovementData());
                 final GameObject bullet = new GameObject(dataO, defaultGraphics, null);
-                /*bullet.setLogicInterface((GameObject gameObject2, long t2, World w2, KeyManager m2) -> {
-                    if (t2 - tick > 200) {
-                        w2.removeGameObject(bullet);
-                    }
-                });*/
+                bullet.setLogicInterface((GameObject gameObject2, long t2, World w2, KeyManager m2) -> {
+                if (t2 - tick > 200) {
+                w2.removeGameObject(bullet);
+                }
+                });
                 CartesianVector hostMovement = new CartesianVector(data.getMovementData().getMovementX(),
                         data.getMovementData().getMovementY());
                 CartesianVector bulletTrajectory = new CartesianVector(
@@ -121,7 +122,7 @@ public class BaseTest {
                                 4));
                 dataO.getMovementData().setMovementX(bulletTrajectory.x + hostMovement.x);
                 dataO.getMovementData().setMovementY(bulletTrajectory.y + hostMovement.y);
-
+                
                 w.addGameObject(bullet);
                 bulletTick1 = tick;
             }
@@ -133,16 +134,12 @@ public class BaseTest {
                         + data.getPositionData().getWidth() / 2
                         - 8,
                         data.getPositionData().getY()
-                        + data.getPositionData().getHeight() / 2
-                        - 8, 16, 16),
+                                + data.getPositionData().getHeight() / 2
+                                - 8, 16, 16),
                         new ImageData(weap2IMG),
                         new MovementData());
                 final GameObject bullet = new GameObject(dataO, defaultGraphics, null);
-                /*bullet.setLogicInterface((GameObject gameObject2, long t2, World w2, KeyManager m2) -> {
-                    if (t2 - tick > 64) {
-                        w2.removeGameObject(bullet);
-                    }
-                });*/
+                
                 CartesianVector hostMovement = new CartesianVector(data.getMovementData().getMovementX(),
                         data.getMovementData().getMovementY());
                 CartesianVector bulletTrajectory = new CartesianVector(
@@ -151,17 +148,18 @@ public class BaseTest {
                                 4));
                 dataO.getMovementData().setMovementX(bulletTrajectory.x + hostMovement.x);
                 dataO.getMovementData().setMovementY(bulletTrajectory.y + hostMovement.y);
-
+                
                 w.addGameObject(bullet);
                 bulletTick2 = tick;
             }
         };
-
+        
         LogicInterface playerTankLI = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
             weapon1.doLogic(gameObject, tick, world, manager);
             weapon2.doLogic(gameObject, tick, world, manager);
         };
-        /*
+         */
+ /*
         BufferedImage panzerGraphic = ImageIO.read(new File("mypanzer.png"));
         BufferedImage panzerGraphic1 = ImageIO.read(new File("panzer.png"));
        
@@ -177,52 +175,106 @@ public class BaseTest {
         world.getGameObjects().add(playerPanzer3);
         world.getGameObjects().add(playerPanzer4);
          */
+//</editor-fold>
+        BufferedImage tankIMG = ImageIO.read(new File("tank2.png"));
+        BufferedImage weap1IMG = ImageIO.read(new File("gun_plasma_shot.png"));
+        BufferedImage weap2IMG = ImageIO.read(new File("gun_magnum_shot.png"));
+
+        GraphicsInterface defaultGraphics = new RotationGraphicsObject();
 
         ControllerInterface playerController = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-            DataObject data = (DataObject) gameObject.getData();
-            MovementData mData = data.getMovementData();
-            double ang = data.getPositionData().getRotation();
+            Chassis c = ((Chassis) gameObject);
+            Drive d = c.getDrive();
+            d.setAccelerate(manager.isKeyPressed(KeyEvent.VK_W));
+            d.setDecelerate(manager.isKeyPressed(KeyEvent.VK_S));
+            d.setBreaks(manager.isKeyPressed(KeyEvent.VK_SPACE));
+            d.setTurnLeft(manager.isKeyPressed(KeyEvent.VK_A));
+            d.setTurnRight(manager.isKeyPressed(KeyEvent.VK_D));
+            
+        };
 
-            PolarVector mv = new PolarVector(new CartesianVector(mData.getMovementX(),
-                    mData.getMovementY()));
-            double deltaAng = mv.angle - ang;
+        Chassis zank = new Chassis(10, 10, tankIMG, defaultGraphics, playerController);
 
-            deltaAng = deltaAng > Math.PI
-                    ? deltaAng - Math.PI * 2 : deltaAng < -Math.PI
-                            ? deltaAng + Math.PI * 2 : deltaAng;
-            if (Math.abs(deltaAng) > Math.PI / 2) {
-                deltaAng -= Math.signum(deltaAng) * Math.PI;
-            }
+        LogicInterface singleShot = (GameObject gameObject, long tick, World world1, KeyManager manager) -> {
+            //Spawn von Projektil, + Richtung, adding projektil zu welt,
+        };
+        LogicInterface fastReload = (GameObject gameObject, long tick, World world1, KeyManager manager) -> {
+            //
+        };
+        ImpactInterface bulletImpact = (Projectile projectile, Weapon weapon, long tick, World world1, KeyManager manager) -> {
 
-            deltaAng = Math.abs(deltaAng) < 0.005 ? deltaAng : deltaAng * 0.01;
-            mv.angle -= deltaAng;
-
-            data.getMovementData().setMovementX(PolarVector.xFromPolar(mv));
-            data.getMovementData().setMovementY(PolarVector.yFromPolar(mv));
-
-            CartesianVector uvRot = new CartesianVector(new PolarVector(ang, 0.1f));
-            if (manager.isKeyPressed(KeyEvent.VK_W)) {
-                mData.increaseMovementX(+uvRot.x);
-                mData.increaseMovementY(+uvRot.y);
-            }
-            if (manager.isKeyPressed(KeyEvent.VK_S)) {
-                mData.increaseMovementX(-uvRot.x);
-                mData.increaseMovementY(-uvRot.y);
-            }
-            if (manager.isKeyPressed(KeyEvent.VK_A)) {
-                data.getPositionData().increaseRotation(-0.004);
-            }
-            if (manager.isKeyPressed(KeyEvent.VK_D)) {
-                data.getPositionData().increaseRotation(+0.004);
-            }
-
-            mData.setMovementX(mData.getMovementX() * 0.90f);
-            mData.setMovementY(mData.getMovementY() * 0.90f);
+        };
+        ControllerInterface unguidedController = (GameObject gameObject, long tick, World world1, KeyManager manager) -> {
 
         };
 
-        GameObject tank = new GameObject(10, 10, tankIMG, defaultGraphics, playerController);
-        world.getGameObjects().add(tank);
+        Weapon weapon = new Weapon(zank, singleShot,
+                fastReload, bulletImpact,
+                unguidedController, 10,
+                10, tankIMG,
+                defaultGraphics, playerController);
+
+        //<editor-fold defaultstate="collapsed" desc="track">
+        Drive track = new Drive(
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+
+                    double ang = data.getPositionData().getRotation();
+                    PolarVector mv = new PolarVector(ang, 0.001f);
+
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(mv) + data.getMovementData().getMovementX());
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(mv) + data.getMovementData().getMovementY());
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+
+                    double ang = data.getPositionData().getRotation();
+                    PolarVector mv = new PolarVector(ang, 0.001f);
+
+                    data.getMovementData().setMovementX(data.getMovementData().getMovementX() - PolarVector.xFromPolar(mv));
+                    data.getMovementData().setMovementY(data.getMovementData().getMovementY() - PolarVector.yFromPolar(mv));
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+
+                    double ang = data.getPositionData().getRotation();
+                    PolarVector mv = new PolarVector(ang, 0.001f);
+
+                    data.getMovementData().setMovementX(data.getMovementData().getMovementX() * 0.992f);
+                    data.getMovementData().setMovementY(data.getMovementData().getMovementY() * 0.992f);
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+
+                    data.getPositionData().increaseRotation(-0.004);
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+
+                    data.getPositionData().increaseRotation(+0.004);
+                    CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
+                            data.getMovementData().getMovementY());
+                    PolarVector pv = vector.toPolarVector();
+                    pv.angle += 0.004;
+                    //pv.updateAngleRangePi();
+
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
+                },
+                null,
+                null,
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+                    CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
+                            data.getMovementData().getMovementY());
+                    PolarVector pv = vector.toPolarVector();
+                }
+        );
+//</editor-fold>
+
+        zank.getWeapons().add(weapon);
+        zank.setDrive(track);
+        world.getGameObjects().add(zank);
 
         /*
          GameObject heli = new GameObject(flyingObject, heliGraphic, aiController);
