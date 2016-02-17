@@ -13,6 +13,7 @@ import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.KeyManager;
 import yansuen.logic.LogicInterface;
+import code.game.tank.projectile.ShootInterface;
 
 /**
  *
@@ -21,17 +22,22 @@ import yansuen.logic.LogicInterface;
 public class Weapon extends GameObject {
 
     protected Chassis chassis;
-    protected LogicInterface shootFunction;
+    protected ShootInterface shootFunction;
     protected LogicInterface reloadFunction;
     protected ImpactInterface impactBehavior;
     protected ControllerInterface projectileBehavior;
 
     protected boolean shoot = false;
     protected boolean reload = false;
+    protected long cooldown = 0;
+    protected long shotReady = 0;
 
-    public Weapon(Chassis chassis, LogicInterface shootFunction, LogicInterface reloadFunction, ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y, BufferedImage img, GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+    public Weapon(Chassis chassis, long cooldown, ShootInterface shootFunction, LogicInterface reloadFunction,
+            ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y,
+            BufferedImage img, GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         super(x, y, img, graphicsInterface, controllerInterface);
         this.chassis = chassis;
+        this.cooldown = cooldown;
         this.shootFunction = shootFunction;
         this.reloadFunction = reloadFunction;
         this.impactBehavior = impactBehavior;
@@ -41,8 +47,10 @@ public class Weapon extends GameObject {
     @Override
     public void doLogic(GameObject gameObject, long tick, World world, KeyManager manager) {
         super.doLogic(gameObject, tick, world, manager);
-        if (shootFunction != null && shoot)
-            shootFunction.doLogic(gameObject, tick, world, manager);
+        if (shootFunction != null && shoot && shotReady < tick) {
+            shootFunction.onShoot(this, tick, impactBehavior, world, manager);
+            shotReady = tick + cooldown;
+        }
         if (reloadFunction != null && reload)
             reloadFunction.doLogic(gameObject, tick, world, manager);
     }
@@ -55,11 +63,19 @@ public class Weapon extends GameObject {
         this.chassis = chassis;
     }
 
-    public LogicInterface getShootFunction() {
+    public long getCooldown() {
+        return cooldown;
+    }
+
+    public void setCooldown(long cooldown) {
+        this.cooldown = cooldown;
+    }
+
+    public ShootInterface getShootFunction() {
         return shootFunction;
     }
 
-    public void setShootFunction(LogicInterface shootFunction) {
+    public void setShootFunction(ShootInterface shootFunction) {
         this.shootFunction = shootFunction;
     }
 

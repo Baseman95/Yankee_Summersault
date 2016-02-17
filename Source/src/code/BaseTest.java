@@ -25,6 +25,7 @@ import yansuen.graphics.GraphicsInterface;
 import yansuen.key.KeyManager;
 import yansuen.physic.CartesianVector;
 import yansuen.physic.PolarVector;
+import code.game.tank.projectile.ShootInterface;
 
 /**
  *
@@ -185,18 +186,36 @@ public class BaseTest {
         ControllerInterface playerController = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
             Chassis c = ((Chassis) gameObject);
             Drive d = c.getDrive();
+            Weapon w0 = c.getWeapons().get(0);
             d.setAccelerate(manager.isKeyPressed(KeyEvent.VK_W));
             d.setDecelerate(manager.isKeyPressed(KeyEvent.VK_S));
             d.setBreaks(manager.isKeyPressed(KeyEvent.VK_SPACE));
             d.setTurnLeft(manager.isKeyPressed(KeyEvent.VK_A));
             d.setTurnRight(manager.isKeyPressed(KeyEvent.VK_D));
-            
+            w0.setShoot(manager.isKeyPressed(KeyEvent.VK_1));
         };
 
         Chassis zank = new Chassis(10, 10, tankIMG, defaultGraphics, playerController);
 
-        LogicInterface singleShot = (GameObject gameObject, long tick, World world1, KeyManager manager) -> {
+        ControllerInterface unguidedController = (GameObject gameObject, long tick, World world1, KeyManager manager) -> {
+            DataObject data = (DataObject) gameObject.getData();
+
+            int velocity = 3; //projektilgeschwindigkeit in px per sec           
+            PolarVector pv = new PolarVector(data.getPositionData().getRotation(), velocity);
+            data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
+            data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
+        };
+
+        ShootInterface singleShot = (Weapon weapon, long tick, ImpactInterface impactInterface, World world1, KeyManager manager) -> {
             //Spawn von Projektil, + Richtung, adding projektil zu welt,
+            int duration = 1000; //Flugdauer
+            DataObject data = (DataObject) zank.getData();
+            Projectile p = new Projectile(weapon, tick + duration,
+                    impactInterface, data.getPositionData().getX(),
+                    data.getPositionData().getY(), weap1IMG, defaultGraphics, unguidedController);
+            ((DataObject) p.getData()).getPositionData().setRotation(data.getPositionData().getRotation());
+            world.addGameObject(p);
+
         };
         LogicInterface fastReload = (GameObject gameObject, long tick, World world1, KeyManager manager) -> {
             //
@@ -204,13 +223,11 @@ public class BaseTest {
         ImpactInterface bulletImpact = (Projectile projectile, Weapon weapon, long tick, World world1, KeyManager manager) -> {
 
         };
-        ControllerInterface unguidedController = (GameObject gameObject, long tick, World world1, KeyManager manager) -> {
-
-        };
-
-        Weapon weapon = new Weapon(zank, singleShot,
+        
+        int cooldown = 20; 
+        Weapon weapon = new Weapon(zank, cooldown, singleShot,
                 fastReload, bulletImpact,
-                unguidedController, 10,
+                null, 10,
                 10, tankIMG,
                 defaultGraphics, playerController);
 
@@ -268,6 +285,10 @@ public class BaseTest {
                     CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
                             data.getMovementData().getMovementY());
                     PolarVector pv = vector.toPolarVector();
+                    pv.angle = data.getPositionData().getRotation();
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
+
                 }
         );
 //</editor-fold>

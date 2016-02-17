@@ -6,6 +6,7 @@
 package code.game.tank.projectile;
 
 import code.game.World;
+import code.game.tank.Chassis;
 import code.game.tank.Weapon;
 import java.awt.image.BufferedImage;
 import yansuen.controller.ControllerInterface;
@@ -17,7 +18,7 @@ import yansuen.key.KeyManager;
  *
  * @author Eris
  */
-public class Projectile extends GameObject {
+public class Projectile extends Chassis {
 
     protected Weapon weapon;
     protected long deathtick;
