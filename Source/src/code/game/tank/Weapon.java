@@ -5,10 +5,13 @@
  */
 package code.game.tank;
 
+import yansuen.logic.LogicInterface;
+
 /**
  *
  * @author Link
  */
 public class Weapon {
-
+    
+    
 }
