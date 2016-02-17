@@ -1,7 +1,6 @@
-package code.game;
+package yansuen.game;
 
 import yansuen.controller.ControllerInterface;
-import yansuen.data.DataInterface;
 import code.data.DataObject;
 import code.data.ImageData;
 import code.data.MovementData;
@@ -9,17 +8,15 @@ import code.data.PositionData;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.logic.LogicInterface;
 import java.awt.image.BufferedImage;
-import yansuen.game.GameInterface;
+import yansuen.data.Data;
 
 /**
  *
  * @author Link162534
  */
-public class GameObject implements GameInterface {
+public class GameObject {
 
-    protected Object[] list = new Object[4];
-
-    protected DataInterface dataObject;
+    protected Data dataObject;
     protected LogicInterface logicInterface;
     protected GraphicsInterface graphicsInterface;
     protected ControllerInterface controllerInterface;
@@ -28,37 +25,32 @@ public class GameObject implements GameInterface {
     }
 
     /**
-     Width and height are taken from the img.
+     * Width and height are taken from the img.
      */
     public GameObject(float x, float y, BufferedImage img, LogicInterface logicInterface,
-                      GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+            GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         this(x, y, img.getWidth(), img.getHeight(), img, logicInterface, graphicsInterface, controllerInterface);
     }
 
     public GameObject(float x, float y, float w, float h, BufferedImage img, LogicInterface logicInterface,
-                      GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
-        this((DataInterface) (new DataObject(new PositionData(x, y, w, h), new ImageData(img), new MovementData())),
-             logicInterface, graphicsInterface, controllerInterface);
+            GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+        this((Data) (new DataObject(new PositionData(x, y, w, h), new ImageData(img), new MovementData())),
+                logicInterface, graphicsInterface, controllerInterface);
     }
 
-    public GameObject(DataInterface dataObject, LogicInterface logicInterface,
-                      GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+    public GameObject(Data dataObject, LogicInterface logicInterface,
+            GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         this.dataObject = dataObject;
         this.logicInterface = logicInterface;
         this.graphicsInterface = graphicsInterface;
         this.controllerInterface = controllerInterface;
-        list[0] = this.dataObject;
-        list[1] = this.logicInterface;
-        list[2] = this.graphicsInterface;
-        list[3] = this.controllerInterface;
-
     }
 
-    public DataInterface getDataObject() {
+    public Data getDataObject() {
         return dataObject;
     }
 
-    public void setDataObject(DataInterface dataObject) {
+    public void setDataObject(Data dataObject) {
         this.dataObject = dataObject;
     }
 
@@ -86,22 +78,4 @@ public class GameObject implements GameInterface {
         this.controllerInterface = controllerInterface;
     }
 
-    @Override
-    public Object get(int i) {
-        if (i < 0 || i >= list.length)
-            return null;
-        return list[i];
-    }
-
-    public Object get(Class c) {
-        return get(getClassInt(c));
-    }
-
-    public int getClassInt(Class c) {
-        for (int i = 0; i < list.length; i++) {
-            if (list[i].getClass() == c)
-                return i;
-        }
-        return -1;
-    }
 }

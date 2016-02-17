@@ -1,6 +1,6 @@
 package yansuen.controller;
 
-import yansuen.data.DataInterface;
+import yansuen.game.GameObject;
 import code.game.World;
 import yansuen.key.KeyManager;
 
@@ -10,6 +10,6 @@ import yansuen.key.KeyManager;
  */
 public interface ControllerInterface {
 
-    void control(DataInterface data, long tick, World world, KeyManager manager);
+    void control(GameObject gameObject, long tick, World world, KeyManager manager);
 
 }
