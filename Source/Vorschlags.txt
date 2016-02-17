@@ -1,0 +1,27 @@
+UZI 
+-
+CANON
+-
+PLASMA
+MAGNUM
+-
+SHELL
+GOLIATH
+-
+ROCKET
+GUIDED
+-
+AGM
+-
+
+
+
+Menü
+
+
+
+Select Mission
+Join Game
+Garage
+Options
+Quit

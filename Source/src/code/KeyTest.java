@@ -5,7 +5,6 @@ import code.data.DataObject;
 import code.data.ImageData;
 import code.data.MovementData;
 import code.data.PositionData;
-import yansuen.game.GameObject;
 import code.game.World;
 import code.game.tank.Chassis;
 import code.graphics.RotationGraphicsObject;
@@ -19,10 +18,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import yansuen.game.GameObject;
 import yansuen.physic.CartesianVector;
 import yansuen.physic.PolarVector;
-import yansuen.physic.Polygon;
-import yansuen.physic.Rectangle;
 
 /**
  *
@@ -63,9 +61,8 @@ public class KeyTest {
                         new MovementData());
                 final GameObject bullet = new GameObject(dataO, null, defaultGraphics, null);
                 bullet.setLogicInterface((GameObject gameObject2, long t2, World w2, KeyManager m2) -> {
-                    if (t2 - tick > 200) {
+                    if (t2 - tick > 200)
                         w2.removeGameObject(bullet);
-                    }
                 });
                 CartesianVector hostMovement = new CartesianVector(data.getMovementData().getMovementX(),
                         data.getMovementData().getMovementY());
@@ -114,20 +111,15 @@ public class KeyTest {
                 mData.increaseMovementX(-uvRot.x);
                 mData.increaseMovementY(-uvRot.y);
             }
-            if (manager.isKeyPressed(KeyEvent.VK_A)) {
+            if (manager.isKeyPressed(KeyEvent.VK_A))
                 data.getPositionData().increaseRotation(-0.004);
-            }
-            if (manager.isKeyPressed(KeyEvent.VK_D)) {
+            if (manager.isKeyPressed(KeyEvent.VK_D))
                 data.getPositionData().increaseRotation(+0.004);
-            }
 
             mData.setMovementX(mData.getMovementX() * 0.90f);
             mData.setMovementY(mData.getMovementY() * 0.90f);
 
         };
-
-        Polygon a = new Rectangle(10, 20, 50, 100);
-        System.out.println(a);
 
         Chassis tank = new Chassis(10, 10, tankImg, tankLogic, defaultGraphics, playerController);
         GameObject tank2 = new GameObject(500, 300, tankImg, null, defaultGraphics, null);
