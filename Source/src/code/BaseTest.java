@@ -4,9 +4,7 @@ import code.data.DataObject;
 import code.data.ImageData;
 import code.data.MovementData;
 import code.data.PositionData;
-import code.game.GameObject;
 import code.game.World;
-import code.graphics.DefaultGraphicsObject;
 import code.graphics.RotationGraphicsObject;
 import java.awt.event.KeyEvent;
 import yansuen.graphics.GraphicsLoop;
@@ -17,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import yansuen.controller.ControllerInterface;
+import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.KeyManager;
 import yansuen.physic.CartesianVector;
@@ -96,8 +95,8 @@ public class BaseTest {
         GraphicsInterface defaultGraphics = new RotationGraphicsObject();
         // Weapon weapon = new Weapon(GameObject, GameObject);
 
-        LogicInterface weapon1 = (DataInterface dataInterface, long tick, World w, KeyManager manager) -> {
-            DataObject data = (DataObject) dataInterface;
+        LogicInterface weapon1 = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+            DataObject data = (DataObject) gameObject.getDataObject();
             if (manager.isKeyPressed(KeyEvent.VK_1) && tick - bulletTick1 > 100) {
                 DataObject dataO = new DataObject(new PositionData(data.getPositionData().getX()
                         + data.getPositionData().getWidth() / 2
@@ -108,7 +107,7 @@ public class BaseTest {
                         new ImageData(weap1IMG),
                         new MovementData());
                 final GameObject bullet = new GameObject(dataO, null, defaultGraphics, null);
-                bullet.setLogicInterface((DataInterface d2, long t2, World w2, KeyManager m2) -> {
+                bullet.setLogicInterface((GameObject gameObject2, long t2, World w2, KeyManager m2) -> {
                     if (t2 - tick > 200) {
                         w2.removeGameObject(bullet);
                     }
@@ -126,8 +125,8 @@ public class BaseTest {
                 bulletTick1 = tick;
             }
         };
-        LogicInterface weapon2 = (DataInterface dataInterface, long tick, World w, KeyManager manager) -> {
-            DataObject data = (DataObject) dataInterface;
+        LogicInterface weapon2 = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+            DataObject data = (DataObject) gameObject.getDataObject();
             if (manager.isKeyPressed(KeyEvent.VK_2) && tick - bulletTick2 > 1) {
                 DataObject dataO = new DataObject(new PositionData(data.getPositionData().getX()
                         + data.getPositionData().getWidth() / 2
@@ -138,7 +137,7 @@ public class BaseTest {
                         new ImageData(weap2IMG),
                         new MovementData());
                 final GameObject bullet = new GameObject(dataO, null, defaultGraphics, null);
-                bullet.setLogicInterface((DataInterface d2, long t2, World w2, KeyManager m2) -> {
+                bullet.setLogicInterface((GameObject gameObject2, long t2, World w2, KeyManager m2) -> {
                     if (t2 - tick > 64) {
                         w2.removeGameObject(bullet);
                     }
@@ -157,9 +156,9 @@ public class BaseTest {
             }
         };
 
-        LogicInterface playerTankLI = (DataInterface dataInterface, long tick, World w, KeyManager manager) -> {
-            weapon1.doLogic(dataInterface, tick, world, manager);
-            weapon2.doLogic(dataInterface, tick, world, manager);
+        LogicInterface playerTankLI = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+            weapon1.doLogic(gameObject, tick, world, manager);
+            weapon2.doLogic(gameObject, tick, world, manager);
         };
         /*
         BufferedImage panzerGraphic = ImageIO.read(new File("mypanzer.png"));
@@ -178,8 +177,8 @@ public class BaseTest {
         world.getGameObjects().add(playerPanzer4);
          */
 
-        ControllerInterface playerController = (DataInterface dataInterface, long tick, World w, KeyManager manager) -> {
-            DataObject data = (DataObject) dataInterface;
+        ControllerInterface playerController = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+            DataObject data = (DataObject) gameObject.getDataObject();
             MovementData mData = data.getMovementData();
             double ang = data.getPositionData().getRotation();
 
