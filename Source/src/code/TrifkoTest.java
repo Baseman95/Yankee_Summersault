@@ -52,15 +52,63 @@ public class TrifkoTest {
         Drive track = new Drive(
                 (GameObject gameObject, long tick, World w, KeyManager manager) -> {
                     DataObject data = (DataObject) gameObject.getData();
-                    data.getMovementData().setMovementX(data.getMovementData().getMovementX() + 0.01f);
-                    data.getMovementData().
+
+                    double ang = data.getPositionData().getRotation();
+                    PolarVector mv = new PolarVector(ang, 0.001f);
+
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(mv) + data.getMovementData().getMovementX());
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(mv) + data.getMovementData().getMovementY());
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+
+                    double ang = data.getPositionData().getRotation();
+                    PolarVector mv = new PolarVector(ang, 0.001f);
+
+                    data.getMovementData().setMovementX(data.getMovementData().getMovementX() - PolarVector.xFromPolar(mv));
+                    data.getMovementData().setMovementY(data.getMovementData().getMovementY() - PolarVector.yFromPolar(mv));
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+
+                    double ang = data.getPositionData().getRotation();
+                    PolarVector mv = new PolarVector(ang, 0.001f);
+
+                    data.getMovementData().setMovementX(data.getMovementData().getMovementX() * 0.992f);
+                    data.getMovementData().setMovementY(data.getMovementData().getMovementY() * 0.992f);
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+
+                    data.getPositionData().increaseRotation(-0.004);
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+
+                    data.getPositionData().increaseRotation(+0.004);
+                    CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
+                            data.getMovementData().getMovementY());
+                    PolarVector pv = vector.toPolarVector();
+                    pv.angle += 0.004;
+                    //pv.updateAngleRangePi();
+                    
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
                 },
                 null,
                 null,
-                null,
-                null,
-                null,
-                null);
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+                    CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
+                            data.getMovementData().getMovementY());
+                    PolarVector pv = vector.toPolarVector();
+                    
+                    System.out.println(data.getPositionData().getRotation()+ " - "+
+                            pv.length + " - "+ pv.angle);
+                    
+                    
+                }
+                );
 
         LogicInterface tankLogic = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
             DataObject data = (DataObject) gameObject.getData();
@@ -101,6 +149,26 @@ public class TrifkoTest {
                 ((Chassis) gameObject).getDrive().setAccelerate(true);
             } else {
                 ((Chassis) gameObject).getDrive().setAccelerate(false);
+            }
+            if (manager.isKeyPressed(KeyEvent.VK_S)) {
+                ((Chassis) gameObject).getDrive().setDecelerate(true);
+            } else {
+                ((Chassis) gameObject).getDrive().setDecelerate(false);
+            }
+            if (manager.isKeyPressed(KeyEvent.VK_SPACE)) {
+                ((Chassis) gameObject).getDrive().setBreaks(true);
+            } else {
+                ((Chassis) gameObject).getDrive().setBreaks(false);
+            }
+            if (manager.isKeyPressed(KeyEvent.VK_A)) {
+                ((Chassis) gameObject).getDrive().setTurnLeft(true);
+            } else {
+                ((Chassis) gameObject).getDrive().setTurnLeft(false);
+            }
+            if (manager.isKeyPressed(KeyEvent.VK_D)) {
+                ((Chassis) gameObject).getDrive().setTurnRight(true);
+            } else {
+                ((Chassis) gameObject).getDrive().setTurnRight(false);
             }
             /*
             PolarVector mv = new PolarVector(new CartesianVector(mData.getMovementX(),
