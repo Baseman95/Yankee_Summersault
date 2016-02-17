@@ -11,10 +11,4 @@ package code.game.tank;
  */
 public class Weapon {
 
-    protected Chassis chassis;
-
-    public Weapon(Chassis chassis) {
-        this.chassis = chassis;
-    }
-
 }

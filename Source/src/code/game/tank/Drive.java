@@ -16,8 +16,6 @@ import yansuen.logic.LogicInterface;
  */
 public class Drive implements LogicInterface {
 
-    protected Chassis chassis;
-
     protected LogicInterface accelerateFunction;
     protected LogicInterface decelerateFunction;
     protected LogicInterface breaksFunction;
@@ -34,16 +32,10 @@ public class Drive implements LogicInterface {
     protected boolean strafeLeft = false;
     protected boolean strafeRight = false;
 
-    public Drive(Chassis chassis) {
-        this.chassis = chassis;
-    }
-
-    public Drive(Chassis chassis,
-            LogicInterface accelerateFunction, LogicInterface decelerateFunction,
+    public Drive(LogicInterface accelerateFunction, LogicInterface decelerateFunction,
             LogicInterface breaksFunction, LogicInterface turnLeftFunction,
             LogicInterface turnRightFunction, LogicInterface strafeLeftFunction,
             LogicInterface strafeRightFunction) {
-        this.chassis = chassis;
         this.accelerateFunction = accelerateFunction;
         this.decelerateFunction = decelerateFunction;
         this.breaksFunction = breaksFunction;
@@ -67,10 +59,6 @@ public class Drive implements LogicInterface {
             strafeLeftFunction.doLogic(gameObject, tick, world, manager);
         if (strafeRightFunction != null && strafeRight)
             strafeRightFunction.doLogic(gameObject, tick, world, manager);
-    }
-
-    public Chassis getChassis() {
-        return chassis;
     }
 
     public LogicInterface getAccelerateFunction() {
