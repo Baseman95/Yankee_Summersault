@@ -32,20 +32,28 @@ public class Chassis extends GameObject {
         super();
     }
 
-    public Chassis(float x, float y, BufferedImage img, LogicInterface logicInterface,
+    public Chassis(float x, float y, BufferedImage img,
             GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
-        this(x, y, img.getWidth(), img.getHeight(), img, logicInterface, graphicsInterface, controllerInterface);
+        this(x, y, img.getWidth(), img.getHeight(), img, graphicsInterface, controllerInterface);
     }
 
-    public Chassis(float x, float y, float w, float h, BufferedImage img, LogicInterface logicInterface,
+    public Chassis(float x, float y, float w, float h, BufferedImage img,
             GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         this((Data) (new DataObject(new PositionData(x, y, w, h), new ImageData(img), new MovementData())),
-                logicInterface, graphicsInterface, controllerInterface);
+                graphicsInterface, controllerInterface);
     }
 
-    public Chassis(Data dataObject, LogicInterface logicInterface,
+    public Chassis(Data dataObject,
             GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
-        super(dataObject, logicInterface, graphicsInterface, controllerInterface);
+        super(dataObject, graphicsInterface, controllerInterface);
+    }
+
+    @Override
+    public void doLogic(GameObject gameObject, long tick, World world, KeyManager manager) {
+        super.doLogic(gameObject, tick, world, manager);
+        if (drive != null) {
+            drive.doLogic(gameObject, tick, world, manager);
+        }
     }
 
     public ArrayList<Weapon> getWeapons() {
@@ -54,12 +62,6 @@ public class Chassis extends GameObject {
 
     public void setDrive(Drive drive) {
         this.drive = drive;
-        setLogicInterface((GameObject gameObject, long tick, World world, KeyManager manager) -> {
-            if (drive != null) {
-                drive.doLogic(gameObject, tick, world, manager);
-            }
-        }
-        );
     }
 
     public Drive getDrive() {

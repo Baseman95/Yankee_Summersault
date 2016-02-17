@@ -73,12 +73,12 @@ public class TrifkoTest {
                         - 8, 16, 16),
                         new ImageData(bulletImg),
                         new MovementData());
-                final GameObject bullet = new GameObject(dataO, null, defaultGraphics, null);
-                bullet.setLogicInterface((GameObject gameObject1, long t2, World w2, KeyManager m2) -> {
+                final GameObject bullet = new GameObject(dataO, defaultGraphics, null);
+                /*bullet.setLogicInterface((GameObject gameObject1, long t2, World w2, KeyManager m2) -> {
                     if (t2 - tick > 200) {
                         w2.removeGameObject(bullet);
                     }
-                });
+                });*/
                 CartesianVector hostMovement = new CartesianVector(data.getMovementData().getMovementX(),
                         data.getMovementData().getMovementY());
                 CartesianVector bulletTrajectory = new CartesianVector(
@@ -96,8 +96,7 @@ public class TrifkoTest {
         BufferedImage tankImg = ImageIO.read(new File("cool_tank.png"));
 
         ControllerInterface playerController = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-           
-         
+
             if (manager.isKeyPressed(KeyEvent.VK_W)) {
                 ((Chassis) gameObject).getDrive().setAccelerate(true);
             } else {
@@ -142,11 +141,11 @@ public class TrifkoTest {
 
         };
 
-        Chassis tank = new Chassis(50, 50, tankImg, null, defaultGraphics, playerController);
+        Chassis tank = new Chassis(50, 50, tankImg, defaultGraphics, playerController);
         tank.setDrive(track);
 
         //GameObject tank = new GameObject(10, 10, tankImg, tankLogic, defaultGraphics, playerController);
-        GameObject tank2 = new GameObject(500, 300, tankImg, null, defaultGraphics, null);
+        GameObject tank2 = new GameObject(500, 300, tankImg, defaultGraphics, null);
         world.getGameObjects().add(tank);
         world.getGameObjects().add(tank2);
     }

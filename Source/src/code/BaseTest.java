@@ -107,12 +107,12 @@ public class BaseTest {
                         - 8, 16, 16),
                         new ImageData(weap1IMG),
                         new MovementData());
-                final GameObject bullet = new GameObject(dataO, null, defaultGraphics, null);
-                bullet.setLogicInterface((GameObject gameObject2, long t2, World w2, KeyManager m2) -> {
+                final GameObject bullet = new GameObject(dataO, defaultGraphics, null);
+                /*bullet.setLogicInterface((GameObject gameObject2, long t2, World w2, KeyManager m2) -> {
                     if (t2 - tick > 200) {
                         w2.removeGameObject(bullet);
                     }
-                });
+                });*/
                 CartesianVector hostMovement = new CartesianVector(data.getMovementData().getMovementX(),
                         data.getMovementData().getMovementY());
                 CartesianVector bulletTrajectory = new CartesianVector(
@@ -137,12 +137,12 @@ public class BaseTest {
                         - 8, 16, 16),
                         new ImageData(weap2IMG),
                         new MovementData());
-                final GameObject bullet = new GameObject(dataO, null, defaultGraphics, null);
-                bullet.setLogicInterface((GameObject gameObject2, long t2, World w2, KeyManager m2) -> {
+                final GameObject bullet = new GameObject(dataO, defaultGraphics, null);
+                /*bullet.setLogicInterface((GameObject gameObject2, long t2, World w2, KeyManager m2) -> {
                     if (t2 - tick > 64) {
                         w2.removeGameObject(bullet);
                     }
-                });
+                });*/
                 CartesianVector hostMovement = new CartesianVector(data.getMovementData().getMovementX(),
                         data.getMovementData().getMovementY());
                 CartesianVector bulletTrajectory = new CartesianVector(
@@ -221,7 +221,7 @@ public class BaseTest {
 
         };
 
-        GameObject tank = new GameObject(10, 10, tankIMG, playerTankLI, defaultGraphics, playerController);
+        GameObject tank = new GameObject(10, 10, tankIMG, defaultGraphics, playerController);
         world.getGameObjects().add(tank);
 
         /*

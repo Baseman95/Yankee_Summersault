@@ -33,10 +33,7 @@ public class World implements LogicLooper {
     @Override
     public synchronized void onLogicLoop(long tick) {
         for (GameObject gameObject : gameObjects) {
-            LogicInterface li = gameObject.getLogicInterface();
-            if (li != null) {
-                li.doLogic(gameObject, tick, this, keyManager);
-            }
+            gameObject.doLogic(gameObject, tick, this, keyManager);
             ControllerInterface ci = gameObject.getControllerInterface();
             if (ci != null && keyManager != null) {
                 ci.control(gameObject, tick, this, keyManager);
