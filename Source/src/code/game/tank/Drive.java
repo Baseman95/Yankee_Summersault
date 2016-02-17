@@ -23,6 +23,7 @@ public class Drive implements LogicInterface {
     protected LogicInterface turnRightFunction;
     protected LogicInterface strafeLeftFunction;
     protected LogicInterface strafeRightFunction;
+    protected LogicInterface logicInterface;
 
     protected boolean accelerate = false;
     protected boolean decelerate = false;
@@ -35,7 +36,7 @@ public class Drive implements LogicInterface {
     public Drive(LogicInterface accelerateFunction, LogicInterface decelerateFunction,
             LogicInterface breaksFunction, LogicInterface turnLeftFunction,
             LogicInterface turnRightFunction, LogicInterface strafeLeftFunction,
-            LogicInterface strafeRightFunction) {
+            LogicInterface strafeRightFunction, LogicInterface logicInterface) {
         this.accelerateFunction = accelerateFunction;
         this.decelerateFunction = decelerateFunction;
         this.breaksFunction = breaksFunction;
@@ -43,14 +44,19 @@ public class Drive implements LogicInterface {
         this.turnRightFunction = turnRightFunction;
         this.strafeLeftFunction = strafeLeftFunction;
         this.strafeRightFunction = strafeRightFunction;
+        this.logicInterface = logicInterface;
     }
 
     @Override
     public void doLogic(GameObject gameObject, long tick, World world, KeyManager manager) {
+        if(logicInterface != null)
+            logicInterface.doLogic(gameObject, tick, world, manager);
         if (accelerateFunction != null && accelerate)
             accelerateFunction.doLogic(gameObject, tick, world, manager);
         if (decelerateFunction != null && decelerate)
             decelerateFunction.doLogic(gameObject, tick, world, manager);
+        if (breaksFunction != null && breaks)
+            breaksFunction.doLogic(gameObject, tick, world, manager);
         if (turnLeftFunction != null && turnLeft)
             turnLeftFunction.doLogic(gameObject, tick, world, manager);
         if (turnRightFunction != null && turnRight)
@@ -59,6 +65,14 @@ public class Drive implements LogicInterface {
             strafeLeftFunction.doLogic(gameObject, tick, world, manager);
         if (strafeRightFunction != null && strafeRight)
             strafeRightFunction.doLogic(gameObject, tick, world, manager);
+    }
+
+    public LogicInterface getLogicInterface() {
+        return logicInterface;
+    }
+
+    public void setLogicInterface(LogicInterface logicInterface) {
+        this.logicInterface = logicInterface;
     }
 
     public LogicInterface getAccelerateFunction() {
