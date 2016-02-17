@@ -1,5 +1,6 @@
 package code.game;
 
+import yansuen.game.GameObject;
 import code.data.DataObject;
 import code.data.MovementData;
 import code.data.PositionData;
@@ -33,11 +34,13 @@ public class World implements LogicLooper {
     public synchronized void onLogicLoop(long tick) {
         for (GameObject gameObject : gameObjects) {
             LogicInterface li = gameObject.getLogicInterface();
-            if (li != null)
-                li.doLogic(gameObject.dataObject, tick, this, keyManager);
+            if (li != null) {
+                li.doLogic(gameObject, tick, this, keyManager);
+            }
             ControllerInterface ci = gameObject.getControllerInterface();
-            if (ci != null && keyManager != null)
-                ci.control(gameObject.dataObject, tick, this, keyManager);
+            if (ci != null && keyManager != null) {
+                ci.control(gameObject, tick, this, keyManager);
+            }
             moveGameObject(gameObject);
         }
         gameObjects.addAll(addObjects);
@@ -60,8 +63,9 @@ public class World implements LogicLooper {
     public synchronized void repaint(Graphics2D g2d) {
         for (GameObject gameObject : gameObjects) {
             GraphicsInterface gi = gameObject.getGraphicsInterface();
-            if (gi != null)
-                gi.render(gameObject.dataObject, camera, g2d);
+            if (gi != null) {
+                gi.render(gameObject.getDataObject(), camera, g2d);
+            }
         }
     }
 

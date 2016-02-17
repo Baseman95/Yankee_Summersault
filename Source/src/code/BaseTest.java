@@ -1,8 +1,7 @@
 package code;
 
-import yansuen.data.DataInterface;
 import code.data.DataObject;
-import code.game.GameObject;
+import yansuen.game.GameObject;
 import code.game.World;
 import yansuen.graphics.GraphicsLoop;
 import yansuen.logic.LogicInterface;
@@ -11,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import yansuen.data.Data;
 
 /**
  *
@@ -63,7 +63,7 @@ public class BaseTest {
         
          };*/
 //</editor-fold>
-        LogicInterface movingObject = (DataInterface data, long tick) -> {
+        LogicInterface movingObject = (Data data, long tick) -> {
             //data.setX(data.getX() + 1);
             if (!(data instanceof TankData)) return;
             TankData tankData = (TankData) data;

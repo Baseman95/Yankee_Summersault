@@ -1,13 +1,13 @@
 package code;
 
 import yansuen.controller.ControllerInterface;
-import yansuen.data.DataInterface;
 import code.data.DataObject;
 import code.data.ImageData;
 import code.data.MovementData;
 import code.data.PositionData;
-import code.game.GameObject;
+import yansuen.game.GameObject;
 import code.game.World;
+import code.game.tank.Chassis;
 import code.graphics.RotationGraphicsObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.graphics.GraphicsLoop;
@@ -21,6 +21,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import yansuen.physic.CartesianVector;
 import yansuen.physic.PolarVector;
+import yansuen.physic.Polygon;
+import yansuen.physic.Rectangle;
 
 /**
  *
@@ -48,28 +50,29 @@ public class KeyTest {
         GraphicsInterface defaultGraphics = new RotationGraphicsObject();
         BufferedImage bulletImg = ImageIO.read(new File("mypanzer.png"));
 
-        LogicInterface tankLogic = (DataInterface dataInterface, long tick, World w, KeyManager manager) -> {
-            DataObject data = (DataObject) dataInterface;
+        LogicInterface tankLogic = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+            DataObject data = (DataObject) gameObject.getDataObject();
             if (manager.isKeyPressed(KeyEvent.VK_SPACE) && tick - bulletTick > 100) {
                 DataObject dataO = new DataObject(new PositionData(data.getPositionData().getX()
-                                                                   + data.getPositionData().getWidth() / 2
-                                                                   - 8,
-                                                                   data.getPositionData().getY()
-                                                                   + data.getPositionData().getHeight() / 2
-                                                                   - 8, 16, 16),
-                                                  new ImageData(bulletImg),
-                                                  new MovementData());
+                        + data.getPositionData().getWidth() / 2
+                        - 8,
+                        data.getPositionData().getY()
+                        + data.getPositionData().getHeight() / 2
+                        - 8, 16, 16),
+                        new ImageData(bulletImg),
+                        new MovementData());
                 final GameObject bullet = new GameObject(dataO, null, defaultGraphics, null);
-                bullet.setLogicInterface((DataInterface d2, long t2, World w2, KeyManager m2) -> {
-                    if (t2 - tick > 200)
+                bullet.setLogicInterface((GameObject gameObject2, long t2, World w2, KeyManager m2) -> {
+                    if (t2 - tick > 200) {
                         w2.removeGameObject(bullet);
+                    }
                 });
                 CartesianVector hostMovement = new CartesianVector(data.getMovementData().getMovementX(),
-                                                                   data.getMovementData().getMovementY());
+                        data.getMovementData().getMovementY());
                 CartesianVector bulletTrajectory = new CartesianVector(
                         new PolarVector(data.getPositionData().getRotation()
-                                        + (Math.random() * Math.PI / 8 - Math.random() * Math.PI / 16),
-                                        4));
+                                + (Math.random() * Math.PI / 8 - Math.random() * Math.PI / 16),
+                                4));
                 dataO.getMovementData().setMovementX(bulletTrajectory.x + hostMovement.x);
                 dataO.getMovementData().setMovementY(bulletTrajectory.y + hostMovement.y);
 
@@ -80,18 +83,18 @@ public class KeyTest {
         };
         BufferedImage tankImg = ImageIO.read(new File("cool_tank.png"));
 
-        ControllerInterface playerController = (DataInterface dataInterface, long tick, World w, KeyManager manager) -> {
-            DataObject data = (DataObject) dataInterface;
+        ControllerInterface playerController = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+            DataObject data = (DataObject) gameObject.getDataObject();
             MovementData mData = data.getMovementData();
             double ang = data.getPositionData().getRotation();
 
             PolarVector mv = new PolarVector(new CartesianVector(mData.getMovementX(),
-                                                                 mData.getMovementY()));
+                    mData.getMovementY()));
             double deltaAng = mv.angle - ang;
 
             deltaAng = deltaAng > Math.PI
-                       ? deltaAng - Math.PI * 2 : deltaAng < -Math.PI
-                                                  ? deltaAng + Math.PI * 2 : deltaAng;
+                    ? deltaAng - Math.PI * 2 : deltaAng < -Math.PI
+                            ? deltaAng + Math.PI * 2 : deltaAng;
             if (Math.abs(deltaAng) > Math.PI / 2) {
                 deltaAng -= Math.signum(deltaAng) * Math.PI;
             }
@@ -111,17 +114,22 @@ public class KeyTest {
                 mData.increaseMovementX(-uvRot.x);
                 mData.increaseMovementY(-uvRot.y);
             }
-            if (manager.isKeyPressed(KeyEvent.VK_A))
+            if (manager.isKeyPressed(KeyEvent.VK_A)) {
                 data.getPositionData().increaseRotation(-0.004);
-            if (manager.isKeyPressed(KeyEvent.VK_D))
+            }
+            if (manager.isKeyPressed(KeyEvent.VK_D)) {
                 data.getPositionData().increaseRotation(+0.004);
+            }
 
             mData.setMovementX(mData.getMovementX() * 0.90f);
             mData.setMovementY(mData.getMovementY() * 0.90f);
 
         };
 
-        GameObject tank = new GameObject(10, 10, tankImg, tankLogic, defaultGraphics, playerController);
+        Polygon a = new Rectangle(10, 20, 50, 100);
+        System.out.println(a);
+
+        Chassis tank = new Chassis(10, 10, tankImg, tankLogic, defaultGraphics, playerController);
         GameObject tank2 = new GameObject(500, 300, tankImg, null, defaultGraphics, null);
         world.getGameObjects().add(tank);
         world.getGameObjects().add(tank2);

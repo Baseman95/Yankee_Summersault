@@ -2,7 +2,6 @@ package code.graphics;
 
 import yansuen.graphics.GraphicsInterface;
 import yansuen.graphics.Camera;
-import yansuen.data.DataInterface;
 import code.data.DataObject;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -10,6 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
+import yansuen.data.Data;
 
 /**
  *
@@ -20,7 +20,7 @@ public class DefaultGraphicsObject implements GraphicsInterface {
     int rendering = 2;
 
     @Override
-    public synchronized void render(DataInterface data, Camera camera, Graphics2D g2d) {
+    public synchronized void render(Data data, Camera camera, Graphics2D g2d) {
         DataObject d = (DataObject) data;
         configureGraphics2D(g2d);
         AffineTransform at = new AffineTransform();
