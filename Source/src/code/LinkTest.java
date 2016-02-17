@@ -1,8 +1,7 @@
 package code;
 
-import yansuen.data.DataInterface;
 import code.data.DataObject;
-import code.game.GameObject;
+import yansuen.game.GameObject;
 import code.game.World;
 import yansuen.graphics.GraphicsLoop;
 import yansuen.key.KeyManager;
@@ -12,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import yansuen.data.Data;
 
 /**
  *
@@ -32,7 +32,7 @@ public class LinkTest {
         gl.start();
         screen.setVisible(true);
 
-        LogicInterface movingObject = (DataInterface di, long tick) -> {
+        LogicInterface movingObject = (Data di, long tick) -> {
             DataObject data = (DataObject) di;
             data.getPositionData().setX(data.getPositionData().getX() + 1);
         };

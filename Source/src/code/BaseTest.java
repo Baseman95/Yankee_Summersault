@@ -1,6 +1,5 @@
 package code;
 
-import yansuen.data.DataInterface;
 import code.data.DataObject;
 import code.data.ImageData;
 import code.data.MovementData;
