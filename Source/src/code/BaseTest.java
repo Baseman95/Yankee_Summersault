@@ -29,6 +29,7 @@ public class BaseTest {
 
     static long bulletTick1 = 0;
     static long bulletTick2 = 0;
+    
 
     public static void main(String[] args) throws IOException {
         LogicLoop ll = new LogicLoop(5000000L, 1);
