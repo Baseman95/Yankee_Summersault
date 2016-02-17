@@ -85,15 +85,7 @@ public class TrifkoTest {
                 (GameObject gameObject, long tick, World w, KeyManager manager) -> {
                     DataObject data = (DataObject) gameObject.getData();
 
-                    data.getPositionData().increaseRotation(+0.004);
-                    CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
-                            data.getMovementData().getMovementY());
-                    PolarVector pv = vector.toPolarVector();
-                    pv.angle += 0.004;
-                    //pv.updateAngleRangePi();
-                    
-                    data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
-                    data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
+                    data.getPositionData().increaseRotation(+0.004); 
                 },
                 null,
                 null,
@@ -102,10 +94,16 @@ public class TrifkoTest {
                     CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
                             data.getMovementData().getMovementY());
                     PolarVector pv = vector.toPolarVector();
-                    
+                    pv.updateAngleRange2Pi();
                     System.out.println(data.getPositionData().getRotation()+ " - "+
                             pv.length + " - "+ pv.angle);
                     
+                    float dif = (float)(data.getPositionData().getRotation() - pv.angle);
+                    System.out.println(dif);
+                    
+                    pv.angle = data.getPositionData().getRotation();
+                     data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
                     
                 }
                 );
