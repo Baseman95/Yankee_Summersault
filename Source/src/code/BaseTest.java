@@ -97,7 +97,7 @@ public class BaseTest {
         // Weapon weapon = new Weapon(GameObject, GameObject);
 
         LogicInterface weapon1 = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-            DataObject data = (DataObject) gameObject.getDataObject();
+            DataObject data = (DataObject) gameObject.getData();
             if (manager.isKeyPressed(KeyEvent.VK_1) && tick - bulletTick1 > 100) {
                 DataObject dataO = new DataObject(new PositionData(data.getPositionData().getX()
                         + data.getPositionData().getWidth() / 2
@@ -127,7 +127,7 @@ public class BaseTest {
             }
         };
         LogicInterface weapon2 = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-            DataObject data = (DataObject) gameObject.getDataObject();
+            DataObject data = (DataObject) gameObject.getData();
             if (manager.isKeyPressed(KeyEvent.VK_2) && tick - bulletTick2 > 1) {
                 DataObject dataO = new DataObject(new PositionData(data.getPositionData().getX()
                         + data.getPositionData().getWidth() / 2
@@ -179,7 +179,7 @@ public class BaseTest {
          */
 
         ControllerInterface playerController = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-            DataObject data = (DataObject) gameObject.getDataObject();
+            DataObject data = (DataObject) gameObject.getData();
             MovementData mData = data.getMovementData();
             double ang = data.getPositionData().getRotation();
 

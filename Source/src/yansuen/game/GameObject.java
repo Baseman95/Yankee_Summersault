@@ -46,7 +46,7 @@ public class GameObject {
         this.controllerInterface = controllerInterface;
     }
 
-    public Data getDataObject() {
+    public Data getData() {
         return dataObject;
     }
 

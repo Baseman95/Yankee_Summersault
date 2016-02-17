@@ -6,6 +6,8 @@ import code.data.ImageData;
 import code.data.MovementData;
 import code.data.PositionData;
 import code.game.World;
+import code.game.tank.Chassis;
+import code.game.tank.Drive;
 import code.graphics.RotationGraphicsObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.graphics.GraphicsLoop;
@@ -47,8 +49,21 @@ public class TrifkoTest {
         GraphicsInterface defaultGraphics = new RotationGraphicsObject();
         BufferedImage bulletImg = ImageIO.read(new File("mypanzer.png"));
 
+        Drive track = new Drive(
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+                    data.getMovementData().setMovementX(data.getMovementData().getMovementX() + 0.01f);
+                    data.getMovementData().
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+
         LogicInterface tankLogic = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-            DataObject data = (DataObject) gameObject.getDataObject();
+            DataObject data = (DataObject) gameObject.getData();
             if (manager.isKeyPressed(KeyEvent.VK_SPACE) && tick - bulletTick > 100) {
                 DataObject dataO = new DataObject(new PositionData(data.getPositionData().getX()
                         + data.getPositionData().getWidth() / 2
@@ -81,10 +96,14 @@ public class TrifkoTest {
         BufferedImage tankImg = ImageIO.read(new File("cool_tank.png"));
 
         ControllerInterface playerController = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-            DataObject data = (DataObject) gameObject.getDataObject();
-            MovementData mData = data.getMovementData();
-            double ang = data.getPositionData().getRotation();
-
+           
+         
+            if (manager.isKeyPressed(KeyEvent.VK_W)) {
+                ((Chassis) gameObject).getDrive().setAccelerate(true);
+            } else {
+                ((Chassis) gameObject).getDrive().setAccelerate(false);
+            }
+            /*
             PolarVector mv = new PolarVector(new CartesianVector(mData.getMovementX(),
                     mData.getMovementY()));
             double deltaAng = mv.angle - ang;
@@ -119,11 +138,14 @@ public class TrifkoTest {
             }
 
             mData.setMovementX(mData.getMovementX() * 0.90f);
-            mData.setMovementY(mData.getMovementY() * 0.90f);
+            mData.setMovementY(mData.getMovementY() * 0.90f);*/
 
         };
 
-        GameObject tank = new GameObject(10, 10, tankImg, tankLogic, defaultGraphics, playerController);
+        Chassis tank = new Chassis(50, 50, tankImg, null, defaultGraphics, playerController);
+        tank.setDrive(track);
+
+        //GameObject tank = new GameObject(10, 10, tankImg, tankLogic, defaultGraphics, playerController);
         GameObject tank2 = new GameObject(500, 300, tankImg, null, defaultGraphics, null);
         world.getGameObjects().add(tank);
         world.getGameObjects().add(tank2);

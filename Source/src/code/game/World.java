@@ -50,9 +50,9 @@ public class World implements LogicLooper {
     }
 
     protected void moveGameObject(GameObject gameObject) {
-        if (gameObject.getDataObject() instanceof DataObject) {
-            PositionData pos = ((DataObject) gameObject.getDataObject()).getPositionData();
-            MovementData move = ((DataObject) gameObject.getDataObject()).getMovementData();
+        if (gameObject.getData() instanceof DataObject) {
+            PositionData pos = ((DataObject) gameObject.getData()).getPositionData();
+            MovementData move = ((DataObject) gameObject.getData()).getMovementData();
             if (pos != null && move != null) {
                 pos.increaseX(move.getMovementX());
                 pos.increaseY(move.getMovementY());
@@ -64,7 +64,7 @@ public class World implements LogicLooper {
         for (GameObject gameObject : gameObjects) {
             GraphicsInterface gi = gameObject.getGraphicsInterface();
             if (gi != null) {
-                gi.render(gameObject.getDataObject(), camera, g2d);
+                gi.render(gameObject.getData(), camera, g2d);
             }
         }
     }
