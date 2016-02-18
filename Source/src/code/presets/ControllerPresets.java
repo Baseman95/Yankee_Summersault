@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import yansuen.controller.ControllerInterface;
 import yansuen.game.GameObject;
 import yansuen.key.KeyManager;
+import yansuen.physic.CartesianVector;
 import yansuen.physic.PolarVector;
 
 /**
@@ -22,16 +23,30 @@ import yansuen.physic.PolarVector;
  */
 public class ControllerPresets {
 
-    /*public static ControllerInterface createMoveToController(int x, int y) {
+    public static ControllerInterface createMoveToController(int x, int y) {
         ControllerInterface moveTo = (GameObject gameObject, long tick, World world, KeyManager manager) -> {
             DataObject data = (DataObject) gameObject.getData();
+            System.out.println(gameObject);
+            Chassis c = ((Chassis) gameObject);
+            Drive d = c.getDrive();
+            d.setAccelerate(true);
 
-            PolarVector pv = new PolarVector(data.getPositionData().getRotation(), velocity);
-            data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
-            data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
+            double chassisRot = data.getPositionData().getRotation();
+
+            int xDelta = x - (int) data.getPositionData().getX();
+            int yDelta = y - (int) data.getPositionData().getY();
+
+            PolarVector deltaVector = new PolarVector(new CartesianVector(xDelta, yDelta));
+
+            deltaVector.angle -= chassisRot;
+            deltaVector.updateAngleRangePi();
+            
+            d.setTurnLeft(deltaVector.angle < 0);
+            d.setTurnRight(deltaVector.angle > 0);
+           
         };
         return moveTo;
-    }*/
+    }
     public static ControllerInterface PLAYER = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
         Chassis c = ((Chassis) gameObject);
         Drive d = c.getDrive();

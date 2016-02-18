@@ -10,6 +10,7 @@ import code.game.World;
 import code.game.tank.Drive;
 import yansuen.game.GameObject;
 import yansuen.key.KeyManager;
+import yansuen.logic.LogicInterface;
 import yansuen.physic.CartesianVector;
 import yansuen.physic.PolarVector;
 
@@ -20,6 +21,7 @@ import yansuen.physic.PolarVector;
 public class DrivePresets {
 
     public static Drive SIMPLE = createDrive(0.001f, 0.001f, 0.004f, 0.95f);
+    public static Drive SIMPLE_FAST = createDrive(0.01f, 0.001f, 0.004f, 0.95f);
 
     private static Drive createDrive(float acceleration, float deceleration,
             float rotation, float breakMultiplicator) {
@@ -70,6 +72,33 @@ public class DrivePresets {
         );
         return drive;
     }
+
+    public static Drive createRocketDrive(float travelspeed, float rotationspeed) {
+        Drive drive = new Drive(
+                (GameObject gameObject, long tick, World world, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+                    PolarVector p = new PolarVector(data.getPositionData().getRotation(), travelspeed);
+
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(p));
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(p));
+                }, null, null,
+                (GameObject gameObject, long tick, World world, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+                    data.getPositionData().increaseRotation(-rotationspeed);
+                }, (GameObject gameObject, long tick, World world, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+                    data.getPositionData().increaseRotation(rotationspeed);
+                }, null, null,
+                (GameObject gameObject, long tick, World world, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+                    PolarVector p = new PolarVector(data.getPositionData().getRotation(),
+                            CartesianVector.lengthFromCartesian(new CartesianVector(data.getMovementData().getMovementX(), data.getMovementData().getMovementY())));
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(p));
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(p));
+                });
+        return drive;
+    }
+    public static Drive ROCKET = createRocketDrive(4,0.008f);
 
     public static Drive createStraightDrive(float speed, double rotation) {
         Drive straight = new Drive(null, null, null, null, null, null, null,

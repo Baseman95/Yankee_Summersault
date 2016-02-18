@@ -49,7 +49,7 @@ public class WeaponPresets {
         return singleShot;
     }
 
-    public static ShotInterface getGuidedShot(long duration, float speed, BufferedImage img, Drive drive, ControllerInterface controller) {
+    public static ShotInterface getGuidedShot(long duration, BufferedImage img, Drive drive, ControllerInterface controller) {
         ShotInterface guidedShot = (Weapon weapon, long tick, ImpactInterface impactInterface, World world) -> {
             //Spawn von Projektil, + Richtung, adding projektil zu welt,
             DataObject data = (DataObject) weapon.getData();
@@ -74,12 +74,12 @@ public class WeaponPresets {
     }
 
     public static Weapon createGuided(Chassis chassis) {
-        Weapon weapon = new Weapon(chassis, 50, WeaponPresets.getGuidedShot(700, 4, ImagePresets.SHOT_1,
-                DrivePresets.SIMPLE, ControllerPresets.PLAYER),
+        Weapon weapon = new Weapon(chassis, 50, WeaponPresets.getGuidedShot(700, ImagePresets.SHOT_1,
+                DrivePresets.createRocketDrive(4, 0.05f), ControllerPresets.createMoveToController(800, 600)),
                 fastReload, bulletImpact,
                 null, 10,
                 10, ImagePresets.TURRET_A,
-                GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+                GraphicsPresets.ROTATION, null);
         return weapon;
     }
 
