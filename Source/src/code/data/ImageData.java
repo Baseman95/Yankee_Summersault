@@ -14,13 +14,17 @@ import java.awt.image.BufferedImage;
 public class ImageData {
 
     protected BufferedImage image;
+    DataObject parent = null;
 
     public ImageData(BufferedImage image) {
         this.image = image;
     }
 
     public void setImage(BufferedImage image) {
+        BufferedImage old = this.image;
         this.image = image;
+        if (parent != null)
+            parent.onImageChanged(parent, old);
     }
 
     public BufferedImage getImage() {

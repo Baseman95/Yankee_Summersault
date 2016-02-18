@@ -18,6 +18,7 @@ public class PositionData {
     protected float width;
     protected float height;
     protected double rotation;
+    DataObject parent;
 
     public PositionData(float x, float y, float width, float height) {
         this.x = x;
@@ -36,11 +37,17 @@ public class PositionData {
     }
 
     public void increaseX(float x) {
+        float old = this.x;
         this.x += x;
+        if (parent != null)
+            parent.onPositionChanged(parent, old, this.y);
     }
 
     public void increaseY(float y) {
+        float old = this.y;
         this.y += y;
+        if (parent != null)
+            parent.onPositionChanged(parent, this.x, old);
     }
 
     public void increaseRotation(double rotation) {
@@ -49,28 +56,43 @@ public class PositionData {
     }
 
     public void setX(float x) {
+        float old = this.x;
         this.x = x;
+        if (parent != null)
+            parent.onPositionChanged(parent, old, this.y);
     }
 
     public void setY(float y) {
+        float old = this.y;
         this.y = y;
+        if (parent != null)
+            parent.onPositionChanged(parent, this.x, old);
     }
 
     public void setWidth(float width) {
+        float old = this.width;
         this.width = width;
+        if (parent != null)
+            parent.onWidthChanged(parent, old, this.height);
     }
 
     public void setHeight(float height) {
+        float old = this.height;
         this.height = height;
+        if (parent != null)
+            parent.onWidthChanged(parent, this.width, old);
     }
 
     public void setRotation(double rotation) {
+        double old = this.rotation;
         if (rotation > Math.PI * 2)
             rotation = rotation % Math.PI * 2;
         while (rotation <= 0) {
             rotation += Math.PI * 2;
         }
         this.rotation = rotation;
+        if (parent != null)
+            parent.onRotationChanged(parent, old);
     }
 
     public float getX() {

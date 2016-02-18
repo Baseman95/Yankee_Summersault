@@ -2,6 +2,7 @@ package code;
 
 import code.game.World;
 import code.game.tank.Chassis;
+import code.game.tank.Weapon;
 import yansuen.graphics.GraphicsLoop;
 import yansuen.logic.LogicLoop;
 import java.io.IOException;
@@ -163,12 +164,15 @@ public class BaseTest {
          */
 //</editor-fold>
         Chassis zank = new Chassis(10, 10, ImagePresets.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
-
-        zank.getWeapons().add(WeaponPresets.createPlasma(zank));
-        zank.getWeapons().add(WeaponPresets.createGuided(zank));
+        Weapon plasma = WeaponPresets.createPlasma(zank);
+        Weapon guided = WeaponPresets.createGuided(zank);
+        zank.getWeapons().add(plasma);
+        zank.getWeapons().add(guided);
         zank.setDrive(DrivePresets.SIMPLE);
         //zank.setDrive(DrivePresets.createRocketDrive(3));
-        world.getGameObjects().add(zank);
+        world.addGameObject(zank);
+        world.addGameObject(plasma);
+        world.addGameObject(guided);
 
         /*
          GameObject heli = new GameObject(flyingObject, heliGraphic, aiController);

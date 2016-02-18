@@ -32,6 +32,9 @@ public class Weapon extends GameObject {
     protected boolean reload = false;
     protected long cooldown = 0;
     protected long shotReady = 0;
+    protected double relativeRotation = 0;
+    protected float xRelative = 0;
+    protected float yRelativeY = 0;
 
     public Weapon(Chassis chassis, long cooldown, ShotInterface shootFunction, LogicInterface reloadFunction,
             ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y,
@@ -57,6 +60,30 @@ public class Weapon extends GameObject {
         }
         if (reloadFunction != null && reload)
             reloadFunction.doLogic(gameObject, tick, world, manager);
+    }
+
+    public double getRelativeRotation() {
+        return relativeRotation;
+    }
+
+    public void setRelativeRotation(double relativeRotation) {
+        this.relativeRotation = relativeRotation;
+    }
+
+    public float getRelativeX() {
+        return xRelative;
+    }
+
+    public void setxRelative(float xRelative) {
+        this.xRelative = xRelative;
+    }
+
+    public float getRelativeY() {
+        return yRelativeY;
+    }
+
+    public void setyRelativeY(float yRelativeY) {
+        this.yRelativeY = yRelativeY;
     }
 
     public Chassis getChassis() {
