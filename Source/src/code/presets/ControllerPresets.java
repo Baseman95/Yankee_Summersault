@@ -36,12 +36,14 @@ public class ControllerPresets {
     public static ControllerInterface PLAYER = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
         Chassis c = ((Chassis) gameObject);
         Drive d = c.getDrive();
-        Weapon w0 = c.getWeapons().get(0);
         d.setAccelerate(manager.isKeyPressed(KeyEvent.VK_W));
         d.setDecelerate(manager.isKeyPressed(KeyEvent.VK_S));
         d.setBreaks(manager.isKeyPressed(KeyEvent.VK_SPACE));
         d.setTurnLeft(manager.isKeyPressed(KeyEvent.VK_A));
         d.setTurnRight(manager.isKeyPressed(KeyEvent.VK_D));
-        w0.setShoot(manager.isKeyPressed(KeyEvent.VK_1));
+        if (c.getWeapons().get(0) != null) {
+            Weapon w0 = c.getWeapons().get(0);
+            w0.setShoot(manager.isKeyPressed(KeyEvent.VK_1));
+        }
     };
 }
