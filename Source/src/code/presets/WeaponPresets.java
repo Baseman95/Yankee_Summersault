@@ -34,7 +34,7 @@ public class WeaponPresets {
     static ImpactInterface bulletImpact = (Projectile projectile, Weapon weapon, long tick, World world1, KeyManager manager) -> {
     };
 
-    public static ShotInterface getSingleShot(long duration, float speed, BufferedImage img) {
+    public static ShotInterface createSingleShot(long duration, float speed, BufferedImage img) {
         ShotInterface singleShot = (Weapon weapon, long tick, ImpactInterface impactInterface, World world) -> {
             //Spawn von Projektil, + Richtung, adding projektil zu welt,
             DataObject data = (DataObject) weapon.getData();
@@ -49,7 +49,7 @@ public class WeaponPresets {
         return singleShot;
     }
 
-    public static ShotInterface getGuidedShot(long duration, BufferedImage img, Drive drive, ControllerInterface controller) {
+    public static ShotInterface createGuidedShot(long duration, BufferedImage img, float speed, double rotation, ControllerInterface controller) {
         ShotInterface guidedShot = (Weapon weapon, long tick, ImpactInterface impactInterface, World world) -> {
             //Spawn von Projektil, + Richtung, adding projektil zu welt,
             DataObject data = (DataObject) weapon.getData();
@@ -57,15 +57,14 @@ public class WeaponPresets {
                     impactInterface, data.getPositionData().getX(),
                     data.getPositionData().getY(), img, GraphicsPresets.ROTATION, controller);
             ((DataObject) p.getData()).getPositionData().setRotation(data.getPositionData().getRotation());
-            p.setDrive(drive);
+            p.setDrive(DrivePresets.createRocketDrive(speed, rotation));
             world.addGameObject(p);
-
         };
         return guidedShot;
     }
 
     public static Weapon createPlasma(Chassis chassis) {
-        Weapon weapon = new Weapon(chassis, 20, WeaponPresets.getSingleShot(500, 4, ImagePresets.SHOT_1),
+        Weapon weapon = new Weapon(chassis, 20, WeaponPresets.createSingleShot(500, 4, ImagePresets.SHOT_1),
                 fastReload, bulletImpact,
                 null, 10,
                 10, ImagePresets.TURRET_A,
@@ -74,13 +73,21 @@ public class WeaponPresets {
     }
 
     public static Weapon createGuided(Chassis chassis) {
-        Weapon weapon = new Weapon(chassis, 50, WeaponPresets.getGuidedShot(700, ImagePresets.SHOT_1,
-                DrivePresets.createRocketDrive(4, 0.05f), ControllerPresets.createMoveToController(800, 600)),
+        Weapon weapon = new Weapon(chassis, 100,
+                WeaponPresets.createGuidedShot(700, ImagePresets.SHOT_2, 4, 0.05f, ControllerPresets.createMoveToController(800, 600)),
+                fastReload, bulletImpact, null, 10, 10, ImagePresets.TURRET_A, GraphicsPresets.ROTATION, null);
+        return weapon;
+    }
+
+    public static Weapon createFlameThrower(Chassis chassis) {
+        Weapon weapon = new Weapon(chassis, 10, WeaponPresets.createSingleShot(100, 3, ImagePresets.SHOT_3),
                 fastReload, bulletImpact,
                 null, 10,
                 10, ImagePresets.TURRET_A,
-                GraphicsPresets.ROTATION, null);
+                GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         return weapon;
     }
+    
+    
 
 }

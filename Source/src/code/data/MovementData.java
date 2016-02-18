@@ -48,4 +48,9 @@ public class MovementData {
         this.movementY += movementY;
     }
 
+    @Override
+    public String toString() {
+        return "MovementData[" + movementX + "|" + movementY + ']';
+    }
+
 }

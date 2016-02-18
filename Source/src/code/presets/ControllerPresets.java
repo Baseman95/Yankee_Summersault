@@ -26,7 +26,6 @@ public class ControllerPresets {
     public static ControllerInterface createMoveToController(int x, int y) {
         ControllerInterface moveTo = (GameObject gameObject, long tick, World world, KeyManager manager) -> {
             DataObject data = (DataObject) gameObject.getData();
-            System.out.println(gameObject);
             Chassis c = ((Chassis) gameObject);
             Drive d = c.getDrive();
             d.setAccelerate(true);
@@ -35,15 +34,18 @@ public class ControllerPresets {
 
             int xDelta = x - (int) data.getPositionData().getX();
             int yDelta = y - (int) data.getPositionData().getY();
+            System.out.println(xDelta);
 
             PolarVector deltaVector = new PolarVector(new CartesianVector(xDelta, yDelta));
 
             deltaVector.angle -= chassisRot;
             deltaVector.updateAngleRangePi();
-            
+
+            //System.out.println(deltaVector.angle);
             d.setTurnLeft(deltaVector.angle < 0);
             d.setTurnRight(deltaVector.angle > 0);
-           
+            //System.out.println(data);
+
         };
         return moveTo;
     }

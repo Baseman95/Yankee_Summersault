@@ -23,14 +23,16 @@ public class ImagePresets {
     public static BufferedImage SHOT_1;
     public static BufferedImage SHOT_2;
     public static BufferedImage TURRET_A;
+    public static BufferedImage SHOT_3;
 
     static {
         try {
             TANK = ImageIO.read(new File("textures/vehicles_beta/m1128.png"));
             OLD_TANK = ImageIO.read(new File("cool_tank.png"));
-            TURRET_A = ImageIO.read(new File("textures/weapons_beta/turretA.png"));
-            SHOT_1 = ImageIO.read(new File("gun_plasma_shot.png"));
-            SHOT_2 = ImageIO.read(new File("gun_magnum_shot.png"));
+            TURRET_A = ImageIO.read(new File("textures/weapons_beta/turrets/turretA.png"));
+            SHOT_1 = ImageIO.read(new File("textures/weapons_beta/shots/gun_plasma_shot.png"));
+            SHOT_2 = ImageIO.read(new File("textures/weapons_beta/shots/missile.png"));
+            SHOT_3 = ImageIO.read(new File("textures/weapons_beta/shots/gun_magnum_shot.png"));
         } catch (IOException ex) {
             Logger.getLogger(ImagePresets.class.getName()).log(Level.SEVERE, null, ex);
         }

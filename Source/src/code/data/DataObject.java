@@ -30,4 +30,9 @@ public class DataObject extends Data {
         return movementData;
     }
 
+    @Override
+    public String toString() {
+        return "DataObject[" + positionData + ", " + movementData + ", " + imageData + ']';
+    }
+
 }

@@ -166,6 +166,7 @@ public class BaseTest {
 
         zank.getWeapons().add(WeaponPresets.createPlasma(zank));
         zank.getWeapons().add(WeaponPresets.createGuided(zank));
+        zank.getWeapons().add(WeaponPresets.createFlameThrower(zank));
         zank.setDrive(DrivePresets.SIMPLE);
         //zank.setDrive(DrivePresets.createRocketDrive(3));
         world.getGameObjects().add(zank);
