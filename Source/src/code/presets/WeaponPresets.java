@@ -26,9 +26,12 @@ import yansuen.logic.LogicInterface;
  */
 public class WeaponPresets {
 
+    static int WEAPON_MG_LENGTH = 10;
+
     private WeaponPresets() {
 
     }
+
     static LogicInterface fastReload = (GameObject gameObject, long tick, World world1, KeyManager manager) -> {
     };
 
@@ -74,7 +77,7 @@ public class WeaponPresets {
         return weapon;
     }
 
-    public static Weapon createGuided(Chassis chassis) {
+    public static Weapon createHSRocket(Chassis chassis) {
         Weapon weapon = new Weapon(chassis, 100,
                 WeaponPresets.createGuidedShot(700, ImagePresets.SHOT_2, 4, 0.05f, ControllerPresets.createMoveToController(800, 600)),
                 fastReload, bulletImpact, null, 10, 10, ImagePresets.TURRET_A, GraphicsPresets.ROTATION, null);
@@ -86,10 +89,77 @@ public class WeaponPresets {
                 fastReload, bulletImpact,
                 null, 10,
                 10, ImagePresets.TURRET_A,
-                GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+                GraphicsPresets.ROTATION, null);
         return weapon;
     }
-    
-    
+    //NEWSTUFFBASE  
 
+    /*
+        WeaponBehavior
+        MG
+        FlameThrower
+        EMP
+        Rocket
+        HSRocket
+        LGRocket
+        UCRocket    
+     */
+    /**
+     *
+     * @param chassis
+     * @param rof bullet per tick
+     * @param travelspeed
+     * @param traveldistance
+     * @param weaponTexture
+     * @param weaponOffsetX
+     * @param weaponOffsetY
+     * @param bulletTexture
+     * @param weaponController
+     * @return
+     */
+    public static Weapon createMG(Chassis chassis, Double rof, Float travelspeed, Long traveldistance,
+            BufferedImage weaponTexture, Float weaponOffsetX, Float weaponOffsetY, BufferedImage bulletTexture, ControllerInterface weaponController) {
+
+        if (rof == null)
+            rof = 0d;
+
+        if (travelspeed == null)
+            travelspeed = 0f;
+
+        if (traveldistance == null)
+            traveldistance = 0L;
+
+        if (weaponTexture == null)
+            weaponTexture = ImagePresets.WEAPON_MG_1;
+
+        if (weaponOffsetX == null)
+            weaponOffsetX = 0f;
+
+        if (weaponOffsetY == null)
+            weaponOffsetY = 0f;
+
+        if (bulletTexture == null)
+            bulletTexture = ImagePresets.BULLET_MG_1;
+
+        ShotInterface si = createSimpleShot(traveldistance, travelspeed, bulletTexture);
+
+        Weapon mg = new Weapon(chassis, (long) (1.0 / rof), si, fastReload, bulletImpact, ControllerPresets.HOLD_ACCELERATE,
+                weaponOffsetX, weaponOffsetY, weaponTexture, GraphicsPresets.ROTATION, weaponController);
+
+        return null;
+    }    
+    public static ShotInterface createSimpleShot(BufferedImage texture, long travelspeed, float traveldistance, int weaponlengh) {
+        ShotInterface simpleShot = (Weapon weapon, long tick, ImpactInterface impactInterface, World world) -> {
+            PositionData pd = ((DataObject) weapon.getData()).getPositionData();
+            Projectile p = new Projectile(weapon, tick + duration, impactInterface,
+                    pd.getX() + pd.getWidth() / 2 - img.getWidth() / 2,
+                    pd.getY() + pd.getHeight() / 2 - img.getHeight() / 2,
+                    img, GraphicsPresets.ROTATION, null);
+            ((DataObject) p.getData()).getPositionData().setRotation(pd.getRotation());
+            p.setDrive(DrivePresets.createStraightDrive(speed, pd.getRotation()));
+            world.addGameObject(p);
+
+        };
+        return simpleShot;
+    }
 }

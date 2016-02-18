@@ -163,14 +163,20 @@ public class BaseTest {
         world.getGameObjects().add(playerPanzer4);
          */
 //</editor-fold>
-        Chassis zank = new Chassis(10, 10, ImagePresets.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Chassis zank = new Chassis(10, 10, ImagePresets.TANK_ABRAMS, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
 
-        zank.getWeapons().add(WeaponPresets.createPlasma(zank));
-        zank.getWeapons().add(WeaponPresets.createGuided(zank));
-        zank.getWeapons().add(WeaponPresets.createFlameThrower(zank));
+        Weapon plasma = WeaponPresets.createPlasma(zank);
+        Weapon hs = WeaponPresets.createHSRocket(zank);
+        Weapon flame = WeaponPresets.createFlameThrower(zank);
+        zank.getWeapons().add(plasma);
+        zank.getWeapons().add(hs);
+        zank.getWeapons().add(flame);
         zank.setDrive(DrivePresets.SIMPLE);
         //zank.setDrive(DrivePresets.createRocketDrive(3));
         world.addGameObject(zank);
+        world.addGameObject(plasma);
+        world.addGameObject(hs);
+        world.addGameObject(flame);
 
         /*
          GameObject heli = new GameObject(flyingObject, heliGraphic, aiController);

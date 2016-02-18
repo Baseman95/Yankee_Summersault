@@ -9,7 +9,6 @@ import code.data.DataObject;
 import code.game.World;
 import code.game.tank.Chassis;
 import code.game.tank.Drive;
-import code.game.tank.Weapon;
 import java.awt.event.KeyEvent;
 import yansuen.controller.ControllerInterface;
 import yansuen.game.GameObject;
@@ -49,6 +48,24 @@ public class ControllerPresets {
         };
         return moveTo;
     }
+    public static ControllerInterface HOLD_ACCELERATE = ControllerPresets.hold(true, false, false, false, false, false, false);
+
+    public static ControllerInterface hold(boolean accelerate, boolean decelerate, boolean breaks,
+            boolean turnLeft, boolean turnRight, boolean strafeLeft, boolean strafeRight) {
+        ControllerInterface controller = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+            Chassis c = ((Chassis) gameObject);
+            Drive d = c.getDrive();
+            d.setAccelerate(accelerate);
+            d.setDecelerate(decelerate);
+            d.setBreaks(breaks);
+            d.setTurnLeft(turnLeft);
+            d.setTurnRight(turnRight);
+            d.setStrafeLeft(strafeLeft);
+            d.setStrafeRight(strafeRight);
+        };
+        return controller;
+    }
+
     public static ControllerInterface PLAYER = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
         Chassis c = ((Chassis) gameObject);
         Drive d = c.getDrive();
