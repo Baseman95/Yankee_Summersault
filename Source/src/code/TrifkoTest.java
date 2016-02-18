@@ -72,10 +72,11 @@ public class TrifkoTest {
                     DataObject data = (DataObject) gameObject.getData();
 
                     double ang = data.getPositionData().getRotation();
-                    PolarVector mv = new PolarVector(ang, 0.001f);
-
-                    data.getMovementData().setMovementX(data.getMovementData().getMovementX() * 0.992f);
-                    data.getMovementData().setMovementY(data.getMovementData().getMovementY() * 0.992f);
+                    
+                    
+                    data.getMovementData().setMovementX(Math.abs(data.getMovementData().getMovementX()) > 0.08 ? data.getMovementData().getMovementX() * 0.992f : 0);
+                    data.getMovementData().setMovementY(Math.abs(data.getMovementData().getMovementX()) > 0.08 ? data.getMovementData().getMovementY() * 0.992f : 0);
+                    
                 },
                 (GameObject gameObject, long tick, World w, KeyManager manager) -> {
                     DataObject data = (DataObject) gameObject.getData();
@@ -98,12 +99,44 @@ public class TrifkoTest {
                     System.out.println(data.getPositionData().getRotation()+ " - "+
                             pv.length + " - "+ pv.angle);
                     
-                    float dif = (float)(data.getPositionData().getRotation() - pv.angle);
+                   /* float dif = (float)((data.getPositionData().getRotation() - pv.angle)%(2*Math.PI));
                     System.out.println(dif);
-                    
-                    pv.angle = data.getPositionData().getRotation();
+                    dif = (float)(dif >= Math.PI ? 2*Math.PI-dif : dif);
+                    if(dif < 0){
+                        pv.angle = pv.angle+(dif*0.05);
+                    }else{
+                        pv.angle = pv.angle+(dif*0.05);
+                    }*/
+                   // pv.angle = data.getPositionData().getRotation();
+                   double deltaAng = pv.angle - data.getPositionData().getRotation();
+
+                    deltaAng = deltaAng > Math.PI
+                             ? deltaAng - Math.PI * 2 : deltaAng < -Math.PI
+                             ? deltaAng + Math.PI * 2 : deltaAng;
+                    if (Math.abs(deltaAng) > Math.PI / 2) {
+                        deltaAng -= Math.signum(deltaAng) * Math.PI;
+                     }
+
+                    // deltaAng = Math.abs(deltaAng) < 0.005 ? deltaAng : deltaAng * 0.01; //deltaAng= Absolutdiffrenzwert
+                     System.out.println(Math.abs(deltaAng) < 0.005 ? "Delta": "*0.01");
+                     System.out.println(Math.abs(deltaAng));
+                   double multipli=1;
+                     if(Math.abs(deltaAng)<0.003){
+                         multipli=1;
+                     }else if(Math.abs(deltaAng)>0.003 && Math.abs(deltaAng)<0.01)
+                         multipli=0.05;
+                     else if(Math.abs(deltaAng)>0.01 && Math.abs(deltaAng)<0.020)
+                         multipli=0.04;
+                     else if(Math.abs(deltaAng)>0.021 && Math.abs(deltaAng)<0.04)
+                         multipli=0.03;
+                     else if(Math.abs(deltaAng)>0.041 && Math.abs(deltaAng)<0.009)
+                         multipli=0.01;
+                     
+                     deltaAng *= multipli;
+                     pv.angle -= deltaAng;
+                     
                      data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
-                    data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
+                     data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
                     
                 }
                 );
@@ -143,67 +176,13 @@ public class TrifkoTest {
 
         ControllerInterface playerController = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
 
-            if (manager.isKeyPressed(KeyEvent.VK_W)) {
-                ((Chassis) gameObject).getDrive().setAccelerate(true);
-            } else {
-                ((Chassis) gameObject).getDrive().setAccelerate(false);
-            }
-            if (manager.isKeyPressed(KeyEvent.VK_S)) {
-                ((Chassis) gameObject).getDrive().setDecelerate(true);
-            } else {
-                ((Chassis) gameObject).getDrive().setDecelerate(false);
-            }
-            if (manager.isKeyPressed(KeyEvent.VK_SPACE)) {
-                ((Chassis) gameObject).getDrive().setBreaks(true);
-            } else {
-                ((Chassis) gameObject).getDrive().setBreaks(false);
-            }
-            if (manager.isKeyPressed(KeyEvent.VK_A)) {
-                ((Chassis) gameObject).getDrive().setTurnLeft(true);
-            } else {
-                ((Chassis) gameObject).getDrive().setTurnLeft(false);
-            }
-            if (manager.isKeyPressed(KeyEvent.VK_D)) {
-                ((Chassis) gameObject).getDrive().setTurnRight(true);
-            } else {
-                ((Chassis) gameObject).getDrive().setTurnRight(false);
-            }
-            /*
-            PolarVector mv = new PolarVector(new CartesianVector(mData.getMovementX(),
-                    mData.getMovementY()));
-            double deltaAng = mv.angle - ang;
-
-            deltaAng = deltaAng > Math.PI
-                    ? deltaAng - Math.PI * 2 : deltaAng < -Math.PI
-                            ? deltaAng + Math.PI * 2 : deltaAng;
-            if (Math.abs(deltaAng) > Math.PI / 2) {
-                deltaAng -= Math.signum(deltaAng) * Math.PI;
-            }
-
-            deltaAng = Math.abs(deltaAng) < 0.005 ? deltaAng : deltaAng * 0.01;
-            mv.angle -= deltaAng;
-
-            data.getMovementData().setMovementX(PolarVector.xFromPolar(mv));
-            data.getMovementData().setMovementY(PolarVector.yFromPolar(mv));
-
-            CartesianVector uvRot = new CartesianVector(new PolarVector(ang, 0.1f));
-            if (manager.isKeyPressed(KeyEvent.VK_W)) {
-                mData.increaseMovementX(+uvRot.x);
-                mData.increaseMovementY(+uvRot.y);
-            }
-            if (manager.isKeyPressed(KeyEvent.VK_S)) {
-                mData.increaseMovementX(-uvRot.x);
-                mData.increaseMovementY(-uvRot.y);
-            }
-            if (manager.isKeyPressed(KeyEvent.VK_A)) {
-                data.getPositionData().increaseRotation(-0.004);
-            }
-            if (manager.isKeyPressed(KeyEvent.VK_D)) {
-                data.getPositionData().increaseRotation(+0.004);
-            }
-
-            mData.setMovementX(mData.getMovementX() * 0.90f);
-            mData.setMovementY(mData.getMovementY() * 0.90f);*/
+            Chassis c = ((Chassis) gameObject);
+            Drive d = c.getDrive();
+            d.setAccelerate(manager.isKeyPressed(KeyEvent.VK_W));
+            d.setDecelerate(manager.isKeyPressed(KeyEvent.VK_S));
+            d.setBreaks(manager.isKeyPressed(KeyEvent.VK_SPACE));
+            d.setTurnLeft(manager.isKeyPressed(KeyEvent.VK_A));
+            d.setTurnRight(manager.isKeyPressed(KeyEvent.VK_D));
 
         };
 
