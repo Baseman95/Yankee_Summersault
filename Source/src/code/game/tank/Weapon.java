@@ -23,12 +23,12 @@ import code.game.tank.projectile.ShotInterface;
 public class Weapon extends GameObject {
 
     protected Chassis chassis;
-    protected ShotInterface shootFunction;
+    protected ShotInterface shotFunction;
     protected LogicInterface reloadFunction;
     protected ImpactInterface impactBehavior;
     protected ControllerInterface projectileBehavior;
 
-    protected boolean shoot = false;
+    protected boolean shot = false;
     protected boolean reload = false;
     protected long cooldown = 0;
     protected long shotReady = 0;
@@ -42,7 +42,7 @@ public class Weapon extends GameObject {
                 + y - img.getHeight() / 2, img, graphicsInterface, controllerInterface);
         this.chassis = chassis;
         this.cooldown = cooldown;
-        this.shootFunction = shootFunction;
+        this.shotFunction = shootFunction;
         this.reloadFunction = reloadFunction;
         this.impactBehavior = impactBehavior;
         this.projectileBehavior = projectileBehavior;
@@ -51,8 +51,8 @@ public class Weapon extends GameObject {
     @Override
     public void doLogic(GameObject gameObject, long tick, World world, KeyManager manager) {
         super.doLogic(gameObject, tick, world, manager);
-        if (shootFunction != null && shoot && shotReady < tick) {
-            shootFunction.onShotCreation(this, tick, impactBehavior, world);
+        if (shotFunction != null && shot && shotReady < tick) {
+            shotFunction.onShotCreation(this, tick, impactBehavior, world);
             shotReady = tick + cooldown;
         }
         if (reloadFunction != null && reload)
@@ -75,12 +75,12 @@ public class Weapon extends GameObject {
         this.cooldown = cooldown;
     }
 
-    public ShotInterface getShootFunction() {
-        return shootFunction;
+    public ShotInterface getShotFunction() {
+        return shotFunction;
     }
 
-    public void setShootFunction(ShotInterface shootFunction) {
-        this.shootFunction = shootFunction;
+    public void setShotFunction(ShotInterface shotFunction) {
+        this.shotFunction = shotFunction;
     }
 
     public LogicInterface getReloadFunction() {
@@ -108,11 +108,11 @@ public class Weapon extends GameObject {
     }
 
     public boolean isShoot() {
-        return shoot;
+        return shot;
     }
 
     public void setShoot(boolean shoot) {
-        this.shoot = shoot;
+        this.shot = shoot;
     }
 
     public boolean isReload() {

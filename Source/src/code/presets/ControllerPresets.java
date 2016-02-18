@@ -22,15 +22,17 @@ import yansuen.physic.PolarVector;
  */
 public class ControllerPresets {
 
-    public static ControllerInterface LINEAR_MOVEMENT = (GameObject gameObject, long tick, World world1, KeyManager manager) -> {
-        DataObject data = (DataObject) gameObject.getData();
+    /*public static ControllerInterface createMoveToController(int x, int y) {
+        ControllerInterface moveTo = (GameObject gameObject, long tick, World world, KeyManager manager) -> {
+            DataObject data = (DataObject) gameObject.getData();
 
-        int velocity = 3; //projektilgeschwindigkeit in px per sec           
-        PolarVector pv = new PolarVector(data.getPositionData().getRotation(), velocity);
-        data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
-        data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
-    };
-    
+            PolarVector pv = new PolarVector(data.getPositionData().getRotation(), velocity);
+            data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
+            data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
+        };
+        return moveTo;
+    }*/
+
     public static ControllerInterface PLAYER = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
         Chassis c = ((Chassis) gameObject);
         Drive d = c.getDrive();

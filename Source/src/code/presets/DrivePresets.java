@@ -70,4 +70,16 @@ public class DrivePresets {
         );
         return drive;
     }
+
+    public static Drive createStraightDrive(float speed, double rotation) {
+        Drive straight = new Drive(null, null, null, null, null, null, null,
+                (GameObject gameObject, long tick, World world1, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+
+                    PolarVector pv = new PolarVector(rotation, speed);
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
+                });
+        return straight;
+    }
 }
