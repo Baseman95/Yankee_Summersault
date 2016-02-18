@@ -14,7 +14,7 @@ import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.KeyManager;
 import yansuen.logic.LogicInterface;
-import code.game.tank.projectile.ShootInterface;
+import code.game.tank.projectile.ShotInterface;
 
 /**
  *
@@ -23,7 +23,7 @@ import code.game.tank.projectile.ShootInterface;
 public class Weapon extends GameObject {
 
     protected Chassis chassis;
-    protected ShootInterface shootFunction;
+    protected ShotInterface shootFunction;
     protected LogicInterface reloadFunction;
     protected ImpactInterface impactBehavior;
     protected ControllerInterface projectileBehavior;
@@ -33,7 +33,7 @@ public class Weapon extends GameObject {
     protected long cooldown = 0;
     protected long shotReady = 0;
 
-    public Weapon(Chassis chassis, long cooldown, ShootInterface shootFunction, LogicInterface reloadFunction,
+    public Weapon(Chassis chassis, long cooldown, ShotInterface shootFunction, LogicInterface reloadFunction,
             ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y,
             BufferedImage img, GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         super(((DataObject) chassis.getData()).getPositionData().getX() + ((DataObject) chassis.getData()).getPositionData().getWidth() / 2
@@ -52,7 +52,7 @@ public class Weapon extends GameObject {
     public void doLogic(GameObject gameObject, long tick, World world, KeyManager manager) {
         super.doLogic(gameObject, tick, world, manager);
         if (shootFunction != null && shoot && shotReady < tick) {
-            shootFunction.onShoot(this, tick, impactBehavior, world, manager);
+            shootFunction.onShotCreation(this, tick, impactBehavior, world);
             shotReady = tick + cooldown;
         }
         if (reloadFunction != null && reload)
@@ -75,11 +75,11 @@ public class Weapon extends GameObject {
         this.cooldown = cooldown;
     }
 
-    public ShootInterface getShootFunction() {
+    public ShotInterface getShootFunction() {
         return shootFunction;
     }
 
-    public void setShootFunction(ShootInterface shootFunction) {
+    public void setShootFunction(ShotInterface shootFunction) {
         this.shootFunction = shootFunction;
     }
 

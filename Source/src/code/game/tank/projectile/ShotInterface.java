@@ -7,15 +7,13 @@ package code.game.tank.projectile;
 
 import code.game.World;
 import code.game.tank.Weapon;
-import yansuen.game.GameObject;
-import yansuen.key.KeyManager;
 
 /**
  *
  * @author Eris
  */
-public interface ShootInterface {
+public interface ShotInterface {
 
-    void onShoot(Weapon weapon, long tick, ImpactInterface impactInterface, World world, KeyManager manager);
+    void onShotCreation(Weapon weapon, long tick, ImpactInterface impactInterface, World world);
 
 }
