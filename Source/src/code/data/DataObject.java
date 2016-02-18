@@ -93,4 +93,10 @@ public class DataObject extends Data implements DataObjectListener {
     public final MovementData getMovementData() {
         return movementData;
     }
+
+    @Override
+    public String toString() {
+        return "DataObject[" + positionData + ", " + movementData + ", " + imageData + ']';
+    }
+
 }

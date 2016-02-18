@@ -10,7 +10,6 @@ import code.game.World;
 import code.game.tank.Drive;
 import yansuen.game.GameObject;
 import yansuen.key.KeyManager;
-import yansuen.logic.LogicInterface;
 import yansuen.physic.CartesianVector;
 import yansuen.physic.PolarVector;
 
@@ -73,7 +72,7 @@ public class DrivePresets {
         return drive;
     }
 
-    public static Drive createRocketDrive(float travelspeed, float rotationspeed) {
+    public static Drive createRocketDrive(float travelspeed, double rotationspeed) {
         Drive drive = new Drive(
                 (GameObject gameObject, long tick, World world, KeyManager manager) -> {
                     DataObject data = (DataObject) gameObject.getData();
@@ -98,7 +97,7 @@ public class DrivePresets {
                 });
         return drive;
     }
-    public static Drive ROCKET = createRocketDrive(4, 0.008f);
+    public static Drive ROCKET = createRocketDrive(4,0.008f);
 
     public static Drive createStraightDrive(float speed, double rotation) {
         Drive straight = new Drive(null, null, null, null, null, null, null,
@@ -205,6 +204,7 @@ public class DrivePresets {
                         System.out.println("1");
                     }
 
+                    
                     pv.angle -= deltaAng;
 
                     data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));

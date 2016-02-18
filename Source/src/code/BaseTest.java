@@ -164,15 +164,13 @@ public class BaseTest {
          */
 //</editor-fold>
         Chassis zank = new Chassis(10, 10, ImagePresets.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
-        Weapon plasma = WeaponPresets.createPlasma(zank);
-        Weapon guided = WeaponPresets.createGuided(zank);
-        zank.getWeapons().add(plasma);
-        zank.getWeapons().add(guided);
+
+        zank.getWeapons().add(WeaponPresets.createPlasma(zank));
+        zank.getWeapons().add(WeaponPresets.createGuided(zank));
+        zank.getWeapons().add(WeaponPresets.createFlameThrower(zank));
         zank.setDrive(DrivePresets.SIMPLE);
         //zank.setDrive(DrivePresets.createRocketDrive(3));
         world.addGameObject(zank);
-        world.addGameObject(plasma);
-        world.addGameObject(guided);
 
         /*
          GameObject heli = new GameObject(flyingObject, heliGraphic, aiController);

@@ -61,4 +61,9 @@ public class MovementData {
             parent.onMovementChanged(parent, this.movementX, old);
     }
 
+    @Override
+    public String toString() {
+        return "MovementData[" + movementX + "|" + movementY + ']';
+    }
+
 }

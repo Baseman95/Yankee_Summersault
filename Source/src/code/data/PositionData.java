@@ -115,4 +115,8 @@ public class PositionData {
         return rotation;
     }
 
+    @Override
+    public String toString() {
+        return "PositionData[" + x + "x|" + y + "y, " + width + "w|" + height + "h, " + rotation + "r]";
+    }
 }
