@@ -6,6 +6,7 @@
 package code.presets;
 
 import code.data.DataObject;
+import code.data.PositionData;
 import code.game.World;
 import code.game.tank.Chassis;
 import code.game.tank.Drive;
@@ -37,12 +38,13 @@ public class WeaponPresets {
     public static ShotInterface getSingleShot(long duration, float speed, BufferedImage img) {
         ShotInterface singleShot = (Weapon weapon, long tick, ImpactInterface impactInterface, World world) -> {
             //Spawn von Projektil, + Richtung, adding projektil zu welt,
-            DataObject data = (DataObject) weapon.getData();
-            Projectile p = new Projectile(weapon, tick + duration,
-                    impactInterface, data.getPositionData().getX(),
-                    data.getPositionData().getY(), img, GraphicsPresets.ROTATION, null);
-            ((DataObject) p.getData()).getPositionData().setRotation(data.getPositionData().getRotation());
-            p.setDrive(DrivePresets.createStraightDrive(speed, data.getPositionData().getRotation()));
+            PositionData pd = ((DataObject) weapon.getData()).getPositionData();
+            Projectile p = new Projectile(weapon, tick + duration, impactInterface,
+                    pd.getX() + pd.getWidth() / 2 - img.getWidth() / 2,
+                    pd.getY() + pd.getHeight() / 2 - img.getHeight() / 2,
+                    img, GraphicsPresets.ROTATION, null);
+            ((DataObject) p.getData()).getPositionData().setRotation(pd.getRotation());
+            p.setDrive(DrivePresets.createStraightDrive(speed, pd.getRotation()));
             world.addGameObject(p);
 
         };
@@ -59,7 +61,6 @@ public class WeaponPresets {
             ((DataObject) p.getData()).getPositionData().setRotation(data.getPositionData().getRotation());
             p.setDrive(drive);
             world.addGameObject(p);
-
         };
         return guidedShot;
     }
@@ -69,7 +70,7 @@ public class WeaponPresets {
                 fastReload, bulletImpact,
                 null, 10,
                 10, ImagePresets.TURRET_A,
-                GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+                GraphicsPresets.ROTATION, null);
         return weapon;
     }
 
@@ -77,8 +78,8 @@ public class WeaponPresets {
         Weapon weapon = new Weapon(chassis, 50, WeaponPresets.getGuidedShot(700, ImagePresets.SHOT_1,
                 DrivePresets.createRocketDrive(4, 0.05f), ControllerPresets.createMoveToController(800, 600)),
                 fastReload, bulletImpact,
-                null, 10,
-                10, ImagePresets.TURRET_A,
+                null, 40,
+                40, ImagePresets.TURRET_A,
                 GraphicsPresets.ROTATION, null);
         return weapon;
     }
