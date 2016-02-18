@@ -38,12 +38,16 @@ public class TrifkoTest {
 
         
 
-        Chassis tank = new Chassis(50, 50, ImagePresets.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Chassis tank = new Chassis(300, 200, ImagePresets.TANK2, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         tank.setDrive(DrivePresets.DEFAULT_TRACK);
+        
+        Chassis tank3 = new Chassis(50, 50, ImagePresets.TANK2, GraphicsPresets.ROTATION, null);
+        tank3.setDrive(DrivePresets.createTrack(0.004f));
 
         //GameObject tank = new GameObject(10, 10, tankImg, tankLogic, defaultGraphics, playerController);
         GameObject tank2 = new GameObject(500, 300, ImagePresets.TANK, GraphicsPresets.ROTATION, null);
         world.getGameObjects().add(tank);
         world.getGameObjects().add(tank2);
+        world.getGameObjects().add(tank3);
     }
 }
