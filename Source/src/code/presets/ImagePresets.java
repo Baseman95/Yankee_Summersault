@@ -19,12 +19,14 @@ import javax.imageio.ImageIO;
 public class ImagePresets {
 
     public static BufferedImage TANK;
+    public static BufferedImage OLD_TANK;
     public static BufferedImage WEAPON_1;
     public static BufferedImage WEAPON_2;
 
     static {
         try {
             TANK = ImageIO.read(new File("tank2.png"));
+            OLD_TANK = ImageIO.read(new File("cool_tank.png"));
             WEAPON_1 = ImageIO.read(new File("gun_plasma_shot.png"));
             WEAPON_2 = ImageIO.read(new File("gun_magnum_shot.png"));
         } catch (IOException ex) {
