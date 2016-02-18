@@ -52,8 +52,8 @@ public class TrifkoTest {
 
         
 
-        Chassis tank = new Chassis(50, 50, ImagePresets.OLD_TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
-        tank.setDrive(DrivePresets.TRACK);
+        Chassis tank = new Chassis(50, 50, ImagePresets.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        tank.setDrive(DrivePresets.DEFAULT_TRACK);
 
         //GameObject tank = new GameObject(10, 10, tankImg, tankLogic, defaultGraphics, playerController);
         GameObject tank2 = new GameObject(500, 300, ImagePresets.TANK, GraphicsPresets.ROTATION, null);
