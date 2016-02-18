@@ -98,7 +98,7 @@ public class DrivePresets {
                 });
         return drive;
     }
-    public static Drive ROCKET = createRocketDrive(4,0.008f);
+    public static Drive ROCKET = createRocketDrive(4, 0.008f);
 
     public static Drive createStraightDrive(float speed, double rotation) {
         Drive straight = new Drive(null, null, null, null, null, null, null,
@@ -112,9 +112,8 @@ public class DrivePresets {
         return straight;
     }
 
-    public static Drive TRACK = new Drive(
-            (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-                DataObject data = (DataObject) gameObject.getData();
+    public static Drive DEFAULT_TRACK = createTrack(0.001f);
+    public static Drive FAST_ROTATION_TRACK = createTrack(0.002f);
 
     public static Drive createTrack(float rotation) {
         Drive track = new Drive(
@@ -206,7 +205,6 @@ public class DrivePresets {
                         System.out.println("1");
                     }
 
-                    
                     pv.angle -= deltaAng;
 
                     data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
