@@ -17,7 +17,6 @@ import yansuen.data.Data;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.KeyManager;
-import yansuen.logic.LogicInterface;
 
 /**
  *

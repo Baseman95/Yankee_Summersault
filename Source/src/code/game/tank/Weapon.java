@@ -5,6 +5,7 @@
  */
 package code.game.tank;
 
+import code.data.DataObject;
 import code.game.World;
 import code.game.tank.projectile.ImpactInterface;
 import java.awt.image.BufferedImage;
@@ -35,7 +36,10 @@ public class Weapon extends GameObject {
     public Weapon(Chassis chassis, long cooldown, ShootInterface shootFunction, LogicInterface reloadFunction,
             ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y,
             BufferedImage img, GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
-        super(x, y, img, graphicsInterface, controllerInterface);
+        super(((DataObject) chassis.getData()).getPositionData().getX() + ((DataObject) chassis.getData()).getPositionData().getWidth() / 2
+                + x - img.getWidth() / 2,
+                ((DataObject) chassis.getData()).getPositionData().getY() + ((DataObject) chassis.getData()).getPositionData().getHeight() / 2
+                + y - img.getHeight() / 2, img, graphicsInterface, controllerInterface);
         this.chassis = chassis;
         this.cooldown = cooldown;
         this.shootFunction = shootFunction;
