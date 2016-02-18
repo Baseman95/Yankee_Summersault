@@ -1,30 +1,16 @@
 package code;
 
-import yansuen.controller.ControllerInterface;
-import code.data.DataObject;
-import code.data.ImageData;
-import code.data.MovementData;
-import code.data.PositionData;
 import code.game.World;
 import code.game.tank.Chassis;
-import code.game.tank.Drive;
 import code.presets.ControllerPresets;
 import code.presets.DrivePresets;
 import code.presets.GraphicsPresets;
 import code.presets.ImagePresets;
-import yansuen.graphics.GraphicsInterface;
 import yansuen.graphics.GraphicsLoop;
 import yansuen.key.KeyManager;
-import yansuen.logic.LogicInterface;
 import yansuen.logic.LogicLoop;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import yansuen.game.GameObject;
-import yansuen.physic.CartesianVector;
-import yansuen.physic.PolarVector;
 
 /**
  *

@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 public class ImagePresets {
 
     public static BufferedImage TANK;
+    public static BufferedImage OLD_TANK;
     public static BufferedImage SHOT_1;
     public static BufferedImage SHOT_2;
     public static BufferedImage TURRET_A;
@@ -26,6 +27,7 @@ public class ImagePresets {
     static {
         try {
             TANK = ImageIO.read(new File("textures/vehicles_beta/m1128.png"));
+            OLD_TANK = ImageIO.read(new File("cool_tank.png"));
             TURRET_A = ImageIO.read(new File("textures/weapons_beta/turretA.png"));
             SHOT_1 = ImageIO.read(new File("gun_plasma_shot.png"));
             SHOT_2 = ImageIO.read(new File("gun_magnum_shot.png"));
