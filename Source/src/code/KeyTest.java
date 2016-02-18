@@ -7,7 +7,7 @@ import code.data.MovementData;
 import code.data.PositionData;
 import code.game.World;
 import code.game.tank.Chassis;
-import code.graphics.RotationGraphicsObject;
+import code.presets.GraphicsPresets;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.graphics.GraphicsLoop;
 import yansuen.key.KeyManager;
@@ -45,9 +45,7 @@ public class KeyTest {
         screen.addKeyListener(keyManager);
 
         screen.setVisible(true);
-        GraphicsInterface defaultGraphics = new RotationGraphicsObject();
-        BufferedImage bulletImg = ImageIO.read(new File("cool_tank"
-                + ".png"));
+        BufferedImage bulletImg = ImageIO.read(new File("cool_tank.png"));
 
         LogicInterface tankLogic = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
             DataObject data = (DataObject) gameObject.getData();
@@ -60,7 +58,7 @@ public class KeyTest {
                         - 8, 16, 16),
                         new ImageData(bulletImg),
                         new MovementData());
-                final GameObject bullet = new GameObject(dataO, defaultGraphics, null);
+                final GameObject bullet = new GameObject(dataO, GraphicsPresets.ROTATION, null);
                 /*bullet.setLogicInterface((GameObject gameObject2, long t2, World w2, KeyManager m2) -> {
                     if (t2 - tick > 200)
                         w2.removeGameObject(bullet);
@@ -122,8 +120,8 @@ public class KeyTest {
 
         };
 
-        Chassis tank = new Chassis(10, 10, tankImg, defaultGraphics, playerController);
-        GameObject tank2 = new GameObject(500, 300, tankImg, defaultGraphics, null);
+        Chassis tank = new Chassis(10, 10, tankImg, GraphicsPresets.ROTATION, playerController);
+        GameObject tank2 = new GameObject(500, 300, tankImg, GraphicsPresets.ROTATION, null);
         world.getGameObjects().add(tank);
         world.getGameObjects().add(tank2);
     }

@@ -116,52 +116,58 @@ public class DrivePresets {
             (GameObject gameObject, long tick, World w, KeyManager manager) -> {
                 DataObject data = (DataObject) gameObject.getData();
 
-                double ang = data.getPositionData().getRotation();
-                PolarVector mv = new PolarVector(ang, 0.001f);
+    public static Drive createTrack(float rotation) {
+        Drive track = new Drive(
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
 
-                data.getMovementData().setMovementX(PolarVector.xFromPolar(mv) + data.getMovementData().getMovementX());
-                data.getMovementData().setMovementY(PolarVector.yFromPolar(mv) + data.getMovementData().getMovementY());
-            },
-            (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-                DataObject data = (DataObject) gameObject.getData();
+                    double ang = data.getPositionData().getRotation();
+                    PolarVector mv = new PolarVector(ang, rotation);
 
-                double ang = data.getPositionData().getRotation();
-                PolarVector mv = new PolarVector(ang, 0.001f);
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(mv) + data.getMovementData().getMovementX());
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(mv) + data.getMovementData().getMovementY());
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
 
-                data.getMovementData().setMovementX(data.getMovementData().getMovementX() - PolarVector.xFromPolar(mv));
-                data.getMovementData().setMovementY(data.getMovementData().getMovementY() - PolarVector.yFromPolar(mv));
-            },
-            (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-                DataObject data = (DataObject) gameObject.getData();
+                    double ang = data.getPositionData().getRotation();
+                    PolarVector mv = new PolarVector(ang, 0.001f);
 
-                double ang = data.getPositionData().getRotation();
+                    data.getMovementData().setMovementX(data.getMovementData().getMovementX() - PolarVector.xFromPolar(mv));
+                    data.getMovementData().setMovementY(data.getMovementData().getMovementY() - PolarVector.yFromPolar(mv));
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
 
-                data.getMovementData().setMovementX(Math.abs(data.getMovementData().getMovementX()) > 0.08 ? data.getMovementData().getMovementX() * 0.992f : 0);
-                data.getMovementData().setMovementY(Math.abs(data.getMovementData().getMovementX()) > 0.08 ? data.getMovementData().getMovementY() * 0.992f : 0);
+                    double ang = data.getPositionData().getRotation();
 
-            },
-            (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-                DataObject data = (DataObject) gameObject.getData();
+                    data.getMovementData().setMovementX(Math.abs(data.getMovementData().getMovementX()) > 0.08 ? data.getMovementData().getMovementX() * 0.992f : 0);
+                    data.getMovementData().setMovementY(Math.abs(data.getMovementData().getMovementX()) > 0.08 ? data.getMovementData().getMovementY() * 0.992f : 0);
 
-                data.getPositionData().increaseRotation(-0.004);
-            },
-            (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-                DataObject data = (DataObject) gameObject.getData();
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
 
-                data.getPositionData().increaseRotation(+0.004);
-            },
-            null,
-            null,
-            (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-                DataObject data = (DataObject) gameObject.getData();
-                CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
-                        data.getMovementData().getMovementY());
-                PolarVector pv = vector.toPolarVector();
-                pv.updateAngleRange2Pi();
-                System.out.println(data.getPositionData().getRotation() + " - "
-                        + pv.length + " - " + pv.angle);
+                    data.getPositionData().increaseRotation(-0.004);
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
 
-                /* float dif = (float)((data.getPositionData().getRotation() - pv.angle)%(2*Math.PI));
+                    data.getPositionData().increaseRotation(+0.004);
+                },
+                null,
+                null,
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+                    CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
+                            data.getMovementData().getMovementY());
+                    PolarVector pv = vector.toPolarVector();
+                    pv.updateAngleRange2Pi();
+
+                    //    System.out.println(data.getPositionData().getRotation() + " - "
+                    //           + pv.length + " - " + pv.angle);
+
+                    /* float dif = (float)((data.getPositionData().getRotation() - pv.angle)%(2*Math.PI));
                     System.out.println(dif);
                     dif = (float)(dif >= Math.PI ? 2*Math.PI-dif : dif);
                     if(dif < 0){
@@ -169,37 +175,45 @@ public class DrivePresets {
                     }else{
                         pv.angle = pv.angle+(dif*0.05);
                     }*/
-                // pv.angle = data.getPositionData().getRotation();
-                double deltaAng = pv.angle - data.getPositionData().getRotation();
+                    // pv.angle = data.getPositionData().getRotation();
+                    double deltaAng = pv.angle - data.getPositionData().getRotation();
+                    System.out.println("DElta1  " + deltaAng);
+                    deltaAng = deltaAng > Math.PI
+                            ? deltaAng - Math.PI * 2 : deltaAng < -Math.PI
+                                    ? deltaAng + Math.PI * 2 : deltaAng;
+                    if (Math.abs(deltaAng) > Math.PI / 2) {
+                        deltaAng -= Math.signum(deltaAng) * Math.PI;
+                    }
 
-                deltaAng = deltaAng > Math.PI
-                        ? deltaAng - Math.PI * 2 : deltaAng < -Math.PI
-                                ? deltaAng + Math.PI * 2 : deltaAng;
-                if (Math.abs(deltaAng) > Math.PI / 2) {
-                    deltaAng -= Math.signum(deltaAng) * Math.PI;
+                    //   deltaAng = Math.abs(deltaAng) < 0.005 ? deltaAng : deltaAng * 0.01; //deltaAng= Absolutdiffrenzwert
+                    //  System.out.println(Math.abs(deltaAng) < 0.005 ? "Delta" : "*0.01");
+                    System.out.println(Math.abs(deltaAng));
+
+                    if (Math.abs(deltaAng) > 0.25) {
+                        deltaAng *= 0.025;
+                        System.out.println("5");
+                    } else if (Math.abs(deltaAng) > 0.079) {
+                        deltaAng *= 0.05;
+                        System.out.println("4");
+                    } else if (Math.abs(deltaAng) > 0.02) {
+                        deltaAng *= 0.1;
+                        System.out.println("3");
+                    } else if (Math.abs(deltaAng) > 0.001) {
+                        deltaAng *= 0.4;
+                        System.out.println("2");
+                    } else {
+                        deltaAng *= 1;
+                        System.out.println("1");
+                    }
+
+                    
+                    pv.angle -= deltaAng;
+
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
+
                 }
-
-                // deltaAng = Math.abs(deltaAng) < 0.005 ? deltaAng : deltaAng * 0.01; //deltaAng= Absolutdiffrenzwert
-                System.out.println(Math.abs(deltaAng) < 0.005 ? "Delta" : "*0.01");
-                System.out.println(Math.abs(deltaAng));
-                double multipli = 1;
-                if (Math.abs(deltaAng) < 0.003) {
-                    multipli = 1;
-                } else if (Math.abs(deltaAng) > 0.003 && Math.abs(deltaAng) < 0.01)
-                    multipli = 0.05;
-                else if (Math.abs(deltaAng) > 0.01 && Math.abs(deltaAng) < 0.020)
-                    multipli = 0.04;
-                else if (Math.abs(deltaAng) > 0.021 && Math.abs(deltaAng) < 0.04)
-                    multipli = 0.03;
-                else if (Math.abs(deltaAng) > 0.041 && Math.abs(deltaAng) < 0.009)
-                    multipli = 0.01;
-
-                deltaAng *= multipli;
-                pv.angle -= deltaAng;
-
-                data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
-                data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
-
-            }
-    );
+        );
+        return track;
+    }
 }
