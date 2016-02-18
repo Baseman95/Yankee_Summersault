@@ -19,69 +19,55 @@ import yansuen.physic.PolarVector;
  */
 public class DrivePresets {
 
-    private static Drive SIMPLE_CONTROLS;
+    public static Drive SIMPLE = createDrive(0.001f, 0.001f, 0.004f, 0.95f);
 
-    public static Drive getDrive(int penis) {
-        if (SIMPLE_CONTROLS == null) {
-            SIMPLE_CONTROLS = new Drive(
-                    (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-                        DataObject data = (DataObject) gameObject.getData();
+    private static Drive createDrive(float acceleration, float deceleration,
+            float rotation, float breakMultiplicator) {
+        Drive drive;
+        drive = new Drive(
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
 
-                        double ang = data.getPositionData().getRotation();
-                        PolarVector mv = new PolarVector(ang, 0.001f);
-                        data.getMovementData().setMovementX(PolarVector.xFromPolar(mv) + data.getMovementData().getMovementX());
-                        data.getMovementData().setMovementY(PolarVector.yFromPolar(mv) + data.getMovementData().getMovementY());
-                    },
-                    (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-                        DataObject data = (DataObject) gameObject.getData();
+                    double ang = data.getPositionData().getRotation();
+                    PolarVector mv = new PolarVector(ang, acceleration);
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(mv) + data.getMovementData().getMovementX());
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(mv) + data.getMovementData().getMovementY());
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
 
-                        double ang = data.getPositionData().getRotation();
-                        PolarVector mv = new PolarVector(ang, 0.001f);
+                    double ang = data.getPositionData().getRotation();
+                    PolarVector mv = new PolarVector(ang, deceleration);
 
-                        data.getMovementData().setMovementX(data.getMovementData().getMovementX() - PolarVector.xFromPolar(mv));
-                        data.getMovementData().setMovementY(data.getMovementData().getMovementY() - PolarVector.yFromPolar(mv));
-                    },
-                    (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-                        DataObject data = (DataObject) gameObject.getData();
+                    data.getMovementData().setMovementX(data.getMovementData().getMovementX() - PolarVector.xFromPolar(mv));
+                    data.getMovementData().setMovementY(data.getMovementData().getMovementY() - PolarVector.yFromPolar(mv));
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+                    data.getMovementData().setMovementX(data.getMovementData().getMovementX() * breakMultiplicator);
+                    data.getMovementData().setMovementY(data.getMovementData().getMovementY() * breakMultiplicator);
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+                    data.getPositionData().increaseRotation(-rotation);
+                },
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+                    data.getPositionData().increaseRotation(+rotation);
+                },
+                null,
+                null,
+                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                    DataObject data = (DataObject) gameObject.getData();
+                    CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
+                            data.getMovementData().getMovementY());
+                    PolarVector pv = vector.toPolarVector();
+                    pv.angle = data.getPositionData().getRotation();
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
 
-                        double ang = data.getPositionData().getRotation();
-                        PolarVector mv = new PolarVector(ang, 0.001f);
-
-                        data.getMovementData().setMovementX(data.getMovementData().getMovementX() * 0.992f);
-                        data.getMovementData().setMovementY(data.getMovementData().getMovementY() * 0.992f);
-                    },
-                    (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-                        DataObject data = (DataObject) gameObject.getData();
-
-                        data.getPositionData().increaseRotation(-0.004);
-                    },
-                    (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-                        DataObject data = (DataObject) gameObject.getData();
-
-                        data.getPositionData().increaseRotation(+0.004);
-                        CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
-                                data.getMovementData().getMovementY());
-                        PolarVector pv = vector.toPolarVector();
-                        pv.angle += 0.004;
-                        //pv.updateAngleRangePi();
-
-                        data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
-                        data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
-                    },
-                    null,
-                    null,
-                    (GameObject gameObject, long tick, World w, KeyManager manager) -> {
-                        DataObject data = (DataObject) gameObject.getData();
-                        CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
-                                data.getMovementData().getMovementY());
-                        PolarVector pv = vector.toPolarVector();
-                        pv.angle = data.getPositionData().getRotation();
-                        data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
-                        data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
-
-                    }
-            );
-        }
-        return SIMPLE_CONTROLS;
+                }
+        );
+        return drive;
     }
 }

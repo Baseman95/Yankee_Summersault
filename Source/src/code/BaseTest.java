@@ -165,7 +165,7 @@ public class BaseTest {
         Chassis zank = new Chassis(10, 10, ImagePresets.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
 
         zank.getWeapons().add(WeaponPresets.createPlasma(zank));
-        zank.setDrive(DrivePresets.SIMPLE_CONTROLS);
+        zank.setDrive(DrivePresets.SIMPLE);
         world.getGameObjects().add(zank);
 
         /*
