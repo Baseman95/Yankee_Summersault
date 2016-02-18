@@ -26,12 +26,11 @@ public class ControllerPresets {
         ControllerInterface moveTo = (GameObject gameObject, long tick, World world, KeyManager manager) -> {
             DataObject data = (DataObject) gameObject.getData();
 
-            PolarVector pv = new PolarVector(data.getPositionData().getRotation(), velocity);
-            data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
-            data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
-        };
-        return moveTo;
-    }*/
+        int velocity = 3; //projektilgeschwindigkeit in px per sec           
+        PolarVector pv = new PolarVector(data.getPositionData().getRotation(), velocity);
+        data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
+        data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
+    };
 
     public static ControllerInterface PLAYER = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
         Chassis c = ((Chassis) gameObject);
