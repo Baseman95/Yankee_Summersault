@@ -71,6 +71,7 @@ public class ImagePresets {
     public static class Vehicle {
 
         public static BufferedImage TANK_ABRAMS = ImagePresets.loadImg("textures/vehicles_beta/abrams.png");
+        public static BufferedImage HELI_APACHE = ImagePresets.loadImg("textures/vehicles_beta/apache.png");
 
         private Vehicle() {
         }

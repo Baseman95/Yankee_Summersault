@@ -35,17 +35,16 @@ public class TrifkoTest extends Application {
     @Override
     public void start() {
         super.start();
-        Chassis tank = new Chassis(300, 200, ImagePresets.Test.TANK2, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
-        tank.setDrive(DrivePresets.DEFAULT_TRACK);
+        Chassis heli = new Chassis(300, 200, ImagePresets.Vehicle.HELI_APACHE, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        heli.setDrive(DrivePresets.createHeli(0.006f));
 
-        Chassis tank3 = new Chassis(50, 50, ImagePresets.Test.TANK2, GraphicsPresets.ROTATION, null);
-        tank3.setDrive(DrivePresets.createTrack(0.004f));
+        
 
         //GameObject tank = new GameObject(10, 10, tankImg, tankLogic, defaultGraphics, playerController);
         GameObject tank2 = new GameObject(500, 300, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, null);
-        world.getGameObjects().add(tank);
+        world.getGameObjects().add(heli);
         world.getGameObjects().add(tank2);
-        world.getGameObjects().add(tank3);
+        
     }
 
 }
