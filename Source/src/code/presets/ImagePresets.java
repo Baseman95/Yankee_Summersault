@@ -27,17 +27,22 @@ public class ImagePresets {
     public static BufferedImage SHOT_3;
 
     static {
+        TANK = loadImg("textures/vehicles_beta/m1128.png");
+        TANK2 = loadImg("tank2.png");
+        OLD_TANK = loadImg("cool_tank.png");
+        TURRET_A = loadImg("textures/weapons_beta/turrets/turretA.png");
+        SHOT_1 = loadImg("textures/weapons_beta/shots/gun_plasma_shot.png");
+        SHOT_2 = loadImg("textures/weapons_beta/shots/missile.png");
+        SHOT_3 = loadImg("textures/weapons_beta/shots/gun_magnum_shot.png");
+    }
+
+    private static BufferedImage loadImg(String path) {
         try {
-            TANK = ImageIO.read(new File("textures/vehicles_beta/m1128.png"));
-            TANK2 =ImageIO.read(new File("tank2.png"));
-            OLD_TANK = ImageIO.read(new File("cool_tank.png"));
-            TURRET_A = ImageIO.read(new File("textures/weapons_beta/turrets/turretA.png"));
-            SHOT_1 = ImageIO.read(new File("textures/weapons_beta/shots/gun_plasma_shot.png"));
-            SHOT_2 = ImageIO.read(new File("textures/weapons_beta/shots/missile.png"));
-            SHOT_3 = ImageIO.read(new File("textures/weapons_beta/shots/gun_magnum_shot.png"));
+            return ImageIO.read(new File(path));
         } catch (IOException ex) {
             Logger.getLogger(ImagePresets.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
     private ImagePresets() {

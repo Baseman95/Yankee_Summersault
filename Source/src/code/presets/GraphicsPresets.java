@@ -81,21 +81,4 @@ public class GraphicsPresets {
                 (int) d.getPositionData().getHeight(), null);
     };
 
-    public static GraphicsInterface CHASSIS = (Data data, Camera camera, Graphics2D g2d) -> {
-        DataObject d = (DataObject) data;
-        configureGraphics2D(g2d);
-        AffineTransform at = new AffineTransform();
-        at.rotate(d.getPositionData().getRotation(), d.getPositionData().getWidth() / 2, d.getPositionData().getHeight() / 2);
-        AffineTransformOp ato = new AffineTransformOp(at, AffineTransformOp.TYPE_BICUBIC);
-        BufferedImage after = new BufferedImage(d.getImageData().getImage().getColorModel(),
-                d.getImageData().getImage().copyData(null),
-                d.getImageData().getImage().isAlphaPremultiplied(), null);
-        ato.filter(d.getImageData().getImage(), after);
-        g2d.drawImage(after,
-                (int) d.getPositionData().getX(),
-                (int) d.getPositionData().getY(),
-                (int) d.getPositionData().getWidth(),
-                (int) d.getPositionData().getHeight(), null);
-    };
-
 }

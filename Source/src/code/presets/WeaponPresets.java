@@ -9,7 +9,6 @@ import code.data.DataObject;
 import code.data.PositionData;
 import code.game.World;
 import code.game.tank.Chassis;
-import code.game.tank.Drive;
 import code.game.tank.Weapon;
 import code.game.tank.projectile.ImpactInterface;
 import code.game.tank.projectile.Projectile;
@@ -27,8 +26,8 @@ import yansuen.logic.LogicInterface;
 public class WeaponPresets {
 
     private WeaponPresets() {
-
     }
+    
     static LogicInterface fastReload = (GameObject gameObject, long tick, World world1, KeyManager manager) -> {
     };
 

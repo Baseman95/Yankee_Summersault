@@ -5,8 +5,6 @@
  */
 package code.data;
 
-import java.awt.image.BufferedImage;
-
 /**
  *
  * @author Link

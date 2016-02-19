@@ -50,6 +50,11 @@ public class GameObject implements LogicInterface {
     public void doLogic(GameObject gameObject, long tick, World world, KeyManager manager) {
     }
 
+    public void destroy(World world) {
+        if (dataObject instanceof DataObject)
+            ((DataObject) dataObject).getListenerList().clear();
+    }
+
     public Data getData() {
         return dataObject;
     }

@@ -1,5 +1,6 @@
 package code;
 
+import code.menu.GamePanel;
 import code.game.World;
 import code.game.tank.Chassis;
 import code.game.tank.Weapon;
@@ -27,7 +28,7 @@ public class BaseTest {
         GraphicsLoop gl = new GraphicsLoop(33);
         KeyManager keyManager = new KeyManager();
         World world = new World(keyManager);
-        Screen screen = new Screen(world);
+        GamePanel screen = new GamePanel(world);
 
         ll.setLogic(world);
         gl.setRepaintTarget(screen);

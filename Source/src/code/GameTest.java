@@ -5,6 +5,7 @@
  */
 package code;
 
+import code.menu.GamePanel;
 import yansuen.game.GameObject;
 import code.game.World;
 import yansuen.graphics.GraphicsLoop;
@@ -31,7 +32,7 @@ public class GameTest {
         LogicLoop ll = new LogicLoop(50000000L, 10);
         GraphicsLoop gl = new GraphicsLoop(33);
         World world = new World(null);
-        Screen screen = new Screen(world);
+        GamePanel screen = new GamePanel(world);
 
         ll.setLogic(world);
         gl.setRepaintTarget(screen);

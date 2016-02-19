@@ -49,22 +49,22 @@ public class Drive implements LogicInterface {
 
     @Override
     public void doLogic(GameObject gameObject, long tick, World world, KeyManager manager) {
-        if(logicInterface != null)
-            logicInterface.doLogic(gameObject, tick, world, manager);
         if (accelerateFunction != null && accelerate)
             accelerateFunction.doLogic(gameObject, tick, world, manager);
         if (decelerateFunction != null && decelerate)
             decelerateFunction.doLogic(gameObject, tick, world, manager);
-        if (breaksFunction != null && breaks)
-            breaksFunction.doLogic(gameObject, tick, world, manager);
-        if (turnLeftFunction != null && turnLeft)
-            turnLeftFunction.doLogic(gameObject, tick, world, manager);
-        if (turnRightFunction != null && turnRight)
-            turnRightFunction.doLogic(gameObject, tick, world, manager);
         if (strafeLeftFunction != null && strafeLeft)
             strafeLeftFunction.doLogic(gameObject, tick, world, manager);
         if (strafeRightFunction != null && strafeRight)
             strafeRightFunction.doLogic(gameObject, tick, world, manager);
+        if (turnLeftFunction != null && turnLeft)
+            turnLeftFunction.doLogic(gameObject, tick, world, manager);
+        if (turnRightFunction != null && turnRight)
+            turnRightFunction.doLogic(gameObject, tick, world, manager);
+        if (logicInterface != null)
+            logicInterface.doLogic(gameObject, tick, world, manager);
+        if (breaksFunction != null && breaks)
+            breaksFunction.doLogic(gameObject, tick, world, manager);
     }
 
     public LogicInterface getLogicInterface() {

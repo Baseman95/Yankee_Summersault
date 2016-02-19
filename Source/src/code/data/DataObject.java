@@ -56,6 +56,10 @@ public class DataObject extends Data implements DataObjectListener {
         }
     }
 
+    public ArrayList<DataObjectListener> getListenerList() {
+        return listenerList;
+    }
+
     public boolean addDataObjectListener(DataObjectListener listener) {
         if (listenerList.isEmpty())
             setListening(true);
