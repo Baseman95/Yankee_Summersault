@@ -52,6 +52,7 @@ public class Application implements ActionListener, ServerListener {
         ll.start();
         gl.start();
         gamePanel.addKeyListener(keyManager);
+        screen.setContentPane(gamePanel);
     }
 
     @Deprecated

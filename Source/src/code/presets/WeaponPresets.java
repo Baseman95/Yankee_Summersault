@@ -14,16 +14,20 @@ import code.game.tank.projectile.ImpactInterface;
 import code.game.tank.projectile.Projectile;
 import yansuen.key.KeyManager;
 import code.game.tank.projectile.ShotInterface;
+import static code.presets.ImagePresets.WEAPON_MG_1;
 import java.awt.image.BufferedImage;
 import yansuen.controller.ControllerInterface;
 import yansuen.game.GameObject;
 import yansuen.logic.LogicInterface;
+import yansuen.physic.PolarVector;
 
 /**
  *
  * @author Eris
  */
 public class WeaponPresets {
+
+    static int WEAPON_MG_LENGTH = 10;
 
     private WeaponPresets() {
     }
@@ -73,7 +77,7 @@ public class WeaponPresets {
         return weapon;
     }
 
-    public static Weapon createGuided(Chassis chassis) {
+    public static Weapon createHSRocket(Chassis chassis) {
         Weapon weapon = new Weapon(chassis, 100,
                 WeaponPresets.createGuidedShot(700, ImagePresets.SHOT_2, 4, 0.05f, ControllerPresets.createMoveToController(800, 600)),
                 fastReload, bulletImpact, null, 10, 10, ImagePresets.TURRET_A, GraphicsPresets.ROTATION, null);
@@ -85,10 +89,91 @@ public class WeaponPresets {
                 fastReload, bulletImpact,
                 null, 10,
                 10, ImagePresets.TURRET_A,
-                GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+                GraphicsPresets.ROTATION, null);
         return weapon;
     }
-    
-    
+    //NEWSTUFFBASE  
 
+    /*        
+        MG+
+        FlameThrower
+        EMP
+        Rocket
+        HSRocket
+        LGRocket
+        UCRocket    
+     */
+    /**
+     *
+     * @param chassis
+     * @param rof bullet per tick
+     * @param travelspeed
+     * @param traveldistance
+     * @param weaponTexture
+     * @param weaponOffsetX
+     * @param weaponOffsetY
+     * @param bulletTexture
+     * @param weaponController
+     * @return
+     */
+    //+projectilecontroller, weaponlengh 
+    public static Weapon createSingleShotWeapon(Chassis chassis, Double rof, Float travelspeed, Long traveldistance,
+            BufferedImage weaponTexture, Float weaponOffsetX, Float weaponOffsetY, BufferedImage bulletTexture, ControllerInterface weaponController) {
+
+        if (rof == null)
+            rof = 0.1d;
+
+        if (travelspeed == null)
+            travelspeed = 3f;
+
+        if (traveldistance == null)
+            traveldistance = 500L;
+
+        if (weaponTexture == null)
+            weaponTexture = ImagePresets.WEAPON_MG_1;
+
+        if (weaponOffsetX == null)
+            weaponOffsetX = 0f;
+
+        if (weaponOffsetY == null)
+            weaponOffsetY = 0f;
+
+        if (bulletTexture == null)
+            bulletTexture = ImagePresets.SHOT_MG_1;
+
+        ShotInterface si = createSimpleShot(bulletTexture, travelspeed, traveldistance, WEAPON_MG_LENGTH);
+
+        Weapon mg = new Weapon(chassis, (long) (1.0 / rof), si, fastReload, bulletImpact, ControllerPresets.HOLD_ACCELERATE,
+                weaponOffsetX, weaponOffsetY, weaponTexture, GraphicsPresets.ROTATION, weaponController);
+
+        return mg;
+    }
+    
+    public static ShotInterface createSimpleShot(BufferedImage texture, float travelSpeed, long travelDistance, int weaponLength) {
+        ShotInterface simpleShot = (Weapon weapon, long tick, ImpactInterface impactInterface, World world) -> {
+            PositionData pd = ((DataObject) weapon.getData()).getPositionData();
+            
+            PolarVector pv = new PolarVector(pd.getRotation(), weaponLength);
+            
+            Projectile p = new Projectile(weapon, tick + travelDistance, impactInterface,
+                    PolarVector.xFromPolar(pv) + pd.getX() + pd.getWidth() / 2 - texture.getWidth() / 2, PolarVector.yFromPolar(pv) + pd.getY() + pd.getHeight() / 2 - texture.getHeight() / 2,
+                    texture, GraphicsPresets.ROTATION, null);
+
+            ((DataObject) p.getData()).getPositionData().setRotation(pd.getRotation());
+            p.setDrive(DrivePresets.createStraightDrive(travelSpeed, pd.getRotation()));
+            world.addGameObject(p);
+
+        };
+        return simpleShot;
+    }    
+    
+    public static Weapon createMG(Chassis chassis) {
+        return createSingleShotWeapon(chassis, null, null, null, null, null, null, null, null);
+    }
+    
+    public static Weapon createRocketLauncher(Chassis chassis) {
+        return createSingleShotWeapon(chassis, 0.01, 2f, 1000L, ImagePresets.WEAPON_RL_1, null, null, ImagePresets.SHOT_RL_1, null);
+    }
+
+    
 }

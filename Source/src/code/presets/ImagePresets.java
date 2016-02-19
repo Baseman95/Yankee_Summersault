@@ -18,25 +18,41 @@ import javax.imageio.ImageIO;
  */
 public class ImagePresets {
 
-    public static BufferedImage TANK;
-    public static BufferedImage OLD_TANK;
-    public static BufferedImage TANK2;
-    public static BufferedImage SHOT_1;
-    public static BufferedImage SHOT_2;
-    public static BufferedImage TURRET_A;
-    public static BufferedImage SHOT_3;
+    public static BufferedImage NO_IMAGE = loadImg("textures/empty.png");
+    ;
+    public static BufferedImage TANK = loadImg("textures/vehicles_beta/m1128.png");
+    public static BufferedImage TANK2 = loadImg("tank2.png");
+    public static BufferedImage OLD_TANK = loadImg("cool_tank.png");
+    public static BufferedImage TURRET_A = loadImg("textures/weapons_beta/turrets/turretA.png");
+    @Deprecated
+    public static BufferedImage SHOT_1 = loadImg("textures/weapons_beta/shots/gun_plasma_shot.png");
+    @Deprecated
+    public static BufferedImage SHOT_2 = loadImg("textures/weapons_beta/shots/missile.png");
+    @Deprecated
+    public static BufferedImage SHOT_3 = loadImg("textures/weapons_beta/shots/gun_magnum_shot.png");
 
-    static {
-        TANK = loadImg("textures/vehicles_beta/m1128.png");
-        TANK2 = loadImg("tank2.png");
-        OLD_TANK = loadImg("cool_tank.png");
-        TURRET_A = loadImg("textures/weapons_beta/turrets/turretA.png");
-        SHOT_1 = loadImg("textures/weapons_beta/shots/gun_plasma_shot.png");
-        SHOT_2 = loadImg("textures/weapons_beta/shots/missile.png");
-        SHOT_3 = loadImg("textures/weapons_beta/shots/gun_magnum_shot.png");
-    }
+    //STUFF
+    //Surfaces START
+    public static BufferedImage SURFACE_CONCRETE = loadImg("textures/world/surface_alpha/concrete.png");
+    public static BufferedImage SURFACE_DIRT = loadImg("textures/world/surface_alpha/dirt.png");
+    public static BufferedImage SURFACE_GRASS = loadImg("textures/world/surface_alpha/grass.png");
+    public static BufferedImage SURFACE_ROAD = loadImg("textures/world/surface_alpha/road.png");
+    public static BufferedImage SURFACE_SAND = loadImg("textures/world/surface_alpha/sand.png");
+    public static BufferedImage SURFACE_WATER = loadImg("textures/world/surface_alpha/water.png");
+    //Surfaces END
+    //Vehicles START    
+    public static BufferedImage TANK_ABRAMS = loadImg("textures/vehicles_beta/abrams.png");
+    //Vehicles END 
+    //Weapons START
+    //Guns
+    public static BufferedImage WEAPON_MG_1 = loadImg("textures/weapons_beta/turrets/turretA.png");
+    public static BufferedImage WEAPON_RL_1 = loadImg("textures/weapons_beta/turrets/turretB.png");
+    //Bullets
+    public static BufferedImage SHOT_MG_1 = loadImg("textures/weapons_beta/shots/projectile.png");
+    public static BufferedImage SHOT_RL_1 = loadImg("textures/weapons_beta/shots/missile.png");
+    //Weapons END
 
-    private static BufferedImage loadImg(String path) {
+    protected static BufferedImage loadImg(String path) {
         try {
             return ImageIO.read(new File(path));
         } catch (IOException ex) {
