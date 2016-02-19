@@ -52,6 +52,7 @@ public class ControllerPresets {
     public static ControllerInterface PLAYER = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
         Chassis c = ((Chassis) gameObject);
         Drive d = c.getDrive();
+        
         d.setAccelerate(manager.isKeyPressed(KeyEvent.VK_W));
         d.setDecelerate(manager.isKeyPressed(KeyEvent.VK_S));
         d.setBreaks(manager.isKeyPressed(KeyEvent.VK_SPACE));

@@ -16,14 +16,14 @@ import yansuen.logic.LogicInterface;
  */
 public class Drive implements LogicInterface {
 
-    protected LogicInterface accelerateFunction;
-    protected LogicInterface decelerateFunction;
-    protected LogicInterface breaksFunction;
-    protected LogicInterface turnLeftFunction;
-    protected LogicInterface turnRightFunction;
-    protected LogicInterface strafeLeftFunction;
-    protected LogicInterface strafeRightFunction;
-    protected LogicInterface logicInterface;
+    protected DriveLogicInterface accelerateFunction;
+    protected DriveLogicInterface decelerateFunction;
+    protected DriveLogicInterface breaksFunction;
+    protected DriveLogicInterface turnLeftFunction;
+    protected DriveLogicInterface turnRightFunction;
+    protected DriveLogicInterface strafeLeftFunction;
+    protected DriveLogicInterface strafeRightFunction;
+    protected DriveLogicInterface driveLogicInterface;
 
     protected boolean accelerate = false;
     protected boolean decelerate = false;
@@ -33,10 +33,10 @@ public class Drive implements LogicInterface {
     protected boolean strafeLeft = false;
     protected boolean strafeRight = false;
 
-    public Drive(LogicInterface accelerateFunction, LogicInterface decelerateFunction,
-            LogicInterface breaksFunction, LogicInterface turnLeftFunction,
-            LogicInterface turnRightFunction, LogicInterface strafeLeftFunction,
-            LogicInterface strafeRightFunction, LogicInterface logicInterface) {
+    public Drive(DriveLogicInterface accelerateFunction, DriveLogicInterface decelerateFunction,
+            DriveLogicInterface breaksFunction, DriveLogicInterface turnLeftFunction,
+            DriveLogicInterface turnRightFunction, DriveLogicInterface strafeLeftFunction,
+            DriveLogicInterface strafeRightFunction, DriveLogicInterface logicInterface) {
         this.accelerateFunction = accelerateFunction;
         this.decelerateFunction = decelerateFunction;
         this.breaksFunction = breaksFunction;
@@ -44,90 +44,90 @@ public class Drive implements LogicInterface {
         this.turnRightFunction = turnRightFunction;
         this.strafeLeftFunction = strafeLeftFunction;
         this.strafeRightFunction = strafeRightFunction;
-        this.logicInterface = logicInterface;
+        this.driveLogicInterface = logicInterface;
     }
 
     @Override
     public void doLogic(GameObject gameObject, long tick, World world, KeyManager manager) {
-        if(logicInterface != null)
-            logicInterface.doLogic(gameObject, tick, world, manager);
+        if (driveLogicInterface != null)
+            driveLogicInterface.doDriveLogic(this, gameObject, tick, world);
         if (accelerateFunction != null && accelerate)
-            accelerateFunction.doLogic(gameObject, tick, world, manager);
+            accelerateFunction.doDriveLogic(this, gameObject, tick, world);
         if (decelerateFunction != null && decelerate)
-            decelerateFunction.doLogic(gameObject, tick, world, manager);
+            decelerateFunction.doDriveLogic(this, gameObject, tick, world);
         if (breaksFunction != null && breaks)
-            breaksFunction.doLogic(gameObject, tick, world, manager);
+            breaksFunction.doDriveLogic(this, gameObject, tick, world);
         if (turnLeftFunction != null && turnLeft)
-            turnLeftFunction.doLogic(gameObject, tick, world, manager);
+            turnLeftFunction.doDriveLogic(this, gameObject, tick, world);
         if (turnRightFunction != null && turnRight)
-            turnRightFunction.doLogic(gameObject, tick, world, manager);
+            turnRightFunction.doDriveLogic(this, gameObject, tick, world);
         if (strafeLeftFunction != null && strafeLeft)
-            strafeLeftFunction.doLogic(gameObject, tick, world, manager);
+            strafeLeftFunction.doDriveLogic(this, gameObject, tick, world);
         if (strafeRightFunction != null && strafeRight)
-            strafeRightFunction.doLogic(gameObject, tick, world, manager);
+            strafeRightFunction.doDriveLogic(this, gameObject, tick, world);
     }
 
-    public LogicInterface getLogicInterface() {
-        return logicInterface;
+    public DriveLogicInterface getDriveLogicInterface() {
+        return driveLogicInterface;
     }
 
-    public void setLogicInterface(LogicInterface logicInterface) {
-        this.logicInterface = logicInterface;
+    public void setDriveLogicInterface(DriveLogicInterface driveLogicInterface) {
+        this.driveLogicInterface = driveLogicInterface;
     }
 
-    public LogicInterface getAccelerateFunction() {
+    public DriveLogicInterface getAccelerateFunction() {
         return accelerateFunction;
     }
 
-    public void setAccelerateFunction(LogicInterface accelerateFunction) {
+    public void setAccelerateFunction(DriveLogicInterface accelerateFunction) {
         this.accelerateFunction = accelerateFunction;
     }
 
-    public LogicInterface getDecelerateFunction() {
+    public DriveLogicInterface getDecelerateFunction() {
         return decelerateFunction;
     }
 
-    public void setDecelerateFunction(LogicInterface deccelerateFunction) {
+    public void setDecelerateFunction(DriveLogicInterface deccelerateFunction) {
         this.decelerateFunction = deccelerateFunction;
     }
 
-    public LogicInterface getBreaksFunction() {
+    public DriveLogicInterface getBreaksFunction() {
         return breaksFunction;
     }
 
-    public void setBreaksFunction(LogicInterface breaksFunction) {
+    public void setBreaksFunction(DriveLogicInterface breaksFunction) {
         this.breaksFunction = breaksFunction;
     }
 
-    public LogicInterface getTurnLeftFunction() {
+    public DriveLogicInterface getTurnLeftFunction() {
         return turnLeftFunction;
     }
 
-    public void setTurnLeftFunction(LogicInterface turnLeftFunction) {
+    public void setTurnLeftFunction(DriveLogicInterface turnLeftFunction) {
         this.turnLeftFunction = turnLeftFunction;
     }
 
-    public LogicInterface getTurnRightFunction() {
+    public DriveLogicInterface getTurnRightFunction() {
         return turnRightFunction;
     }
 
-    public void setTurnRightFunction(LogicInterface turnRightFunction) {
+    public void setTurnRightFunction(DriveLogicInterface turnRightFunction) {
         this.turnRightFunction = turnRightFunction;
     }
 
-    public LogicInterface getStrafeLeftFunction() {
+    public DriveLogicInterface getStrafeLeftFunction() {
         return strafeLeftFunction;
     }
 
-    public void setStrafeLeftFunction(LogicInterface strafeLeftFunction) {
+    public void setStrafeLeftFunction(DriveLogicInterface strafeLeftFunction) {
         this.strafeLeftFunction = strafeLeftFunction;
     }
 
-    public LogicInterface getStrafeRightFunction() {
+    public DriveLogicInterface getStrafeRightFunction() {
         return strafeRightFunction;
     }
 
-    public void setStrafeRightFunction(LogicInterface strafeRightFunction) {
+    public void setStrafeRightFunction(DriveLogicInterface strafeRightFunction) {
         this.strafeRightFunction = strafeRightFunction;
     }
 

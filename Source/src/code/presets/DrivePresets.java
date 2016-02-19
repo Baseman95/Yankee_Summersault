@@ -7,6 +7,7 @@ package code.presets;
 
 import code.data.DataObject;
 import code.game.World;
+import code.game.tank.Chassis;
 import code.game.tank.Drive;
 import yansuen.game.GameObject;
 import yansuen.key.KeyManager;
@@ -26,7 +27,7 @@ public class DrivePresets {
             float rotation, float breakMultiplicator) {
         Drive drive;
         drive = new Drive(
-                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                (Drive drive1, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
 
                     double ang = data.getPositionData().getRotation();
@@ -34,7 +35,7 @@ public class DrivePresets {
                     data.getMovementData().setMovementX(PolarVector.xFromPolar(mv) + data.getMovementData().getMovementX());
                     data.getMovementData().setMovementY(PolarVector.yFromPolar(mv) + data.getMovementData().getMovementY());
                 },
-                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                (Drive drive1, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
 
                     double ang = data.getPositionData().getRotation();
@@ -43,22 +44,22 @@ public class DrivePresets {
                     data.getMovementData().setMovementX(data.getMovementData().getMovementX() - PolarVector.xFromPolar(mv));
                     data.getMovementData().setMovementY(data.getMovementData().getMovementY() - PolarVector.yFromPolar(mv));
                 },
-                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                (Drive drive1, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
                     data.getMovementData().setMovementX(data.getMovementData().getMovementX() * breakMultiplicator);
                     data.getMovementData().setMovementY(data.getMovementData().getMovementY() * breakMultiplicator);
                 },
-                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                (Drive drive1, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
                     data.getPositionData().increaseRotation(-rotation);
                 },
-                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                (Drive drive1, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
                     data.getPositionData().increaseRotation(+rotation);
                 },
                 null,
                 null,
-                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                (Drive drive1, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
                     CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
                             data.getMovementData().getMovementY());
@@ -74,21 +75,21 @@ public class DrivePresets {
 
     public static Drive createRocketDrive(float travelspeed, double rotationspeed) {
         Drive drive = new Drive(
-                (GameObject gameObject, long tick, World world, KeyManager manager) -> {
+                (Drive drive1, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
                     PolarVector p = new PolarVector(data.getPositionData().getRotation(), travelspeed);
 
                     data.getMovementData().setMovementX(PolarVector.xFromPolar(p));
                     data.getMovementData().setMovementY(PolarVector.yFromPolar(p));
                 }, null, null,
-                (GameObject gameObject, long tick, World world, KeyManager manager) -> {
+                (Drive drive1, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
                     data.getPositionData().increaseRotation(-rotationspeed);
-                }, (GameObject gameObject, long tick, World world, KeyManager manager) -> {
+                }, (Drive drive1, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
                     data.getPositionData().increaseRotation(rotationspeed);
                 }, null, null,
-                (GameObject gameObject, long tick, World world, KeyManager manager) -> {
+                (Drive drive1, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
                     PolarVector p = new PolarVector(data.getPositionData().getRotation(),
                             CartesianVector.lengthFromCartesian(new CartesianVector(data.getMovementData().getMovementX(), data.getMovementData().getMovementY())));
@@ -97,11 +98,11 @@ public class DrivePresets {
                 });
         return drive;
     }
-    public static Drive ROCKET = createRocketDrive(4,0.008f);
+    public static Drive ROCKET = createRocketDrive(4, 0.008f);
 
     public static Drive createStraightDrive(float speed, double rotation) {
         Drive straight = new Drive(null, null, null, null, null, null, null,
-                (GameObject gameObject, long tick, World world1, KeyManager manager) -> {
+                (Drive drive, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
 
                     PolarVector pv = new PolarVector(rotation, speed);
@@ -111,51 +112,95 @@ public class DrivePresets {
         return straight;
     }
 
-    public static Drive DEFAULT_TRACK = createTrack(0.001f);
+    public static Drive DEFAULT_TRACK = createTrack(0.002f);
     public static Drive FAST_ROTATION_TRACK = createTrack(0.002f);
 
     public static Drive createTrack(float rotation) {
         Drive track = new Drive(
-                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                (Drive drive, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
+                    PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
+                            data.getMovementData().getMovementY()));
+                    current.updateAngleRange2Pi();
+                    //        System.out.println(data.getPositionData().getRotation()+"------------"+current.angle);
+                    if (!getRichtung(data, current.angle))
+                            drive.setBreaks(current.length != 0);
+                    
+                    if (drive.isBreaks())
+                        return;
 
+                    // System.out.println("CurrentSpeed: " + current.length);
                     double ang = data.getPositionData().getRotation();
-                    PolarVector mv = new PolarVector(ang, rotation);
+                    PolarVector mv = new PolarVector(ang, getAccerate(current.length));
+                    data.getMovementData().setMovementX(current.length < 1.2
+                            ? PolarVector.xFromPolar(mv) + data.getMovementData().getMovementX()
+                            : data.getMovementData().getMovementX());
 
-                    data.getMovementData().setMovementX(PolarVector.xFromPolar(mv) + data.getMovementData().getMovementX());
-                    data.getMovementData().setMovementY(PolarVector.yFromPolar(mv) + data.getMovementData().getMovementY());
+                    data.getMovementData().setMovementY(current.length < 1.2
+                            ? PolarVector.yFromPolar(mv) + data.getMovementData().getMovementY()
+                            : data.getMovementData().getMovementY());
                 },
-                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                (Drive drive, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
+                    PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
+                            data.getMovementData().getMovementY()));
 
+                    current.updateAngleRange2Pi();
+
+                    if (getRichtung(data, current.angle)) 
+                            drive.setBreaks(current.length != 0);
+                    
+                    if (drive.isBreaks())
+                        return;
+
+                    // System.out.println("CurrentSpeed: " + current.length);
                     double ang = data.getPositionData().getRotation();
-                    PolarVector mv = new PolarVector(ang, 0.001f);
+                    PolarVector mv = new PolarVector(ang, getAccerate(current.length));
 
                     data.getMovementData().setMovementX(data.getMovementData().getMovementX() - PolarVector.xFromPolar(mv));
                     data.getMovementData().setMovementY(data.getMovementData().getMovementY() - PolarVector.yFromPolar(mv));
                 },
-                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                (Drive drive, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
 
-                    double ang = data.getPositionData().getRotation();
+                    PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
+                            data.getMovementData().getMovementY()));
 
-                    data.getMovementData().setMovementX(Math.abs(data.getMovementData().getMovementX()) > 0.08 ? data.getMovementData().getMovementX() * 0.992f : 0);
-                    data.getMovementData().setMovementY(Math.abs(data.getMovementData().getMovementX()) > 0.08 ? data.getMovementData().getMovementY() * 0.992f : 0);
+                    data.getMovementData().setMovementX(Math.abs(data.getMovementData().getMovementX()) > 0.07 ? data.getMovementData().getMovementX() * getBreakStrength(current.length) : 0);
+                    data.getMovementData().setMovementY(Math.abs(data.getMovementData().getMovementY()) > 0.07 ? data.getMovementData().getMovementY() * getBreakStrength(current.length) : 0);
 
                 },
-                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                (Drive drive, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
 
                     data.getPositionData().increaseRotation(-0.004);
+
+                    if (drive.isBreaks())
+                        return;
+
+                    PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
+                            data.getMovementData().getMovementY()));
+                    current.length *= 0.9985;
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(current));
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(current));
                 },
-                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                (Drive drive, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
 
                     data.getPositionData().increaseRotation(+0.004);
+
+                    if (drive.isBreaks())
+                        return;
+
+                    PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
+                            data.getMovementData().getMovementY()));
+                    current.length *= 0.9985;
+                    data.getMovementData().setMovementX(PolarVector.xFromPolar(current));
+                    data.getMovementData().setMovementY(PolarVector.yFromPolar(current));
                 },
                 null,
                 null,
-                (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+                (Drive drive, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
                     CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
                             data.getMovementData().getMovementY());
@@ -175,7 +220,7 @@ public class DrivePresets {
                     }*/
                     // pv.angle = data.getPositionData().getRotation();
                     double deltaAng = pv.angle - data.getPositionData().getRotation();
-                    System.out.println("DElta1  " + deltaAng);
+                    //    System.out.println("DElta1  " + deltaAng);
                     deltaAng = deltaAng > Math.PI
                             ? deltaAng - Math.PI * 2 : deltaAng < -Math.PI
                                     ? deltaAng + Math.PI * 2 : deltaAng;
@@ -183,35 +228,61 @@ public class DrivePresets {
                         deltaAng -= Math.signum(deltaAng) * Math.PI;
                     }
 
+                    PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
+                            data.getMovementData().getMovementY()));
                     //   deltaAng = Math.abs(deltaAng) < 0.005 ? deltaAng : deltaAng * 0.01; //deltaAng= Absolutdiffrenzwert
                     //  System.out.println(Math.abs(deltaAng) < 0.005 ? "Delta" : "*0.01");
-                    System.out.println(Math.abs(deltaAng));
-
-                    if (Math.abs(deltaAng) > 0.25) {
-                        deltaAng *= 0.025;
-                        System.out.println("5");
-                    } else if (Math.abs(deltaAng) > 0.079) {
-                        deltaAng *= 0.05;
-                        System.out.println("4");
+                         System.out.println(Math.abs(deltaAng) + "--------");
+                         System.out.println("CurrentSpeed: " + current.length);
+                    if (Math.abs(deltaAng) > 0.008 && current.length > 0.93) {
+                        deltaAng *= 0.015;
+                        //System.out.println("5");
+                    } else if (Math.abs(deltaAng) > 0.08 && current.length > 0.50) {
+                        deltaAng *= 0.018;
+                      //  System.out.println("4");
                     } else if (Math.abs(deltaAng) > 0.02) {
-                        deltaAng *= 0.1;
-                        System.out.println("3");
-                    } else if (Math.abs(deltaAng) > 0.001) {
-                        deltaAng *= 0.4;
-                        System.out.println("2");
+                        deltaAng *= 0.05;
+                       // System.out.println("3");
                     } else {
                         deltaAng *= 1;
-                        System.out.println("1");
+                        //System.out.println("1");
                     }
 
-                    
                     pv.angle -= deltaAng;
+                    if (!drive.isBreaks())
+                        pv.length *= current.length > 0.08 ? (current.length < 1 ? 0.9965 : 0.9975) : 0.88;
 
                     data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
                     data.getMovementData().setMovementY(PolarVector.yFromPolar(pv));
 
                 }
         );
+
         return track;
+    }
+
+    private static float getAccerate(float current) {
+        float a = (float) ((Math.pow(current, 8)) * 0.0015 - (current * current) * 0.0167 - current * 0.0001 + 0.02);
+        return a >= 0 ? a : 0;
+
+    }
+
+    private static float getBreakStrength(float current) {
+        float a = (float) (0.01 * current + 0.98);
+        return a < 0.999 ? a : 0.999f;
+
+    }
+
+    private static boolean getRichtung(DataObject d, double winkel) {
+        double deltaAng = winkel - d.getPositionData().getRotation();
+        //    System.out.println("DElta1  " + deltaAng);
+        deltaAng += Math.PI / 2;
+        PolarVector pv = new PolarVector(deltaAng, 1);
+        pv.updateAngleRange2Pi();
+        if (pv.angle <= Math.PI)
+            return true;
+        else
+            return false;
+
     }
 }
