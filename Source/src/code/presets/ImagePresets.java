@@ -22,10 +22,14 @@ public class ImagePresets {
     public static BufferedImage TANK;
     public static BufferedImage OLD_TANK;
     public static BufferedImage TANK2;
+    @Deprecated
     public static BufferedImage SHOT_1;
+    @Deprecated
     public static BufferedImage SHOT_2;
     public static BufferedImage TURRET_A;
+    @Deprecated
     public static BufferedImage SHOT_3;
+
     //Surfaces START
     public static BufferedImage SURFACE_CONCRETE;
     public static BufferedImage SURFACE_DIRT;
@@ -39,7 +43,10 @@ public class ImagePresets {
     //Vehicle END
     //Weapons START
     public static BufferedImage WEAPON_MG_1;
-    public static BufferedImage BULLET_MG_1;
+    public static BufferedImage WEAPON_RL_1;
+    //Bullets
+    public static BufferedImage SHOT_MG_1;
+    public static BufferedImage SHOT_RL_1;
     //Weapons END
 
     static {
@@ -59,16 +66,18 @@ public class ImagePresets {
             SURFACE_GRASS = ImageIO.read(new File("textures/world/surface_alpha/grass.png"));
             SURFACE_ROAD = ImageIO.read(new File("textures/world/surface_alpha/road.png"));
             SURFACE_SAND = ImageIO.read(new File("textures/world/surface_alpha/sand.png"));
-            SURFACE_WATER = ImageIO.read(new File("textextures/world/surface_alpha/water.png"));
+            SURFACE_WATER = ImageIO.read(new File("textures/world/surface_alpha/water.png"));
             //Surfaces END
             //Vehicles START
             TANK_ABRAMS = ImageIO.read(new File("textures/vehicles_beta/abrams.png"));
             //Vehicles END 
             //Weapons START
-            //Turrets
+            //Guns
             WEAPON_MG_1 = ImageIO.read(new File("textures/weapons_beta/turrets/turretA.png"));
+            WEAPON_RL_1 = ImageIO.read(new File("textures/weapons_beta/turrets/turretB.png"));
             //Bullets
-            BULLET_MG_1 = ImageIO.read(new File("textures/weapons_beta/shots/gun_plasma_shot.png"));
+            SHOT_MG_1 = ImageIO.read(new File("textures/weapons_beta/shots/projectile.png"));
+            SHOT_RL_1 = ImageIO.read(new File("textures/weapons_beta/shots/missile.png"));
             //Weapons END
 
         } catch (IOException ex) {
