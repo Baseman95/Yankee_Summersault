@@ -30,11 +30,26 @@ public class Weapon extends GameObject {
 
     protected boolean shot = false;
     protected boolean reload = false;
-    protected long cooldown = 0;
+    protected long cooldown;
     protected long shotReady = 0;
     protected double relativeRotation = 0;
     protected float xRelative = 0;
-    protected float yRelativeY = 0;
+    protected float yRelative = 0;
+
+    public Weapon(Chassis chassis, long cooldown, ShotInterface shotFunction, LogicInterface reloadFunction,
+            ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y, float w, float h,
+            BufferedImage img, GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+        super(((DataObject) chassis.getData()).getPositionData().getX() + ((DataObject) chassis.getData()).getPositionData().getWidth() / 2
+                + x - w / 2,
+                ((DataObject) chassis.getData()).getPositionData().getY() + ((DataObject) chassis.getData()).getPositionData().getHeight() / 2
+                + y - h / 2, w, h, img, graphicsInterface, controllerInterface);
+        this.chassis = chassis;
+        this.cooldown = cooldown;
+        this.shotFunction = shotFunction;
+        this.reloadFunction = reloadFunction;
+        this.impactBehavior = impactBehavior;
+        this.projectileBehavior = projectileBehavior;
+    }
 
     public Weapon(Chassis chassis, long cooldown, ShotInterface shootFunction, LogicInterface reloadFunction,
             ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y,
@@ -79,11 +94,11 @@ public class Weapon extends GameObject {
     }
 
     public float getRelativeY() {
-        return yRelativeY;
+        return yRelative;
     }
 
     public void setyRelativeY(float yRelativeY) {
-        this.yRelativeY = yRelativeY;
+        this.yRelative = yRelativeY;
     }
 
     public Chassis getChassis() {

@@ -8,7 +8,6 @@ import yansuen.controller.ControllerInterface;
 import yansuen.graphics.Camera;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.KeyManager;
-import yansuen.logic.LogicInterface;
 import yansuen.logic.LogicLooper;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -80,6 +79,7 @@ public class World implements LogicLooper {
 
     public void removeGameObject(GameObject gameObject) {
         removeObjects.add(gameObject);
+        gameObject.destroy(this);
     }
 
 }

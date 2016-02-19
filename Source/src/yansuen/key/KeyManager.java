@@ -1,5 +1,6 @@
 package yansuen.key;
 
+import java.awt.KeyEventDispatcher;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.function.BiConsumer;
  *
  * @author Link162534
  */
-public class KeyManager extends KeyAdapter {
+public class KeyManager extends KeyAdapter implements KeyEventDispatcher {
 
     protected ArrayList<Integer> keyList = new ArrayList<>();
     protected ArrayList<KeyManagerListener> shortcutList = new ArrayList<>();
@@ -21,7 +22,7 @@ public class KeyManager extends KeyAdapter {
             return;
         keyList.add(key);
         checkShortcuts(key);
-    //    System.out.println("+" + key);
+        //    System.out.println("+" + key);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class KeyManager extends KeyAdapter {
         if (!keyList.contains(key))
             return;
         keyList.remove(key);
-    //    System.out.println("-" + key);
+        //    System.out.println("-" + key);
     }
 
     public boolean isKeyPressed(Integer key) {
@@ -43,7 +44,8 @@ public class KeyManager extends KeyAdapter {
 
     public void removeShortcut(Object receiver, Integer key) {
         for (KeyManagerListener shortcut : shortcutList) {
-            if (shortcut.event != receiver || !shortcut.key.equals(key)) continue;
+            if (shortcut.event != receiver || !shortcut.key.equals(key))
+                continue;
             shortcutList.remove(shortcut);
             return;
         }
@@ -52,11 +54,27 @@ public class KeyManager extends KeyAdapter {
     protected void checkShortcuts(Integer key) {
         Thread t = new Thread(() -> {
             for (KeyManagerListener shortcut : shortcutList) {
-                if (shortcut.getKey().equals(key)) shortcut.execute();
+                if (shortcut.getKey().equals(key))
+                    shortcut.execute();
             }
         });
         t.setDaemon(true);
         t.start();
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent e) {
+        new Thread(() -> {
+            switch (e.paramString().split(",")[0]) {
+                case "KEY_PRESSED":
+                    keyPressed(e);
+                    break;
+                case "KEY_RELEASED":
+                    keyReleased(e);
+                    break;
+            }
+        }).start();
+        return false;
     }
 
     public static class KeyManagerListener {

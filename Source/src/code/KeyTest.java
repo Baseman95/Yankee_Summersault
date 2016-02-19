@@ -1,5 +1,6 @@
 package code;
 
+import code.menu.GamePanel;
 import yansuen.controller.ControllerInterface;
 import code.data.DataObject;
 import code.data.ImageData;
@@ -35,7 +36,7 @@ public class KeyTest {
         GraphicsLoop gl = new GraphicsLoop(33);
         KeyManager keyManager = new KeyManager();
         World world = new World(keyManager);
-        Screen screen = new Screen(world);
+        GamePanel screen = new GamePanel(world);
 
         ll.setLogic(world);
         gl.setRepaintTarget(screen);

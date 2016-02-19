@@ -28,6 +28,7 @@ public class GraphicsLoop extends Thread {
             while (!paused) {
                 try {
                     Thread.sleep(sleepTime);
+                    repaintTarget.revalidate();
                     repaintTarget.repaint();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(LogicLoop.class.getName()).log(Level.SEVERE, null, ex);
