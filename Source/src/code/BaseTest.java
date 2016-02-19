@@ -43,13 +43,17 @@ public class BaseTest extends Application {
         Weapon mg = WeaponPresets.createMG(zank);
         Weapon rocket = WeaponPresets.createRocketLauncher(zank);
         Weapon flame = WeaponPresets.createFlameThrower(zank);
+        Weapon tracer = WeaponPresets.createTracer(zank);
         zank.getWeapons().add(mg);
         zank.getWeapons().add(rocket);
         zank.getWeapons().add(flame);
+        zank.getWeapons().add(tracer);
         zank.setDrive(DrivePresets.SIMPLE);
         world.addGameObject(zank);
         world.addGameObject(mg);
         world.addGameObject(rocket);
+        world.addGameObject(flame);
+        world.addGameObject(tracer);
     }
 
 }

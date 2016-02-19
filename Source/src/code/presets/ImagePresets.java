@@ -30,6 +30,8 @@ public class ImagePresets {
         public static BufferedImage TANK2 = loadImg("tank2.png");
         public static BufferedImage TANK = loadImg("textures/vehicles_beta/m1128.png");
         public static BufferedImage TURRET_A = ImagePresets.loadImg("textures/weapons_beta/turrets/turretA.png");
+        public static BufferedImage TRACER = ImagePresets.loadImg("textures/weapons_beta/shots/tracer.png");
+                
 
         private Test() {
         }
@@ -80,7 +82,11 @@ public class ImagePresets {
         try {
             return ImageIO.read(new File(path));
         } catch (IOException ex) {
-            Logger.getLogger(ImagePresets.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                return ImageIO.read(new File("textures/no_image.png"));
+            } catch (IOException ex1) {
+                Logger.getLogger(ImagePresets.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
         return null;
     }

@@ -9,6 +9,7 @@ import code.data.DataObject;
 import code.data.PositionData;
 import code.game.World;
 import code.game.tank.Chassis;
+import code.game.tank.Drive;
 import code.game.tank.Weapon;
 import code.game.tank.projectile.ImpactInterface;
 import code.game.tank.projectile.Projectile;
@@ -103,25 +104,29 @@ public class WeaponPresets {
         LGRocket
         UCRocket    
      */
-    /**
-     *
+
+    /** 
      * @param chassis
-     * @param rof bullet per tick
-     * @param travelspeed
-     * @param weaponLength
-     * @param traveldistance
-     * @param weaponImage
-     * @param deviationPerSide percent
      * @param weaponOffsetX
      * @param weaponOffsetY
-     * @param projectileImage
+     * @param weaponLength
+     * @param weaponImage
      * @param weaponController
+     * @param weaponDrive
+     * @param cooldown in ticks
+     * @param deviationPerSide percent
+     * @param travelspeed
+     * @param ticksToLive
+     * @param projectileImage
      * @param projectileController
-     * @return
+     * @param projectileDrive
+     * @return 
      */
     public static Weapon createSingleShotWeapon(Chassis chassis,
-            Float weaponOffsetX, Float weaponOffsetY, Integer weaponLength, BufferedImage weaponImage, ControllerInterface weaponController,
-            Double rof, Float deviationPerSide, Float travelspeed, Long traveldistance, BufferedImage projectileImage, ControllerInterface projectileController) {
+            Float weaponOffsetX, Float weaponOffsetY, Integer weaponLength, BufferedImage weaponImage,
+            ControllerInterface weaponController, Drive weaponDrive,
+            Long cooldown, Float deviationPerSide, Float travelspeed, Long ticksToLive, BufferedImage projectileImage,
+            ControllerInterface projectileController, Drive projectileDrive) {
 
         if (weaponOffsetX == null)
             weaponOffsetX = 0f;
@@ -136,8 +141,8 @@ public class WeaponPresets {
             weaponImage = ImagePresets.Default.NO_IMAGE;
 
         //Controller
-        if (rof == null)
-            rof = 0.1d;
+        if (cooldown == null)
+            cooldown = 10L;
 
         if (deviationPerSide == null)
             deviationPerSide = 0.1f;
@@ -145,16 +150,16 @@ public class WeaponPresets {
         if (travelspeed == null)
             travelspeed = 3f;
 
-        if (traveldistance == null)
-            traveldistance = 500L;
+        if (ticksToLive == null)
+            ticksToLive = 500L;
 
         if (projectileImage == null)
             projectileImage = ImagePresets.Default.NO_IMAGE;
 
         //Controller       
-        ShotInterface si = createSingleShot(projectileImage, travelspeed, traveldistance, deviationPerSide, weaponLength);
+        ShotInterface si = createSingleShot(projectileImage, travelspeed, ticksToLive, deviationPerSide, weaponLength);
 
-        Weapon mg = new Weapon(chassis, (long) (1.0 / rof), si, fastReload, bulletImpact, ControllerPresets.HOLD_ACCELERATE,
+        Weapon mg = new Weapon(chassis, cooldown, si, fastReload, bulletImpact, ControllerPresets.HOLD_ACCELERATE,
                 weaponOffsetX, weaponOffsetY, weaponImage, GraphicsPresets.ROTATION, weaponController);
 
         return mg;
@@ -185,12 +190,41 @@ public class WeaponPresets {
     }
 
     public static Weapon createMG(Chassis chassis) {
-        return createSingleShotWeapon(chassis, null, null, WEAPON_MG_LENGTH, ImagePresets.Weapon.SHOT_MG_1, null, null, 0.01f, null, null, ImagePresets.Weapon.SHOT_MG_1, null);
+        return createSingleShotWeapon(chassis, null, null, WEAPON_MG_LENGTH, ImagePresets.Weapon.SHOT_MG_1,
+                null, null,
+                null, 0.01f, null, null, ImagePresets.Weapon.SHOT_MG_1,
+                null, null);
     }
 
     public static Weapon createRocketLauncher(Chassis chassis) {
-        return createSingleShotWeapon(chassis, null, null, WEAPON_MG_LENGTH, ImagePresets.Weapon.WEAPON_RL_1, null,
-                0.01, 0.01f, 2f, 1000L, ImagePresets.Weapon.SHOT_RL_1, null);
+        return createSingleShotWeapon(chassis, null, null, WEAPON_MG_LENGTH, ImagePresets.Weapon.WEAPON_RL_1,
+                null, null,
+                100L, 0.01f, 2f, 1000L, ImagePresets.Weapon.SHOT_RL_1,
+                null, null);
     }
 
+    public static Weapon createTracer(Chassis chassis) {
+        return createSingleShotWeapon(chassis, null, null, 0, ImagePresets.Default.NOTHING,
+                null, null,
+                5L, 0f, 0f, Long.MAX_VALUE/2, ImagePresets.Test.TRACER,
+                null, null);
+    }
+    
+    /** 
+     * @param chassis
+     * @param weaponOffsetX
+     * @param weaponOffsetY
+     * @param weaponLength
+     * @param weaponImage
+     * @param weaponController
+     * @param weaponDrive
+     * @param rof bullet per tick
+     * @param deviationPerSide percent
+     * @param travelspeed
+     * @param traveldistance
+     * @param projectileImage
+     * @param projectileController
+     * @param projectileDrive
+     * @return 
+     */
 }
