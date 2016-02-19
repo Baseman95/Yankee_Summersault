@@ -1,8 +1,10 @@
 package code;
 
+import code.game.Application;
 import code.menu.GamePanel;
 import code.game.World;
 import code.game.tank.Chassis;
+import code.menu.Screen;
 import code.presets.ControllerPresets;
 import code.presets.DrivePresets;
 import code.presets.GraphicsPresets;
@@ -17,31 +19,25 @@ import yansuen.game.GameObject;
  *
  * @author Link162534
  */
-public class TrifkoTest {
-
-    public static long bulletTick = 0;
+public class TrifkoTest extends Application {
 
     public static void main(String[] args) throws IOException {
-        LogicLoop ll = new LogicLoop(5000000L, 1);
-        GraphicsLoop gl = new GraphicsLoop(33);
-        KeyManager keyManager = new KeyManager();
-        World world = new World(keyManager);
-        GamePanel screen = new GamePanel(world);
-
-        ll.setLogic(world);
-        gl.setRepaintTarget(screen);
-
-        ll.start();
-        gl.start();
-        screen.addKeyListener(keyManager);
-
+        Screen screen = new Screen();
+        Application application = new TrifkoTest(screen);
+        screen.setApplication(application);
         screen.setVisible(true);
+    }
 
-        
+    public TrifkoTest(Screen screen) {
+        super(screen);
+    }
 
+    @Override
+    public void start() {
+        super.start();
         Chassis tank = new Chassis(300, 200, ImagePresets.Test.TANK2, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         tank.setDrive(DrivePresets.DEFAULT_TRACK);
-        
+
         Chassis tank3 = new Chassis(50, 50, ImagePresets.Test.TANK2, GraphicsPresets.ROTATION, null);
         tank3.setDrive(DrivePresets.createTrack(0.004f));
 
@@ -51,4 +47,5 @@ public class TrifkoTest {
         world.getGameObjects().add(tank2);
         world.getGameObjects().add(tank3);
     }
+
 }
