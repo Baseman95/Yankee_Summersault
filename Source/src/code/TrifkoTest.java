@@ -4,11 +4,13 @@ import code.game.Application;
 import code.menu.GamePanel;
 import code.game.World;
 import code.game.tank.Chassis;
+import code.game.tank.Weapon;
 import code.menu.Screen;
 import code.presets.ControllerPresets;
 import code.presets.DrivePresets;
 import code.presets.GraphicsPresets;
 import code.presets.ImagePresets;
+import code.presets.WeaponPresets;
 import yansuen.graphics.GraphicsLoop;
 import yansuen.key.KeyManager;
 import yansuen.logic.LogicLoop;
@@ -38,7 +40,9 @@ public class TrifkoTest extends Application {
         Chassis heli = new Chassis(300, 200, ImagePresets.Vehicle.HELI_APACHE, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         heli.setDrive(DrivePresets.createHeli(0.006f));
 
-        
+        Weapon tracer = WeaponPresets.createTracer(heli);
+        heli.getWeapons().add(tracer);
+        world.addGameObject(tracer);
 
         //GameObject tank = new GameObject(10, 10, tankImg, tankLogic, defaultGraphics, playerController);
         GameObject tank2 = new GameObject(500, 300, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, null);
