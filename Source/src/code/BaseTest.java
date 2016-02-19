@@ -1,15 +1,10 @@
 package code;
 
 import code.game.Application;
-import code.menu.GamePanel;
-import code.game.World;
 import code.game.tank.Chassis;
 import code.game.tank.Weapon;
 import code.menu.Screen;
-import yansuen.graphics.GraphicsLoop;
-import yansuen.logic.LogicLoop;
 import java.io.IOException;
-import yansuen.key.KeyManager;
 import code.presets.ImagePresets;
 import code.presets.ControllerPresets;
 import code.presets.DrivePresets;
@@ -43,7 +38,7 @@ public class BaseTest extends Application {
         dataO.getMovementData().setMovementY(bulletTrajectory.y + hostMovement.y);
         
  </editor-fold>*/
-        Chassis zank = new Chassis(10, 10, ImagePresets.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Chassis zank = new Chassis(10, 10, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
 
         Weapon mg = WeaponPresets.createMG(zank);
         Weapon rocket = WeaponPresets.createRocketLauncher(zank);
