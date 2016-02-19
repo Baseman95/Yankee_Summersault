@@ -1,7 +1,6 @@
-package yansuen.network.commands.client;
+package yansuen.network.commands;
 
 import yansuen.network.Network;
-import yansuen.network.commands.ClientCommand;
 
 /**
  *
@@ -13,7 +12,7 @@ public class SetIdCommand implements ClientCommand {
     public void execute(String[] argument, Network network) {
         int id = Integer.parseInt(argument[0]);
         network.setId(id);
-        network.getApplication().getPlayerList().put(id, network.getApplication().getPlayer());
+        network.getApplication().getKeyManager().getNetworkKeyManager(id);
     }
 
 }

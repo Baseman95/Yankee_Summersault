@@ -10,38 +10,37 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JPanel;
 import yansuen.graphics.GraphicsLoop;
-import yansuen.key.KeyManager;
+import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicLoop;
 import yansuen.network.Network;
 import yansuen.network.NetworkServer;
-import yansuen.network.Player;
 import yansuen.network.ServerListener;
 
 /**
  *
  * @author Link162534
  */
-public class Application implements ActionListener, ServerListener {
+public class Application implements ServerListener {
 
-    public Network network;
-    protected final ConcurrentHashMap<Integer, Player> playerList = new ConcurrentHashMap<>();
-    protected final Player localPlayer;
+    protected Network network;
     protected boolean started = false;
 
-    public LogicLoop ll = new LogicLoop(5000000L, 1);
-    public GraphicsLoop gl = new GraphicsLoop(33);
-    public KeyManager keyManager = new KeyManager();
-    public World world = new World(keyManager);
-    public GamePanel gamePanel = new GamePanel(world);
-    public Screen screen;
+    protected LogicLoop ll = new LogicLoop(5000000L, 1);
+    protected GraphicsLoop gl = new GraphicsLoop(33);
+    protected MasterKeyManager keyManager = new MasterKeyManager();
+    protected World world = new World(keyManager);
+    protected GamePanel gamePanel = new GamePanel(world);
+    protected Screen screen;
+
+    public JPanel mainPanel;
 
     public Application(Screen screen) {
-        localPlayer = new Player(this);
         ll.setLogic(world);
         gl.setRepaintTarget(screen);
         this.screen = screen;
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyManager);
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyManager.getLocalKeyManager());
         // localPlayer.getTools().selectTool(localPlayer.getDrawTool());
     }
 
@@ -51,7 +50,7 @@ public class Application implements ActionListener, ServerListener {
         started = true;
         ll.start();
         gl.start();
-        gamePanel.addKeyListener(keyManager);
+        mainPanel = (JPanel) screen.getContentPane();
         screen.setContentPane(gamePanel);
     }
 
@@ -60,11 +59,10 @@ public class Application implements ActionListener, ServerListener {
         if (!started)
             return;
         started = false;
+        screen.setContentPane(mainPanel);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        /* new Thread(() -> {
+    /* new Thread(() -> {
             if (e.getSource() == gui.getConnectToServerButton()) {
                 connectToIp(gui.getIpTextField().getText());
                 SwingUtilities.getWindowAncestor(((Component) e.getSource())).setVisible(false);
@@ -75,17 +73,19 @@ public class Application implements ActionListener, ServerListener {
                 SwingUtilities.getWindowAncestor(((Component) e.getSource())).setVisible(false);
             }
         }).start();*/
-    }
-
     public void createServer() {
         try {
             NetworkServer server = new NetworkServer(47624);
             server.open();
             server.addServerListener(this);
+
         } catch (IOException ex) {
-            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Application.class
+                    .getName()).log(Level.SEVERE, null, ex);
+
         } catch (NumberFormatException ex) {
-            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Application.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -95,7 +95,8 @@ public class Application implements ActionListener, ServerListener {
             network.connect();
         } catch (UnknownHostException ex) {
         } catch (IOException ex) {
-            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Application.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -105,12 +106,9 @@ public class Application implements ActionListener, ServerListener {
             network.disconnect();
             network = null;
         } catch (IOException ex) {
-            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Application.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public Network getNetwork() {
-        return network;
     }
 
     @Override
@@ -119,6 +117,70 @@ public class Application implements ActionListener, ServerListener {
                                      id + "",
                                      (int) gui.getDrawPanel().getImageDimension().getWidth() + "",
                                      (int) gui.getDrawPanel().getImageDimension().getHeight() + "");*/
+    }
+
+    public Network getNetwork() {
+        return network;
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+
+    public LogicLoop getLl() {
+        return ll;
+    }
+
+    public void setLl(LogicLoop ll) {
+        this.ll = ll;
+    }
+
+    public GraphicsLoop getGl() {
+        return gl;
+    }
+
+    public void setGl(GraphicsLoop gl) {
+        this.gl = gl;
+    }
+
+    public MasterKeyManager getKeyManager() {
+        return keyManager;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
+
+    public GamePanel getGamePanel() {
+        return gamePanel;
+    }
+
+    public void setGamePanel(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+    }
+
+    public Screen getScreen() {
+        return screen;
+    }
+
+    public void setScreen(Screen screen) {
+        this.screen = screen;
+    }
+
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
+
+    public void setMainPanel(JPanel mainPanel) {
+        this.mainPanel = mainPanel;
     }
 
 }

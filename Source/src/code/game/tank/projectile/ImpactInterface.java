@@ -7,7 +7,7 @@ package code.game.tank.projectile;
 
 import code.game.World;
 import code.game.tank.Weapon;
-import yansuen.key.KeyManager;
+import yansuen.key.MasterKeyManager;
 
 /**
  *
@@ -15,6 +15,6 @@ import yansuen.key.KeyManager;
  */
 public interface ImpactInterface {
 
-    void doImpact(Projectile projectile, Weapon weapon, long tick, World world, KeyManager manager);
+    void doImpact(Projectile projectile, Weapon weapon, long tick, World world, MasterKeyManager manager);
 
 }

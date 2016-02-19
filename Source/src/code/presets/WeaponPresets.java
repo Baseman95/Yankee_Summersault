@@ -12,7 +12,7 @@ import code.game.tank.Chassis;
 import code.game.tank.Weapon;
 import code.game.tank.projectile.ImpactInterface;
 import code.game.tank.projectile.Projectile;
-import yansuen.key.KeyManager;
+import yansuen.key.MasterKeyManager;
 import code.game.tank.projectile.ShotInterface;
 import static code.presets.ImagePresets.WEAPON_MG_1;
 import java.awt.image.BufferedImage;
@@ -32,10 +32,10 @@ public class WeaponPresets {
     private WeaponPresets() {
     }
     
-    static LogicInterface fastReload = (GameObject gameObject, long tick, World world1, KeyManager manager) -> {
+    static LogicInterface fastReload = (GameObject gameObject, long tick, World world1, MasterKeyManager manager) -> {
     };
 
-    static ImpactInterface bulletImpact = (Projectile projectile, Weapon weapon, long tick, World world1, KeyManager manager) -> {
+    static ImpactInterface bulletImpact = (Projectile projectile, Weapon weapon, long tick, World world1, MasterKeyManager manager) -> {
     };
 
     public static ShotInterface createSingleShot(long duration, float speed, BufferedImage img) {

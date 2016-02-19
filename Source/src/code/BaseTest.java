@@ -9,7 +9,7 @@ import code.menu.Screen;
 import yansuen.graphics.GraphicsLoop;
 import yansuen.logic.LogicLoop;
 import java.io.IOException;
-import yansuen.key.KeyManager;
+import yansuen.key.MasterKeyManager;
 import code.presets.ImagePresets;
 import code.presets.ControllerPresets;
 import code.presets.DrivePresets;
@@ -51,7 +51,7 @@ public class BaseTest extends Application {
         zank.getWeapons().add(mg);
         zank.getWeapons().add(rocket);
         zank.getWeapons().add(flame);
-        zank.setDrive(DrivePresets.SIMPLE);
+        zank.setDrive(DrivePresets.createSimpleDrive());
         world.addGameObject(zank);
         world.addGameObject(mg);
         world.addGameObject(rocket);

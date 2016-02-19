@@ -11,7 +11,7 @@ import code.game.tank.Chassis;
 import code.presets.GraphicsPresets;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.graphics.GraphicsLoop;
-import yansuen.key.KeyManager;
+import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;
 import yansuen.logic.LogicLoop;
 import java.awt.event.KeyEvent;
@@ -34,7 +34,7 @@ public class KeyTest {
     public static void main(String[] args) throws IOException {
         LogicLoop ll = new LogicLoop(5000000L, 1);
         GraphicsLoop gl = new GraphicsLoop(33);
-        KeyManager keyManager = new KeyManager();
+        MasterKeyManager keyManager = new MasterKeyManager();
         World world = new World(keyManager);
         GamePanel screen = new GamePanel(world);
 
@@ -48,7 +48,7 @@ public class KeyTest {
         screen.setVisible(true);
         BufferedImage bulletImg = ImageIO.read(new File("cool_tank.png"));
 
-        LogicInterface tankLogic = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+        LogicInterface tankLogic = (GameObject gameObject, long tick, World w, MasterKeyManager manager) -> {
             DataObject data = (DataObject) gameObject.getData();
             if (manager.isKeyPressed(KeyEvent.VK_SPACE) && tick - bulletTick > 100) {
                 DataObject dataO = new DataObject(new PositionData(data.getPositionData().getX()
@@ -80,7 +80,7 @@ public class KeyTest {
         };
         BufferedImage tankImg = ImageIO.read(new File("cool_tank.png"));
 
-        ControllerInterface playerController = (GameObject gameObject, long tick, World w, KeyManager manager) -> {
+        ControllerInterface playerController = (GameObject gameObject, long tick, World w, MasterKeyManager manager) -> {
             DataObject data = (DataObject) gameObject.getData();
             MovementData mData = data.getMovementData();
             double ang = data.getPositionData().getRotation();

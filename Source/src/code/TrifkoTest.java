@@ -8,7 +8,7 @@ import code.presets.DrivePresets;
 import code.presets.GraphicsPresets;
 import code.presets.ImagePresets;
 import yansuen.graphics.GraphicsLoop;
-import yansuen.key.KeyManager;
+import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicLoop;
 import java.io.IOException;
 import yansuen.game.GameObject;
@@ -24,7 +24,7 @@ public class TrifkoTest {
     public static void main(String[] args) throws IOException {
         LogicLoop ll = new LogicLoop(5000000L, 1);
         GraphicsLoop gl = new GraphicsLoop(33);
-        KeyManager keyManager = new KeyManager();
+        MasterKeyManager keyManager = new MasterKeyManager();
         World world = new World(keyManager);
         GamePanel screen = new GamePanel(world);
 

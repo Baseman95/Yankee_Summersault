@@ -7,10 +7,12 @@ import code.data.PositionData;
 import yansuen.controller.ControllerInterface;
 import yansuen.graphics.Camera;
 import yansuen.graphics.GraphicsInterface;
-import yansuen.key.KeyManager;
+import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicLooper;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import yansuen.key.NetworkKeyManager;
 
 /**
  *
@@ -22,10 +24,10 @@ public class World implements LogicLooper {
     protected ArrayList<GameObject> addObjects = new ArrayList<>();
     protected ArrayList<GameObject> removeObjects = new ArrayList<>();
 
-    protected KeyManager keyManager;
+    protected MasterKeyManager keyManager;
     protected Camera camera;
 
-    public World(KeyManager keyManager) {
+    public World(MasterKeyManager keyManager) {
         this.keyManager = keyManager;
     }
 

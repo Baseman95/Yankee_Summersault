@@ -2,6 +2,7 @@ package yansuen.network;
 
 
 import code.game.Application;
+import code.network.CommandList;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +14,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import yansuen.network.commands.Command;
 import yansuen.network.commands.BroadcastCommand;
 
 /**
@@ -115,7 +115,7 @@ public class Network {
 
     public static String buildSendBroadcastString(int id, int command, String... argument) {
         StringBuilder message = new StringBuilder(String.valueOf(id));
-        message.append(Packet.SEPERATOR).append(Command.getCommandId(BroadcastCommand.class));
+        message.append(Packet.SEPERATOR).append(CommandList.getCommandId(BroadcastCommand.class));
         message.append(Packet.SEPERATOR).append(command).append(Packet.ARGUMENT_SEPERATOR);
         for (String a : argument) {
             message.append(a.replace(Packet.ARGUMENT_SEPERATOR, "")).append(Packet.ARGUMENT_SEPERATOR);

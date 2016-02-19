@@ -7,7 +7,7 @@ package code.game.tank;
 
 import code.game.World;
 import yansuen.game.GameObject;
-import yansuen.key.KeyManager;
+import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;
 
 /**
@@ -48,7 +48,7 @@ public class Drive implements LogicInterface {
     }
 
     @Override
-    public void doLogic(GameObject gameObject, long tick, World world, KeyManager manager) {
+    public void doLogic(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
         if (accelerateFunction != null && accelerate)
             accelerateFunction.doLogic(gameObject, tick, world, manager);
         if (decelerateFunction != null && decelerate)

@@ -2,7 +2,7 @@ package yansuen.controller;
 
 import yansuen.game.GameObject;
 import code.game.World;
-import yansuen.key.KeyManager;
+import yansuen.key.MasterKeyManager;
 
 /**
  *
@@ -10,6 +10,6 @@ import yansuen.key.KeyManager;
  */
 public interface ControllerInterface {
 
-    void control(GameObject gameObject, long tick, World world, KeyManager manager);
+    void control(GameObject gameObject, long tick, World world, MasterKeyManager manager);
 
 }

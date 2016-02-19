@@ -1,5 +1,6 @@
 package yansuen.network;
 
+import code.network.CommandList;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
@@ -7,9 +8,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import yansuen.network.commands.Command;
-import yansuen.network.commands.client.SetIdCommand;
-import yansuen.network.commands.client.UpdateIdListCommand;
+import yansuen.network.commands.SetIdCommand;
 
 /**
  *
@@ -174,13 +173,12 @@ public class NetworkServer {
                     int id = clients.indexOf(client);
                     client.setId(id);
                     Logger.getLogger(NewClientListener.class.getName()).log(Level.INFO, "Client {0} connected.", id);
-                    sendCommand(id, Command.getCommandId(SetIdCommand.class), Integer.toString(id));
+                    sendCommand(id, CommandList.getCommandId(SetIdCommand.class), Integer.toString(id));
                     int[] index = getIndices();
                     String[] arg = new String[index.length];
                     for (int i = 0; i < index.length; i++) {
                         arg[i] = Integer.toString(index[i]);
                     }
-                    broadcastAllCommand(Command.getCommandId(UpdateIdListCommand.class), arg);
                     client.start();
                     client.setActive(true);
                     serverListener.onConnectedToServer(id);

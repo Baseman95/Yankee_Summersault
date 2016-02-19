@@ -18,7 +18,7 @@ import code.data.DataObjectListener;
 import code.data.DataObjectListenerAdapter;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
-import yansuen.key.KeyManager;
+import yansuen.key.MasterKeyManager;
 
 /**
  *
@@ -31,7 +31,7 @@ public class Chassis extends GameObject {
     protected DataObjectListener weaponUpdater = new DataObjectListenerAdapter() {
         @Override
         public void onPositionChanged(DataObject data, float xOld, float yOld) {
-            DataObject d = ((DataObject) dataObject);
+            DataObject d = ((DataObject) data);
             for (Weapon weapon : weapons) {
                 DataObject wd = ((DataObject) weapon.getData());
                 wd.getPositionData().setX(d.getPositionData().getX() + d.getPositionData().getWidth() / 2
@@ -43,7 +43,7 @@ public class Chassis extends GameObject {
 
         @Override
         public void onRotationChanged(DataObject data, double rOld) {
-            DataObject d = ((DataObject) dataObject);
+            DataObject d = ((DataObject) data);
             for (Weapon weapon : weapons) {
                 DataObject wd = ((DataObject) weapon.getData());
                 wd.getPositionData().setRotation(d.getPositionData().getRotation() - weapon.getRelativeRotation());
@@ -54,7 +54,7 @@ public class Chassis extends GameObject {
 
     public Chassis() {
         super();
-        ((DataObject) dataObject).addDataObjectListener(weaponUpdater);
+        ((DataObject) data).addDataObjectListener(weaponUpdater);
     }
 
     public Chassis(float x, float y, BufferedImage img,
@@ -75,7 +75,7 @@ public class Chassis extends GameObject {
     }
 
     @Override
-    public void doLogic(GameObject gameObject, long tick, World world, KeyManager manager) {
+    public void doLogic(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
         super.doLogic(gameObject, tick, world, manager);
         if (drive != null)
             drive.doLogic(gameObject, tick, world, manager);

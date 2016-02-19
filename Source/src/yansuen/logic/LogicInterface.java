@@ -1,7 +1,7 @@
 package yansuen.logic;
 
 import code.game.World;
-import yansuen.key.KeyManager;
+import yansuen.key.MasterKeyManager;
 import yansuen.game.GameObject;
 
 /**
@@ -10,6 +10,6 @@ import yansuen.game.GameObject;
  */
 public interface LogicInterface {
 
-    void doLogic(GameObject gameObject, long tick, World world, KeyManager manager);
+    void doLogic(GameObject gameObject, long tick, World world, MasterKeyManager manager);
 
 }

@@ -10,7 +10,7 @@ import yansuen.graphics.GraphicsInterface;
 import yansuen.logic.LogicInterface;
 import java.awt.image.BufferedImage;
 import yansuen.data.Data;
-import yansuen.key.KeyManager;
+import yansuen.key.MasterKeyManager;
 
 /**
  *
@@ -18,16 +18,14 @@ import yansuen.key.KeyManager;
  */
 public class GameObject implements LogicInterface {
 
-    protected Data dataObject;
+    protected int networkProjectionId = -1;
+    protected Data data;
     protected GraphicsInterface graphicsInterface;
     protected ControllerInterface controllerInterface;
 
     public GameObject() {
     }
 
-    /**
-     * Width and height are taken from the img.
-     */
     public GameObject(float x, float y, BufferedImage img,
             GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         this(x, y, img.getWidth(), img.getHeight(), img, graphicsInterface, controllerInterface);
@@ -36,31 +34,31 @@ public class GameObject implements LogicInterface {
     public GameObject(float x, float y, float w, float h, BufferedImage img,
             GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         this((Data) (new DataObject(new PositionData(x, y, w, h), new ImageData(img), new MovementData())),
-                graphicsInterface, controllerInterface);
+             graphicsInterface, controllerInterface);
     }
 
     public GameObject(Data dataObject,
             GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
-        this.dataObject = dataObject;
+        this.data = dataObject;
         this.graphicsInterface = graphicsInterface;
         this.controllerInterface = controllerInterface;
     }
 
     @Override
-    public void doLogic(GameObject gameObject, long tick, World world, KeyManager manager) {
+    public void doLogic(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
     }
 
     public void destroy(World world) {
-        if (dataObject instanceof DataObject)
-            ((DataObject) dataObject).getListenerList().clear();
+        if (data instanceof DataObject)
+            ((DataObject) data).getListenerList().clear();
     }
 
     public Data getData() {
-        return dataObject;
+        return data;
     }
 
-    public void setDataObject(Data dataObject) {
-        this.dataObject = dataObject;
+    public void setData(Data data) {
+        this.data = data;
     }
 
     public GraphicsInterface getGraphicsInterface() {
@@ -77,6 +75,18 @@ public class GameObject implements LogicInterface {
 
     public void setControllerInterface(ControllerInterface controllerInterface) {
         this.controllerInterface = controllerInterface;
+    }
+
+    public boolean istNetworkProjection() {
+        return networkProjectionId != -1;
+    }
+
+    public int getNetworkProjectionId() {
+        return networkProjectionId;
+    }
+
+    public void setNetworkProjectionId(int networkProjectionId) {
+        this.networkProjectionId = networkProjectionId;
     }
 
 }

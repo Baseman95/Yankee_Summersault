@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import yansuen.controller.ControllerInterface;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
-import yansuen.key.KeyManager;
+import yansuen.key.MasterKeyManager;
 
 /**
  *
@@ -63,7 +63,7 @@ public class Projectile extends Chassis {
     }
 
     @Override
-    public void doLogic(GameObject gameObject, long tick, World world, KeyManager manager) {
+    public void doLogic(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
         super.doLogic(gameObject, tick, world, manager);
         if (deathtick != 0 && tick > deathtick)
             world.removeGameObject(gameObject);

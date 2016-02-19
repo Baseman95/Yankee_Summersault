@@ -1,5 +1,6 @@
 package yansuen.network;
 
+import code.network.CommandList;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,7 +28,7 @@ public class Packet {
         try {
             String[] args = split[2].split(Pattern.quote(ARGUMENT_SEPERATOR));
             return new Packet(Integer.parseInt(split[0]),
-                              (Command) Command.COMMAND_ARRAY[Integer.parseInt(split[1])].getConstructor().newInstance(),
+                              (Command) CommandList.COMMAND_ARRAY[Integer.parseInt(split[1])].getConstructor().newInstance(),
                               args);
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
                  InvocationTargetException | NoSuchMethodException | SecurityException ex) {
