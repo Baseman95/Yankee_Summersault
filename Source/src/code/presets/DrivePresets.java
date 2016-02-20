@@ -75,13 +75,7 @@ public class DrivePresets {
 
     public static Drive createRocketDrive(float travelspeed, double rotationspeed) {
         Drive drive = new Drive(
-                (Drive drive1, GameObject gameObject, long tick, World w) -> {
-                    DataObject data = (DataObject) gameObject.getData();
-                    PolarVector p = new PolarVector(data.getPositionData().getRotation(), travelspeed);
-
-                    data.getMovementData().setMovementX(PolarVector.xFromPolar(p));
-                    data.getMovementData().setMovementY(PolarVector.yFromPolar(p));
-                }, null, null,
+                null, null, null,
                 (Drive drive1, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
                     data.getPositionData().increaseRotation(-rotationspeed);
@@ -91,8 +85,8 @@ public class DrivePresets {
                 }, null, null,
                 (Drive drive1, GameObject gameObject, long tick, World w) -> {
                     DataObject data = (DataObject) gameObject.getData();
-                    PolarVector p = new PolarVector(data.getPositionData().getRotation(),
-                            CartesianVector.lengthFromCartesian(new CartesianVector(data.getMovementData().getMovementX(), data.getMovementData().getMovementY())));
+                    PolarVector p = new PolarVector(data.getPositionData().getRotation(), travelspeed);
+
                     data.getMovementData().setMovementX(PolarVector.xFromPolar(p));
                     data.getMovementData().setMovementY(PolarVector.yFromPolar(p));
                 });

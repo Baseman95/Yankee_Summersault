@@ -79,9 +79,9 @@ public class Chassis extends GameObject {
         super.doLogic(gameObject, tick, world, manager);
         if (drive != null)
             drive.doLogic(gameObject, tick, world, manager);
-        weapons.stream().forEach((weapon) -> {
+        for (Weapon weapon : weapons) {
             weapon.doLogic(gameObject, tick, world, manager);
-        });
+        }
     }
 
     public ArrayList<Weapon> getWeapons() {

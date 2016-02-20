@@ -31,6 +31,7 @@ public class ImagePresets {
         public static BufferedImage TANK = loadImg("textures/vehicles_beta/m1128.png");
         public static BufferedImage TURRET_A = ImagePresets.loadImg("textures/weapons_beta/turrets/turretA.png");
         public static BufferedImage TRACER = ImagePresets.loadImg("textures/weapons_beta/shots/tracer.png");
+        public static BufferedImage SMOKE = ImagePresets.loadImg("textures/weapons_beta/shots/smoke.png");      
                 
 
         private Test() {
@@ -65,6 +66,7 @@ public class ImagePresets {
         public static BufferedImage SHOT_RL_1 = ImagePresets.loadImg("textures/weapons_beta/shots/missile.png");
         public static BufferedImage WEAPON_MG_1 = ImagePresets.loadImg("textures/weapons_beta/turrets/turretA.png");
         public static BufferedImage SHOT_MG_1 = ImagePresets.loadImg("textures/weapons_beta/shots/projectile.png");
+        public static BufferedImage SHOT_MG_2 = ImagePresets.loadImg("textures/weapons_beta/shots/projectile_mini.png");
 
         private Weapon() {
         }
@@ -72,7 +74,19 @@ public class ImagePresets {
 
     public static class Vehicle {
 
-        public static BufferedImage TANK_ABRAMS = ImagePresets.loadImg("textures/vehicles_beta/abrams.png");
+        public static BufferedImage TANK_ABRAMS_B = ImagePresets.loadImg("textures/vehicles_beta/load/abrams_b.png");
+        public static BufferedImage TANK_ABRAMS_R = ImagePresets.loadImg("textures/vehicles_beta/load/abrams_r.png");
+        public static BufferedImage HELI_APACHE_B = ImagePresets.loadImg("textures/vehicles_beta/load/apache_b.png");
+        public static BufferedImage HELI_APACHE_R = ImagePresets.loadImg("textures/vehicles_beta/load/apache_r.png");
+        public static BufferedImage PLANE_HARRIER_B = ImagePresets.loadImg("textures/vehicles_beta/load/harrier_b.png");
+        public static BufferedImage PLANE_HARRIER_R = ImagePresets.loadImg("textures/vehicles_beta/load/harrier_r.png");
+        public static BufferedImage WTANK_LAV300_B = ImagePresets.loadImg("textures/vehicles_beta/load/lav300_b.png");
+        public static BufferedImage WTANK_LAV300_R = ImagePresets.loadImg("textures/vehicles_beta/load/lav300_r.png");
+        public static BufferedImage CAR_TECHNICAL_B = ImagePresets.loadImg("textures/vehicles_beta/load/technical_b.png");
+        public static BufferedImage CAR_TECHNICAL_R = ImagePresets.loadImg("textures/vehicles_beta/load/technical_r.png");
+        
+        
+        
 
         private Vehicle() {
         }

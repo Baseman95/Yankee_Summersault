@@ -39,21 +39,25 @@ public class BaseTest extends Application {
         
  </editor-fold>*/
         Chassis zank = new Chassis(10, 10, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
-
-        Weapon mg = WeaponPresets.createMG(zank);
-        Weapon rocket = WeaponPresets.createRocketLauncher(zank);
-        Weapon flame = WeaponPresets.createFlameThrower(zank);
-        Weapon tracer = WeaponPresets.createTracer(zank);
-        zank.getWeapons().add(mg);
-        zank.getWeapons().add(rocket);
-        zank.getWeapons().add(flame);
-        zank.getWeapons().add(tracer);
         zank.setDrive(DrivePresets.SIMPLE);
-        world.addGameObject(zank);
-        world.addGameObject(mg);
-        world.addGameObject(rocket);
-        world.addGameObject(flame);
-        world.addGameObject(tracer);
+
+        Weapon mg = WeaponPresets.createMinigun(zank);
+        Weapon shotgun = WeaponPresets.createShotgun(zank);
+        Weapon tvmissile = WeaponPresets.createUserControlledRocketLauncher(zank);
+        Weapon smoke = WeaponPresets.createSmoke(zank);
+        
+        
+        zank.getWeapons().add(mg);
+        zank.getWeapons().add(shotgun);
+        zank.getWeapons().add(tvmissile);
+        zank.getWeapons().add(smoke);        
+        
+        
+        world.addGameObject(zank);        
+        world.addGameObject(shotgun);        
+        world.addGameObject(tvmissile);
+        world.addGameObject(smoke);
+        
     }
 
 }
