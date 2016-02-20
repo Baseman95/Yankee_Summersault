@@ -29,10 +29,8 @@ public class LinkTest extends Application {
     @Override
     public void start() {
         super.start();
-        Chassis zank = new Chassis(10, 10, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
-        zank.getWeapons().add(WeaponPresets.createPlasma(zank));
-        zank.getWeapons().add(WeaponPresets.createRocketLauncher(zank));
-        zank.getWeapons().add(WeaponPresets.createFlameThrower(zank));
+        Chassis zank = new Chassis(10, 10, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);        
+        zank.getWeapons().add(WeaponPresets.createRocketLauncher(zank));        
         zank.setDrive(DrivePresets.SIMPLE);
         //zank.setDrive(DrivePresets.createRocketDrive(3));
         world.addGameObject(zank);

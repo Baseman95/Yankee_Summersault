@@ -83,11 +83,8 @@ public class ImagePresets {
         public static BufferedImage WTANK_LAV300_B = ImagePresets.loadImg("textures/vehicles_beta/load/lav300_b.png");
         public static BufferedImage WTANK_LAV300_R = ImagePresets.loadImg("textures/vehicles_beta/load/lav300_r.png");
         public static BufferedImage CAR_TECHNICAL_B = ImagePresets.loadImg("textures/vehicles_beta/load/technical_b.png");
-        public static BufferedImage CAR_TECHNICAL_R = ImagePresets.loadImg("textures/vehicles_beta/load/technical_r.png");
+        public static BufferedImage CAR_TECHNICAL_R = ImagePresets.loadImg("textures/vehicles_beta/load/technical_r.png");      
         
-        
-        
-
         private Vehicle() {
         }
     }
