@@ -75,6 +75,8 @@ public class ControllerPresets {
         d.setBreaks(manager.isKeyPressed(KeyEvent.VK_SPACE));
         d.setTurnLeft(manager.isKeyPressed(KeyEvent.VK_A));
         d.setTurnRight(manager.isKeyPressed(KeyEvent.VK_D));
+        d.setStrafeLeft(manager.isKeyPressed(KeyEvent.VK_Q));
+        d.setStrafeRight(manager.isKeyPressed(KeyEvent.VK_E));
         for (int i = 0; i < c.getWeapons().size(); i++) {
             c.getWeapons().get(i).setShoot(manager.isKeyPressed(KeyEvent.VK_1 + i));
         }

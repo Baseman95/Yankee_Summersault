@@ -15,6 +15,7 @@ import yansuen.graphics.GraphicsLoop;
 import yansuen.key.KeyManager;
 import yansuen.logic.LogicLoop;
 import java.io.IOException;
+import javax.swing.JLabel;
 import yansuen.game.GameObject;
 
 /**
@@ -23,6 +24,11 @@ import yansuen.game.GameObject;
  */
 public class TrifkoTest extends Application {
 
+    public static JLabel Currentlabel = new JLabel();
+    public static JLabel Richtunglabel = new JLabel();
+    public static JLabel Driftlabel = new JLabel();
+    public static JLabel Deltalabel = new JLabel();
+    
     public static void main(String[] args) throws IOException {
         Screen screen = new Screen();
         Application application = new TrifkoTest(screen);
@@ -43,11 +49,20 @@ public class TrifkoTest extends Application {
         Weapon tracer = WeaponPresets.createTracer(heli);
         heli.getWeapons().add(tracer);
         world.addGameObject(tracer);
+        Weapon mg = WeaponPresets.createMG(heli);
+        heli.getWeapons().add(mg);
+        world.addGameObject(mg);
+        
+        
 
         //GameObject tank = new GameObject(10, 10, tankImg, tankLogic, defaultGraphics, playerController);
         GameObject tank2 = new GameObject(500, 300, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, null);
         world.getGameObjects().add(heli);
         world.getGameObjects().add(tank2);
+        gamePanel.add(Currentlabel);
+        gamePanel.add(Richtunglabel);
+        gamePanel.add(Driftlabel);
+        gamePanel.add(Deltalabel);
         
     }
 
