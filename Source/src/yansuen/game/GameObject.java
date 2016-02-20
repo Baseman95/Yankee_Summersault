@@ -9,16 +9,19 @@ import code.game.World;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.logic.LogicInterface;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import yansuen.data.Data;
 import yansuen.key.MasterKeyManager;
+import yansuen.network.NetworkSerializable;
 
 /**
  *
  * @author Link162534
  */
-public class GameObject implements LogicInterface {
+public class GameObject implements LogicInterface, NetworkSerializable {
 
     protected int networkProjectionId = -1;
+    protected int objectId = -1;
     protected Data data;
     protected GraphicsInterface graphicsInterface;
     protected ControllerInterface controllerInterface;
@@ -77,7 +80,7 @@ public class GameObject implements LogicInterface {
         this.controllerInterface = controllerInterface;
     }
 
-    public boolean istNetworkProjection() {
+    public boolean isNetworkProjection() {
         return networkProjectionId != -1;
     }
 
@@ -87,6 +90,35 @@ public class GameObject implements LogicInterface {
 
     public void setNetworkProjectionId(int networkProjectionId) {
         this.networkProjectionId = networkProjectionId;
+    }
+
+    public long getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(int objectId) {
+        this.objectId = objectId;
+    }
+
+    public static int objectIdCounter = 0;
+
+    public static int getNewObjectID() {
+        return objectIdCounter++;
+    }
+
+    @Override
+    public String[] networkSerialize() {
+        return data.networkSerialize();
+    }
+
+    @Override
+    public void networkDeserialize(String[] args) {
+        data.networkDeserialize(args);
+    }
+
+    @Override
+    public int networkSerializeArgumentCount() {
+        return data.networkSerializeArgumentCount();
     }
 
 }

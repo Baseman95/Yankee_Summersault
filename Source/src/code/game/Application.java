@@ -30,15 +30,13 @@ public class Application implements ServerListener {
     protected LogicLoop ll = new LogicLoop(5000000L, 1);
     protected GraphicsLoop gl = new GraphicsLoop(33);
     protected MasterKeyManager keyManager = new MasterKeyManager();
-    protected World world = new World(keyManager);
-    protected GamePanel gamePanel = new GamePanel(world);
+    protected World world;
+    protected GamePanel gamePanel;
     protected Screen screen;
 
     public JPanel mainPanel;
 
     public Application(Screen screen) {
-        ll.setLogic(world);
-        gl.setRepaintTarget(screen);
         this.screen = screen;
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyManager.getLocalKeyManager());
         // localPlayer.getTools().selectTool(localPlayer.getDrawTool());
@@ -48,6 +46,10 @@ public class Application implements ServerListener {
         if (started)
             return;
         started = true;
+        world = new World(keyManager, network);
+        gamePanel = new GamePanel(world);
+        gl.setRepaintTarget(screen);
+        ll.setLogic(world);
         ll.start();
         gl.start();
         mainPanel = (JPanel) screen.getContentPane();

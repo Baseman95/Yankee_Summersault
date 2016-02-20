@@ -9,6 +9,7 @@ import code.game.World;
 import yansuen.game.GameObject;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;
+import yansuen.network.NetworkSerializable;
 
 /**
  *
@@ -187,4 +188,28 @@ public class Drive implements LogicInterface {
         this.strafeRight = strafeRight;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="NetworkSerializeStuff">
+    /* @Override
+    public String[] networkSerialize() {
+    return new String[]{
+    String.valueOf(accelerate),
+    String.valueOf(decelerate),
+    String.valueOf(breaks),
+    String.valueOf(turnLeft),
+    String.valueOf(turnRight),
+    String.valueOf(strafeLeft),
+    String.valueOf(strafeRight)};
+    }
+    
+    @Override
+    public void networkDeserialize(String[] args) {
+    accelerate = Boolean.valueOf(args[0]);
+    decelerate = Boolean.valueOf(args[1]);
+    breaks = Boolean.valueOf(args[2]);
+    turnLeft = Boolean.valueOf(args[3]);
+    turnRight = Boolean.valueOf(args[4]);
+    strafeLeft = Boolean.valueOf(args[5]);
+    strafeRight = Boolean.valueOf(args[6]);
+    }*/
+//</editor-fold>
 }

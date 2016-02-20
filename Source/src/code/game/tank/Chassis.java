@@ -16,6 +16,7 @@ import yansuen.controller.ControllerInterface;
 import yansuen.data.Data;
 import code.data.DataObjectListener;
 import code.data.DataObjectListenerAdapter;
+import java.util.Arrays;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;
@@ -35,9 +36,9 @@ public class Chassis extends GameObject {
             for (Weapon weapon : weapons) {
                 DataObject wd = ((DataObject) weapon.getData());
                 wd.getPositionData().setX(d.getPositionData().getX() + d.getPositionData().getWidth() / 2
-                        + weapon.getRelativeX() - ((DataObject) weapon.getData()).getPositionData().getWidth() / 2);
+                                          + weapon.getRelativeX() - ((DataObject) weapon.getData()).getPositionData().getWidth() / 2);
                 wd.getPositionData().setY(d.getPositionData().getY() + d.getPositionData().getHeight() / 2
-                        + weapon.getRelativeY() - ((DataObject) weapon.getData()).getPositionData().getHeight() / 2);
+                                          + weapon.getRelativeY() - ((DataObject) weapon.getData()).getPositionData().getHeight() / 2);
             }
         }
 
@@ -65,7 +66,7 @@ public class Chassis extends GameObject {
     public Chassis(float x, float y, float w, float h, BufferedImage img,
             GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         this((Data) (new DataObject(new PositionData(x, y, w, h), new ImageData(img), new MovementData())),
-                graphicsInterface, controllerInterface);
+             graphicsInterface, controllerInterface);
     }
 
     public Chassis(Data dataObject,
@@ -96,4 +97,33 @@ public class Chassis extends GameObject {
         return drive;
     }
 
+    @Override
+    public String[] networkSerialize() {
+        ArrayList<String> args = new ArrayList<>(Arrays.asList(super.networkSerialize()));
+        for (int i = 0; i < weapons.size(); i++) {
+            args.addAll(Arrays.asList(weapons.get(i).networkSerialize()));
+        }
+        return args.toArray(new String[0]);
+    }
+
+    @Override
+    public void networkDeserialize(String[] args) {
+        super.networkDeserialize(args);
+        if (weapons.size() > 0) {
+            int weaponLength = weapons.get(0).networkSerializeArgumentCount();
+            for (int i = 0; i < weapons.size(); i++) {
+                weapons.get(i).networkDeserialize(Arrays.copyOfRange(
+                        args, super.networkSerializeArgumentCount() + i * weaponLength, args.length));
+            }
+        }
+    }
+
+    @Override
+    public int networkSerializeArgumentCount() {
+        int count = super.networkSerializeArgumentCount();
+        if (weapons.isEmpty())
+            return count;
+        count += weapons.get(0).networkSerializeArgumentCount() * weapons.size();
+        return count;
+    }
 }

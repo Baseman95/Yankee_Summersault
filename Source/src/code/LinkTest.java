@@ -14,6 +14,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import yansuen.game.GameObject;
 
 /**
  *
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  */
 public class LinkTest extends Application {
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws Exception {
         Screen screen = new Screen();
         Application application = new LinkTest(screen);
         screen.setApplication(application);
@@ -58,7 +59,7 @@ public class LinkTest extends Application {
                         args.add(0, network.getId() + "");
                         args.add(1, pressed + "");
                         args.add(2, e.getKeyCode() + "");
-                        System.out.println("Sending(" + network.getId() + "): " + pressed + ":" + e.getKeyCode());
+                        //System.out.println("Sending(" + network.getId() + "): " + pressed + ":" + e.getKeyCode());
                         network.sendBroadcastCommand(CommandList.getCommandId(KeyPressedCommand.class), args.toArray(new String[0]));
                         break;
                 }
@@ -68,6 +69,8 @@ public class LinkTest extends Application {
         keyManager.setNetwork(network);
         john.setNetworkProjectionId(0);
         julia.setNetworkProjectionId(1);
+        john.setObjectId(GameObject.getNewObjectID());
+        julia.setObjectId(GameObject.getNewObjectID());
 
     }
 

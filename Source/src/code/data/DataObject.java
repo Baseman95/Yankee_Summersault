@@ -2,13 +2,14 @@ package code.data;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import yansuen.data.Data;
 
 /**
  *
  * @author Link162534
  */
-public class DataObject extends Data implements DataObjectListener {
+public class DataObject implements Data, DataObjectListener {
 
     protected PositionData positionData;
     protected ImageData imageData;
@@ -101,6 +102,33 @@ public class DataObject extends Data implements DataObjectListener {
     @Override
     public String toString() {
         return "DataObject[" + positionData + ", " + movementData + ", " + imageData + ']';
+    }
+
+    @Override
+    public String[] networkSerialize() {
+        String[] ps = positionData.networkSerialize();
+        String[] ms = movementData.networkSerialize();
+        String[] is = imageData.networkSerialize();
+        String[] args = new String[ps.length + ms.length + is.length];
+        System.arraycopy(ps, 0, args, 0, ps.length);
+        System.arraycopy(ms, 0, args, ps.length, ms.length);
+        System.arraycopy(is, 0, args, ps.length + ms.length, is.length);
+        return args;
+    }
+
+    @Override
+    public void networkDeserialize(String[] args) {
+        positionData.networkDeserialize(args);
+        movementData.networkDeserialize(Arrays.copyOfRange(args, positionData.networkSerializeArgumentCount(), args.length));
+        imageData.networkDeserialize(Arrays.copyOfRange(args, positionData.networkSerializeArgumentCount()
+                                                              + movementData.networkSerializeArgumentCount(), args.length));
+    }
+
+    @Override
+    public int networkSerializeArgumentCount() {
+        return positionData.networkSerializeArgumentCount()
+               + movementData.networkSerializeArgumentCount()
+               + imageData.networkSerializeArgumentCount();
     }
 
 }

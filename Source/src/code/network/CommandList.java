@@ -19,7 +19,8 @@ public class CommandList {
                                            UpdateIdListCommand.class,
                                            BroadcastCommand.class,
                                            ReceiveTextCommand.class,
-                                           KeyPressedCommand.class};
+                                           KeyPressedCommand.class,
+                                           UpdateObjectCommand.class};
 
     public static int getCommandId(Class command) {
         int id;

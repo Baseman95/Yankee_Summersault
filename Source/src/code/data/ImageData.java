@@ -6,12 +6,13 @@
 package code.data;
 
 import java.awt.image.BufferedImage;
+import yansuen.data.Data;
 
 /**
  *
  * @author Link
  */
-public class ImageData {
+public class ImageData implements Data {
 
     protected BufferedImage image;
     DataObject parent = null;
@@ -29,6 +30,20 @@ public class ImageData {
 
     public BufferedImage getImage() {
         return image;
+    }
+
+    @Override
+    public String[] networkSerialize() {
+        return new String[0];
+    }
+
+    @Override
+    public void networkDeserialize(String[] args) {
+    }
+
+    @Override
+    public int networkSerializeArgumentCount() {
+        return 0;
     }
 
 }

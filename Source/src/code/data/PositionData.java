@@ -5,11 +5,13 @@
  */
 package code.data;
 
+import yansuen.network.NetworkSerializable;
+
 /**
  *
  * @author Link
  */
-public class PositionData {
+public class PositionData implements NetworkSerializable {
 
     protected float x;
     protected float y;
@@ -114,7 +116,27 @@ public class PositionData {
     }
 
     @Override
+    public String[] networkSerialize() {
+        return NetworkSerializable.generateArguments(x, y, width, height, rotation);
+    }
+
+    @Override
+    public void networkDeserialize(String[] args) {
+        x = Float.valueOf(args[0]);
+        y = Float.valueOf(args[1]);
+        width = Float.valueOf(args[2]);
+        height = Float.valueOf(args[3]);
+        rotation = Double.valueOf(args[4]);
+    }
+
+    @Override
+    public int networkSerializeArgumentCount() {
+        return 5;
+    }
+
+    @Override
     public String toString() {
         return "PositionData[" + x + "x|" + y + "y, " + width + "w|" + height + "h, " + rotation + "r]";
     }
+
 }

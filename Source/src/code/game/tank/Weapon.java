@@ -15,12 +15,15 @@ import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;
 import code.game.tank.projectile.ShotInterface;
+import java.util.ArrayList;
+import java.util.Arrays;
+import yansuen.network.NetworkSerializable;
 
 /**
  *
  * @author Link
  */
-public class Weapon extends GameObject {
+public class Weapon extends GameObject implements NetworkSerializable {
 
     protected Chassis chassis;
     protected ShotInterface shotFunction;
@@ -40,9 +43,9 @@ public class Weapon extends GameObject {
             ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y, float w, float h,
             BufferedImage img, GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         super(((DataObject) chassis.getData()).getPositionData().getX() + ((DataObject) chassis.getData()).getPositionData().getWidth() / 2
-                + x - w / 2,
-                ((DataObject) chassis.getData()).getPositionData().getY() + ((DataObject) chassis.getData()).getPositionData().getHeight() / 2
-                + y - h / 2, w, h, img, graphicsInterface, controllerInterface);
+              + x - w / 2,
+              ((DataObject) chassis.getData()).getPositionData().getY() + ((DataObject) chassis.getData()).getPositionData().getHeight() / 2
+              + y - h / 2, w, h, img, graphicsInterface, controllerInterface);
         this.chassis = chassis;
         this.cooldown = cooldown;
         this.shotFunction = shotFunction;
@@ -55,9 +58,9 @@ public class Weapon extends GameObject {
             ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y,
             BufferedImage img, GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         super(((DataObject) chassis.getData()).getPositionData().getX() + ((DataObject) chassis.getData()).getPositionData().getWidth() / 2
-                + x - img.getWidth() / 2,
-                ((DataObject) chassis.getData()).getPositionData().getY() + ((DataObject) chassis.getData()).getPositionData().getHeight() / 2
-                + y - img.getHeight() / 2, img, graphicsInterface, controllerInterface);
+              + x - img.getWidth() / 2,
+              ((DataObject) chassis.getData()).getPositionData().getY() + ((DataObject) chassis.getData()).getPositionData().getHeight() / 2
+              + y - img.getHeight() / 2, img, graphicsInterface, controllerInterface);
         this.chassis = chassis;
         this.cooldown = cooldown;
         this.shotFunction = shootFunction;
@@ -165,4 +168,27 @@ public class Weapon extends GameObject {
         this.reload = reload;
     }
 
+    @Override
+    public String[] networkSerialize() {
+        ArrayList<String> args = new ArrayList<>();
+        args.addAll(Arrays.asList(super.networkSerialize()));
+        args.add(String.valueOf(relativeRotation));
+        args.add(String.valueOf(xRelative));
+        args.add(String.valueOf(yRelative));
+        return args.toArray(new String[0]);
+    }
+
+    @Override
+    public void networkDeserialize(String[] args) {
+        super.networkDeserialize(args);
+        int i = args.length;
+        yRelative = Float.valueOf(args[--i]);
+        xRelative = Float.valueOf(args[--i]);
+        relativeRotation = Double.valueOf(args[--i]);
+    }
+
+    @Override
+    public int networkSerializeArgumentCount() {
+        return 3 + super.networkSerializeArgumentCount();
+    }
 }

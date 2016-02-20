@@ -5,11 +5,14 @@
  */
 package code.data;
 
+import yansuen.data.Data;
+import yansuen.network.NetworkSerializable;
+
 /**
  *
  * @author Link
  */
-public class MovementData {
+public class MovementData implements Data {
 
     protected float movementX;
     protected float movementY;
@@ -64,6 +67,22 @@ public class MovementData {
     @Override
     public String toString() {
         return "MovementData[" + movementX + "|" + movementY + ']';
+    }
+
+    @Override
+    public String[] networkSerialize() {
+        return NetworkSerializable.generateArguments(movementX, movementY);
+    }
+
+    @Override
+    public void networkDeserialize(String[] args) {
+        this.movementX = Float.valueOf(args[0]);
+        this.movementY = Float.valueOf(args[1]);
+    }
+
+    @Override
+    public int networkSerializeArgumentCount() {
+        return 2;
     }
 
 }
