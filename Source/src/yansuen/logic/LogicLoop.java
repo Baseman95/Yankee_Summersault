@@ -16,6 +16,7 @@ public class LogicLoop extends Thread {
     private boolean running = false;
     private boolean paused = false;
     private long tickCount = 0;
+    private final int tplLimit = 5;
 
     public LogicLoop(long tickLength, int sleepTime) {
         this.tickLength = tickLength;
@@ -28,6 +29,7 @@ public class LogicLoop extends Thread {
         long time;
         long newTime;
         long deltaTime = 0;
+        int tpl;
         while (running) {
             time = System.nanoTime();
             while (!paused) {
@@ -38,11 +40,16 @@ public class LogicLoop extends Thread {
                     newTime = System.nanoTime();
                     deltaTime += newTime - time;
                     time = newTime;
-
+                    tpl = 0;
                     while (deltaTime > tickLength) {
                         deltaTime -= tickLength;
                         looper.onLogicLoop(tickCount);
                         tickCount++;
+                        tpl++;
+                        if (tpl >= tplLimit) {
+                            deltaTime = 0;
+                            break;
+                        }
                     }
 
                 } catch (InterruptedException ex) {
