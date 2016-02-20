@@ -42,7 +42,9 @@ public class World implements LogicLooper {
     public synchronized void onLogicLoop(long tick) {
         for (GameObject gameObject : gameObjects) {
             gameObject.doLogic(gameObject, tick, this, keyManager);
-            gameObject.getControllerInterface().control(gameObject, tick, this, keyManager);
+            ControllerInterface ci = gameObject.getControllerInterface();
+            if (ci != null)
+                ci.control(gameObject, tick, this, keyManager);
             moveGameObject(gameObject);
             if (network != null && network.getId() == 0 && gameObject.getObjectId() != -1 && synchronizeTick < tick) {
                 ArrayList<String> args = new ArrayList();
