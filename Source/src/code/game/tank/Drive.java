@@ -50,6 +50,8 @@ public class Drive implements LogicInterface {
 
     @Override
     public void doLogic(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
+        if (driveLogicInterface != null)
+            driveLogicInterface.doDriveLogic(this, gameObject, tick, world);
         if (accelerateFunction != null && accelerate)
             accelerateFunction.doDriveLogic(this, gameObject, tick, world);
         if (decelerateFunction != null && decelerate)
