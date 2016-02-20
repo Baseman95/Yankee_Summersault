@@ -9,7 +9,6 @@ import code.data.PositionData;
 import code.game.World;
 import code.game.tank.Chassis;
 import code.presets.GraphicsPresets;
-import yansuen.graphics.GraphicsInterface;
 import yansuen.graphics.GraphicsLoop;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;

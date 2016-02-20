@@ -32,6 +32,7 @@ public class MasterKeyManager {
     public boolean isKeyPressed(Integer key, int id) {
         if (id == -1 || id == network.getId())
             return isKeyPressed(key);
+        System.out.println(network.getId());
         NetworkKeyManager knm = networkManagerList.get(id);
         if (knm == null) {
             networkManagerList.put(id, new NetworkKeyManager());

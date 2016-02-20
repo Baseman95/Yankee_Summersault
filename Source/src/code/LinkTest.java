@@ -36,17 +36,18 @@ public class LinkTest extends Application {
     @Override
     public void start() {
         super.start();
-        Chassis john = new Chassis(10, 10, ImagePresets.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
-        john.getWeapons().add(WeaponPresets.createPlasma(john));
-        john.getWeapons().add(WeaponPresets.createRocketLauncher(john));
-        john.getWeapons().add(WeaponPresets.createFlameThrower(john));
-        john.setDrive(DrivePresets.createSimpleDrive());
-        //zank.setDrive(DrivePresets.createRocketDrive(3));
-        world.addGameObject(john);
+        Chassis zank = new Chassis(10, 10, ImagePresets.Vehicle.WTANK_LAV300_R, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        zank.getWeapons().add(WeaponPresets.createRocketLauncher(zank));
+        zank.setDrive(DrivePresets.createSimpleDrive());
+        world.addGameObject(zank);
 
-        Chassis julia = new Chassis(50, 50, ImagePresets.TANK_ABRAMS, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Chassis julia = new Chassis(50, 50, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         julia.setDrive(DrivePresets.createSimpleDrive());
         world.addGameObject(julia);
+
+        Chassis peter = new Chassis(50, 50, ImagePresets.Vehicle.HELI_APACHE_B, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        peter.setDrive(DrivePresets.createSimpleDrive());
+        world.addGameObject(peter);
 
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher((KeyEvent e) -> {
             new Thread(() -> {
@@ -67,10 +68,12 @@ public class LinkTest extends Application {
             return true;
         });
         keyManager.setNetwork(network);
-        john.setNetworkProjectionId(0);
+        zank.setNetworkProjectionId(0);
+        zank.setObjectId(GameObject.getNewObjectID());
         julia.setNetworkProjectionId(1);
-        john.setObjectId(GameObject.getNewObjectID());
         julia.setObjectId(GameObject.getNewObjectID());
+        peter.setNetworkProjectionId(2);
+        peter.setObjectId(GameObject.getNewObjectID());
 
     }
 

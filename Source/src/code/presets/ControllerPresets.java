@@ -9,13 +9,10 @@ import code.data.DataObject;
 import code.game.World;
 import code.game.tank.Chassis;
 import code.game.tank.Drive;
-import code.game.tank.Weapon;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
 import yansuen.controller.ControllerInterface;
 import yansuen.game.GameObject;
 import yansuen.key.MasterKeyManager;
-import yansuen.network.Network;
 import yansuen.physic.CartesianVector;
 import yansuen.physic.PolarVector;
 
@@ -72,11 +69,14 @@ public class ControllerPresets {
     public static ControllerInterface PLAYER = (GameObject gameObject, long tick, World w, MasterKeyManager manager) -> {
         Chassis c = ((Chassis) gameObject);
         Drive d = c.getDrive();
-        d.setAccelerate(manager.isKeyPressed(KeyEvent.VK_W, gameObject.getNetworkProjectionId()));
-        d.setDecelerate(manager.isKeyPressed(KeyEvent.VK_S, gameObject.getNetworkProjectionId()));
-        d.setBreaks(manager.isKeyPressed(KeyEvent.VK_SPACE, gameObject.getNetworkProjectionId()));
-        d.setTurnLeft(manager.isKeyPressed(KeyEvent.VK_A, gameObject.getNetworkProjectionId()));
-        d.setTurnRight(manager.isKeyPressed(KeyEvent.VK_D, gameObject.getNetworkProjectionId()));
+
+        d.setAccelerate(manager.isKeyPressed(KeyEvent.VK_W, c.getNetworkProjectionId()));
+        d.setDecelerate(manager.isKeyPressed(KeyEvent.VK_S, c.getNetworkProjectionId()));
+        d.setBreaks(manager.isKeyPressed(KeyEvent.VK_SPACE, c.getNetworkProjectionId()));
+        d.setTurnLeft(manager.isKeyPressed(KeyEvent.VK_A, c.getNetworkProjectionId()));
+        d.setTurnRight(manager.isKeyPressed(KeyEvent.VK_D, c.getNetworkProjectionId()));
+        d.setStrafeLeft(manager.isKeyPressed(KeyEvent.VK_Q, c.getNetworkProjectionId()));
+        d.setStrafeRight(manager.isKeyPressed(KeyEvent.VK_E, c.getNetworkProjectionId()));
         for (int i = 0; i < c.getWeapons().size(); i++) {
             c.getWeapons().get(i).setShoot(manager.isKeyPressed(KeyEvent.VK_1 + i, gameObject.getNetworkProjectionId()));
         }

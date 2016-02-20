@@ -44,7 +44,7 @@ public class World implements LogicLooper {
             gameObject.doLogic(gameObject, tick, this, keyManager);
             gameObject.getControllerInterface().control(gameObject, tick, this, keyManager);
             moveGameObject(gameObject);
-            if (network != null && gameObject.getObjectId() != -1 && synchronizeTick < tick) {
+            if (network != null && network.getId() == 0 && gameObject.getObjectId() != -1 && synchronizeTick < tick) {
                 ArrayList<String> args = new ArrayList();
                 args.add(String.valueOf(gameObject.getObjectId()));
                 args.addAll(Arrays.asList(gameObject.networkSerialize()));
