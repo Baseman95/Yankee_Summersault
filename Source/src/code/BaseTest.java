@@ -41,6 +41,13 @@ public class BaseTest extends Application {
  </editor-fold>*/
         Chassis zank = new Chassis(10, 10, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         zank.setDrive(DrivePresets.createSimpleDrive());
+        
+        Chassis choppah = new Chassis(300, 300, ImagePresets.Vehicle.HELI_APACHE_R, GraphicsPresets.ROTATION, null);
+        //choppah.setDrive(DrivePresets.createHeli(0.006f));
+        
+        Chassis hydra = new Chassis(300, 350, ImagePresets.Vehicle.PLANE_HARRIER_R, GraphicsPresets.ROTATION, null);
+        
+        
 
         Weapon mg = WeaponPresets.createMinigun(zank);
         Weapon shotgun = WeaponPresets.createShotgun(zank);
@@ -53,6 +60,9 @@ public class BaseTest extends Application {
         zank.getWeapons().add(smoke);
 
         world.addGameObject(zank);
+        world.addGameObject(choppah);
+        world.addGameObject(hydra);
+        
         world.addGameObject(shotgun);
         world.addGameObject(tvmissile);
         world.addGameObject(smoke);

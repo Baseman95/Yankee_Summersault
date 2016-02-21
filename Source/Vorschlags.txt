@@ -25,3 +25,99 @@ Join Game
 Garage
 Options
 Quit
+
+
+
+
+
+
+
+
+
+
+
+
+createSimpleSingleShotInterface(projectileImage, travelspeed, ticksToLive, deviationPerSide, weaponLength);
+
+
+
+public static Weapon createSingleShotWeapon(Chassis chassis,
+            Float weaponOffsetX, Float weaponOffsetY, Integer weaponLength, BufferedImage weaponImage,
+            ControllerInterface weaponController, Drive weaponDrive,
+            Long cooldown, Float deviationPerSide, Float travelspeed, Long ticksToLive,
+ BufferedImage projectileImage,
+            ControllerInterface projectileController, Drive projectileDrive) {
+
+        if (weaponOffsetX == null)
+            weaponOffsetX = 0f;
+
+        if (weaponOffsetY == null)
+            weaponOffsetY = 0f;
+
+        if (weaponLength == null)
+            weaponLength = 0;
+
+        if (weaponImage == null)
+            weaponImage = ImagePresets.Default.NO_IMAGE;
+
+        //Controller
+        if (cooldown == null)
+            cooldown = 10L;
+
+        if (deviationPerSide == null)
+            deviationPerSide = 0.1f;
+
+        if (travelspeed == null)
+            travelspeed = 3f;
+
+        if (ticksToLive == null)
+            ticksToLive = 500L;
+
+        if (projectileImage == null)
+            projectileImage = ImagePresets.Default.NO_IMAGE;
+
+        //Controller       
+        ShotInterface si = createSingleShot(projectileImage, travelspeed, ticksToLive, deviationPerSide, weaponLength);
+
+        Weapon mg = new Weapon(chassis, cooldown, si, fastReload, bulletImpact, ControllerPresets.HOLD_ACCELERATE,
+                weaponOffsetX, weaponOffsetY, weaponImage, GraphicsPresets.ROTATION, weaponController);
+
+        return mg;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

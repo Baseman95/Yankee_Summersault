@@ -199,13 +199,13 @@ public class WeaponPresets {
     protected static ShotInterface ROUNDHOUSE_SHOTINTERFACE = createSimpleMultiShotInterface(ImagePresets.Weapon.SHOT_MG_1, 3f, 200, 1f, WEAPON_MG_LENGTH, 50, null);
     
     public static Weapon createShotgun(Chassis chassis) {
-        return createWeapon(chassis, null, null, 200L, ImagePresets.Default.NOTHING, null, null, ROUNDHOUSE_SHOTINTERFACE);
+        return createWeapon(chassis, null, null, 200L, ImagePresets.Default.NOTHING, null, null, SHOTGUN_SHOTINTERFACE);
     }
 
 //<editor-fold defaultstate="collapsed" desc="Specials">
     protected static ShotInterface TRACER_SHOTINTERFACE = createSimpleSingleShotInterface(ImagePresets.Test.TRACER, 0, Long.MAX_VALUE / 2, 0.005f, 0);
 
-    protected static ShotInterface SMOKE_SHOTINTERFACE = createSimpleSingleShotInterface(ImagePresets.Test.SMOKE, 0, 3000, 0, 0);
+    protected static ShotInterface SMOKE_SHOTINTERFACE = createSimpleSingleShotInterface(ImagePresets.Test.SMOKE, 0, 500, 0, 0);
 
     public static Weapon createTracer(Chassis chassis) {
         return createWeapon(chassis, null, null, 5L, ImagePresets.Default.NOTHING, null, null, TRACER_SHOTINTERFACE);
