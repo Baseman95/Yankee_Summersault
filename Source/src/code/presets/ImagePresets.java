@@ -26,9 +26,12 @@ public class ImagePresets {
         public static BufferedImage SHOT_3 = ImagePresets.loadImg("textures/weapons_beta/shots/gun_magnum_shot.png");
         @Deprecated
         public static BufferedImage SHOT_1 = ImagePresets.loadImg("textures/weapons_beta/shots/gun_plasma_shot.png");
+        @Deprecated
         public static BufferedImage OLD_TANK = loadImg("cool_tank.png");
+        @Deprecated
         public static BufferedImage TANK2 = loadImg("tank2.png");
-        public static BufferedImage TANK = loadImg("textures/vehicles_beta/m1128.png");
+        @Deprecated
+        public static BufferedImage TANK = loadImg("textures/vehicles_beta/load/m1128.png");
         public static BufferedImage TURRET_A = ImagePresets.loadImg("textures/weapons_beta/turrets/turretA.png");
         public static BufferedImage TRACER = ImagePresets.loadImg("textures/weapons_beta/shots/tracer.png");
         public static BufferedImage SMOKE = ImagePresets.loadImg("textures/weapons_beta/shots/smoke.png");      

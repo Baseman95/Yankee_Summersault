@@ -84,75 +84,77 @@ public class WeaponPresets {
         return mg;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="create ShotInterfaces">
     public static ShotInterface createSimpleSingleShotInterface(BufferedImage texture, float travelSpeed, long ticksToLive, float deviationPerSide, int weaponLength) {
         ShotInterface simpleShot = (Weapon weapon, long tick, ImpactInterface impactInterface, World world) -> {
             PositionData pd = ((DataObject) weapon.getData()).getPositionData();
-
+            
             PolarVector pv = new PolarVector(pd.getRotation(), weaponLength);
-
+            
             Projectile p = new Projectile(weapon, tick + ticksToLive, impactInterface,
                     PolarVector.xFromPolar(pv) + pd.getX() + pd.getWidth() / 2 - texture.getWidth() / 2, PolarVector.yFromPolar(pv) + pd.getY() + pd.getHeight() / 2 - texture.getHeight() / 2,
                     texture, GraphicsPresets.ROTATION, null);
-
+            
             double random = Math.abs(generateGaussianRandom(deviationPerSide));
-
+            
             ((DataObject) p.getData()).getPositionData().setRotation(pd.getRotation() + random);
             p.setDrive(DrivePresets.createStraightDrive(travelSpeed, pd.getRotation() + random));
             world.addGameObject(p);
-
+            
         };
         return simpleShot;
     }
-
+    
     public static ShotInterface createSimpleMultiShotInterface(BufferedImage texture, float projectileSpeed, long ticksToLive, float deviationPerSide, int weaponLength, int projectileCount, Float speedDeviation) {
         ShotInterface simpleShot = (Weapon weapon, long tick, ImpactInterface impactInterface, World world) -> {
             PositionData pd = ((DataObject) weapon.getData()).getPositionData();
-
+            
             PolarVector pv = new PolarVector(pd.getRotation(), weaponLength);
-
+            
             Float localSpeedDeviation = speedDeviation;
-
+            
             if (localSpeedDeviation == null)
                 localSpeedDeviation = 0f;
-
+            
             for (int i = 0; i <= projectileCount; i++) {
-
+                
                 Projectile p = new Projectile(weapon, tick + ticksToLive, impactInterface,
                         PolarVector.xFromPolar(pv) + pd.getX() + pd.getWidth() / 2 - texture.getWidth() / 2, PolarVector.yFromPolar(pv) + pd.getY() + pd.getHeight() / 2 - texture.getHeight() / 2,
                         texture, GraphicsPresets.ROTATION, null);
-
+                
                 double randomAccuracy = generateGaussianRandom(deviationPerSide);
-
+                
                 float randomSpeed = (float) new Random().nextGaussian() * localSpeedDeviation - localSpeedDeviation / 2;
-
+                
                 ((DataObject) p.getData()).getPositionData().setRotation(pd.getRotation() + randomAccuracy);
                 p.setDrive(DrivePresets.createStraightDrive(projectileSpeed + randomSpeed, pd.getRotation() + randomAccuracy));
                 world.addGameObject(p);
             }
-
+            
         };
         return simpleShot;
     }
-
+    
     public static ShotInterface createAIControlledSingleShotInterface(BufferedImage texture, float travelSpeed, long travelDistance, float deviationPerSide, int weaponLength, ControllerInterface c) {
         ShotInterface si = (Weapon weapon, long tick, ImpactInterface impactInterface, World world) -> {
             PositionData pd = ((DataObject) weapon.getData()).getPositionData();
-
+            
             PolarVector pv = new PolarVector(pd.getRotation(), weaponLength);
-
+            
             Projectile p = new Projectile(weapon, tick + travelDistance, impactInterface,
                     PolarVector.xFromPolar(pv) + pd.getX() + pd.getWidth() / 2 - texture.getWidth() / 2, PolarVector.yFromPolar(pv) + pd.getY() + pd.getHeight() / 2 - texture.getHeight() / 2,
                     texture, GraphicsPresets.ROTATION, c);
-
+            
             double random = generateGaussianRandom(deviationPerSide);
             ((DataObject) p.getData()).getPositionData().setRotation(pd.getRotation() + random);
             Drive d = DrivePresets.createRocketDrive(travelSpeed, 0.01);
             p.setDrive(d);
             world.addGameObject(p);
-
+            
         };
         return si;
     }
+//</editor-fold>
 
     /*
     public static Weapon createMG(Chassis chassis) {
@@ -194,7 +196,8 @@ public class WeaponPresets {
     }
 
 //</editor-fold>
-    //Shotguns
+    
+//<editor-fold defaultstate="expanded" desc="Shotguns">    
     protected static ShotInterface SHOTGUN_SHOTINTERFACE = createSimpleMultiShotInterface(ImagePresets.Weapon.SHOT_MG_1, 3f, 200, 0.03f, WEAPON_MG_LENGTH, 10, 0.3f);
     protected static ShotInterface ROUNDHOUSE_SHOTINTERFACE = createSimpleMultiShotInterface(ImagePresets.Weapon.SHOT_MG_1, 3f, 200, 1f, WEAPON_MG_LENGTH, 50, null);
     
@@ -204,6 +207,7 @@ public class WeaponPresets {
     public static Weapon createRoundShotGund(Chassis chassis) {
         return createWeapon(chassis, null, null, 400L, ImagePresets.Default.NOTHING, null, null, ROUNDHOUSE_SHOTINTERFACE);
     }
+//</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Specials">
     protected static ShotInterface TRACER_SHOTINTERFACE = createSimpleSingleShotInterface(ImagePresets.Test.TRACER, 0, Long.MAX_VALUE / 2, 0.005f, 0);
