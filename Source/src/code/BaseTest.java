@@ -5,7 +5,6 @@ import code.game.tank.Chassis;
 import code.game.tank.Weapon;
 import code.menu.Screen;
 import java.io.IOException;
-import yansuen.key.MasterKeyManager;
 import code.presets.ImagePresets;
 import code.presets.ControllerPresets;
 import code.presets.DrivePresets;
