@@ -63,8 +63,9 @@ public class ImagePresets {
     public static class Weapon {
 
         public static BufferedImage WEAPON_RL_1 = ImagePresets.loadImg("textures/weapons_beta/turrets/turretB.png");
-        public static BufferedImage SHOT_RL_1 = ImagePresets.loadImg("textures/weapons_beta/shots/missile.png");
         public static BufferedImage WEAPON_MG_1 = ImagePresets.loadImg("textures/weapons_beta/turrets/turretA.png");
+        public static BufferedImage SHOT_RL_1 = ImagePresets.loadImg("textures/weapons_beta/shots/missile.png");
+        public static BufferedImage SHOT_RL_2 = ImagePresets.loadImg("textures/weapons_beta/shots/missile.png");        
         public static BufferedImage SHOT_MG_1 = ImagePresets.loadImg("textures/weapons_beta/shots/projectile.png");
         public static BufferedImage SHOT_MG_2 = ImagePresets.loadImg("textures/weapons_beta/shots/projectile_mini.png");
 

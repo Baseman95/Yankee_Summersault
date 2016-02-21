@@ -174,7 +174,7 @@ public class WeaponPresets {
 //</editor-fold>    
 
 //<editor-fold defaultstate="expanded" desc="RocketLaunchers">
-    protected static ShotInterface RL_SHOTINTERFACE = createSimpleSingleShotInterface(ImagePresets.Weapon.SHOT_RL_1, 3, 700, 0.005f, WEAPON_MG_LENGTH);
+    protected static ShotInterface RL_SHOTINTERFACE = createSimpleSingleShotInterface(ImagePresets.Weapon.SHOT_RL_2, 3, 700, 0.005f, WEAPON_MG_LENGTH);
 
     public static Weapon createRocketLauncher(Chassis chassis) {
         return createWeapon(chassis, null, null, 100L, ImagePresets.Weapon.WEAPON_RL_1, null, null, RL_SHOTINTERFACE);
@@ -200,6 +200,9 @@ public class WeaponPresets {
     
     public static Weapon createShotgun(Chassis chassis) {
         return createWeapon(chassis, null, null, 200L, ImagePresets.Default.NOTHING, null, null, SHOTGUN_SHOTINTERFACE);
+    }
+    public static Weapon createRoundShotGund(Chassis chassis) {
+        return createWeapon(chassis, null, null, 400L, ImagePresets.Default.NOTHING, null, null, ROUNDHOUSE_SHOTINTERFACE);
     }
 
 //<editor-fold defaultstate="collapsed" desc="Specials">
