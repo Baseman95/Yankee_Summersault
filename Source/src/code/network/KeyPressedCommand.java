@@ -1,6 +1,8 @@
 package code.network;
 
 import code.LinkTest;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import yansuen.key.NetworkKeyManager;
 import yansuen.network.Network;
 import yansuen.network.commands.ClientCommand;
@@ -11,6 +13,10 @@ import yansuen.network.commands.ClientCommand;
  */
 public class KeyPressedCommand implements ClientCommand {
 
+    {
+        Logger.getLogger(KeyPressedCommand.class.getName()).setLevel(Level.ALL);
+    }
+
     @Override
     public void execute(String[] argument, Network network) {
         LinkTest a = ((LinkTest) network.getApplication());
@@ -20,7 +26,7 @@ public class KeyPressedCommand implements ClientCommand {
             knm.forcePressKey(key);
         else
             knm.forceReleaseKey(key);
-        System.out.println("Received(" + argument[0] + "): " + argument[1] + ":" + key);
+        Logger.getLogger(KeyPressedCommand.class.getName()).log(Level.FINER, "Received({0}): {1}:{2}", new Object[]{argument[0], argument[1], key});
     }
 
 }

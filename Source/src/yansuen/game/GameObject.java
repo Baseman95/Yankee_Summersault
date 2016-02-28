@@ -1,18 +1,16 @@
 package yansuen.game;
 
 import yansuen.controller.ControllerInterface;
-import code.data.DataObject;
-import code.data.ImageData;
-import code.data.MovementData;
-import code.data.PositionData;
+import yansuen.data.ImageData;
+import yansuen.data.MovementData;
+import yansuen.data.PositionData;
 import code.game.World;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.logic.LogicInterface;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import yansuen.data.Data;
 import yansuen.key.MasterKeyManager;
 import yansuen.network.NetworkSerializable;
+import yansuen.data.DataContainer;
 
 /**
  *
@@ -22,7 +20,7 @@ public class GameObject implements LogicInterface, NetworkSerializable {
 
     protected int networkProjectionId = -1;
     protected int objectId = -1;
-    protected Data data;
+    protected DataContainer data;
     protected GraphicsInterface graphicsInterface;
     protected ControllerInterface controllerInterface;
 
@@ -36,11 +34,11 @@ public class GameObject implements LogicInterface, NetworkSerializable {
 
     public GameObject(float x, float y, float w, float h, BufferedImage img,
             GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
-        this((Data) (new DataObject(new PositionData(x, y, w, h), new ImageData(img), new MovementData())),
+        this((DataContainer) (new DataContainer(new PositionData(x, y, w, h), new ImageData(img))),
              graphicsInterface, controllerInterface);
     }
 
-    public GameObject(Data dataObject,
+    public GameObject(DataContainer dataObject,
             GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         this.data = dataObject;
         this.graphicsInterface = graphicsInterface;
@@ -52,15 +50,15 @@ public class GameObject implements LogicInterface, NetworkSerializable {
     }
 
     public void destroy(World world) {
-        if (data instanceof DataObject)
-            ((DataObject) data).getListenerList().clear();
+        if (data instanceof DataContainer)
+            ((DataContainer) data).getListenerList().clear();
     }
 
-    public Data getData() {
+    public DataContainer getDataContainer() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(DataContainer data) {
         this.data = data;
     }
 

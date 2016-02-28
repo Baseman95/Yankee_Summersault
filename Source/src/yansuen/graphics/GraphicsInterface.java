@@ -1,7 +1,7 @@
 package yansuen.graphics;
 
 import java.awt.Graphics2D;
-import yansuen.data.Data;
+import yansuen.data.DataContainer;
 
 /**
  *
@@ -9,6 +9,6 @@ import yansuen.data.Data;
  */
 public interface GraphicsInterface {
 
-    void render(Data data, Camera camera, Graphics2D g2d);
+    void render(DataContainer data, Camera camera, Graphics2D g2d);
 
 }

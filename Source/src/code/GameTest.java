@@ -18,7 +18,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import yansuen.data.Data;
+import yansuen.data.DataContainer;
 
 /**
  *
@@ -55,7 +55,7 @@ public class GameTest {
 
         });
 
-        LogicInterface movingObject = (Data data, long tick) -> {
+        LogicInterface movingObject = (DataContainer data, long tick) -> {
             //data.setX(data.getX() + 1);
             if (!(data instanceof TankData)) return;
             TankData tankData = (TankData) data;
@@ -65,7 +65,7 @@ public class GameTest {
              tankData.setX(tankData.getX() + 1);
              }*/
         };
-        LogicInterface projectile = (Data data, long tick) -> {
+        LogicInterface projectile = (DataContainer data, long tick) -> {
             //data.setX(data.getX() + 1);
             if (!(data instanceof TankData)) return;
             TankData tankData = (TankData) data;

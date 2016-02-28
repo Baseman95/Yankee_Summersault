@@ -6,13 +6,12 @@
 package code.presets;
 
 import code.TrifkoTest;
-import code.data.DataObject;
+import yansuen.data.MovableDataContainer;
+import yansuen.data.DataContainer;
 import code.game.World;
-import code.game.tank.Chassis;
 import code.game.tank.Drive;
 import java.text.DecimalFormat;
 import yansuen.game.GameObject;
-import yansuen.key.MasterKeyManager;
 import yansuen.physic.CartesianVector;
 import yansuen.physic.PolarVector;
 
@@ -35,7 +34,7 @@ public class DrivePresets {
         Drive drive;
         drive = new Drive(
                 (Drive drive1, GameObject gameObject, long tick, World world) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
 
                     double ang = data.getPositionData().getRotation();
                     PolarVector mv = new PolarVector(ang, acceleration);
@@ -43,7 +42,7 @@ public class DrivePresets {
                     data.getMovementData().setMovementY(PolarVector.yFromPolar(mv) + data.getMovementData().getMovementY());
                 },
                 (Drive drive1, GameObject gameObject, long tick, World world) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
 
                     double ang = data.getPositionData().getRotation();
                     PolarVector mv = new PolarVector(ang, deceleration);
@@ -52,22 +51,22 @@ public class DrivePresets {
                     data.getMovementData().setMovementY(data.getMovementData().getMovementY() - PolarVector.yFromPolar(mv));
                 },
                 (Drive drive1, GameObject gameObject, long tick, World world) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     data.getMovementData().setMovementX(data.getMovementData().getMovementX() * breakMultiplicator);
                     data.getMovementData().setMovementY(data.getMovementData().getMovementY() * breakMultiplicator);
                 },
                 (Drive drive1, GameObject gameObject, long tick, World world) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     data.getPositionData().increaseRotation(-rotation);
                 },
                 (Drive drive1, GameObject gameObject, long tick, World world) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     data.getPositionData().increaseRotation(+rotation);
                 },
                 null,
                 null,
                 (Drive drive1, GameObject gameObject, long tick, World world) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
                                                                  data.getMovementData().getMovementY());
                     PolarVector pv = vector.toPolarVector();
@@ -84,14 +83,14 @@ public class DrivePresets {
         Drive drive = new Drive(
                 null, null, null,
                 (Drive drive1, GameObject gameObject, long tick, World w) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     data.getPositionData().increaseRotation(-rotationspeed);
                 }, (Drive drive1, GameObject gameObject, long tick, World w) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     data.getPositionData().increaseRotation(rotationspeed);
                 }, null, null,
                 (Drive drive1, GameObject gameObject, long tick, World w) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     PolarVector p = new PolarVector(data.getPositionData().getRotation(), travelspeed);
                     data.getMovementData().setMovementX(PolarVector.xFromPolar(p));
                     data.getMovementData().setMovementY(PolarVector.yFromPolar(p));
@@ -102,7 +101,7 @@ public class DrivePresets {
     public static Drive createStraightDrive(float speed, double rotation) {
         Drive straight = new Drive(null, null, null, null, null, null, null,
                                    (Drive drive, GameObject gameObject, long tick, World world) -> {
-                                       DataObject data = (DataObject) gameObject.getData();
+                                       MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
 
                                        PolarVector pv = new PolarVector(rotation, speed);
                                        data.getMovementData().setMovementX(PolarVector.xFromPolar(pv));
@@ -114,7 +113,7 @@ public class DrivePresets {
     public static Drive createTrack(float rotation) {
         Drive track = new Drive(
                 (Drive drive, GameObject gameObject, long tick, World world) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
                                                                               data.getMovementData().getMovementY()));
                     current.updateAngleRange2Pi();
@@ -137,7 +136,7 @@ public class DrivePresets {
                                                         : data.getMovementData().getMovementY());
                 },
                 (Drive drive, GameObject gameObject, long tick, World world) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
                                                                               data.getMovementData().getMovementY()));
 
@@ -157,7 +156,7 @@ public class DrivePresets {
                     data.getMovementData().setMovementY(data.getMovementData().getMovementY() - PolarVector.yFromPolar(mv));
                 },
                 (Drive drive, GameObject gameObject, long tick, World world) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
 
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
                                                                               data.getMovementData().getMovementY()));
@@ -167,7 +166,7 @@ public class DrivePresets {
 
                 },
                 (Drive drive, GameObject gameObject, long tick, World world) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
 
                     data.getPositionData().increaseRotation(-0.004);
 
@@ -181,7 +180,7 @@ public class DrivePresets {
                     data.getMovementData().setMovementY(PolarVector.yFromPolar(current));
                 },
                 (Drive drive, GameObject gameObject, long tick, World world) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
 
                     data.getPositionData().increaseRotation(+0.004);
 
@@ -197,7 +196,7 @@ public class DrivePresets {
                 null,
                 null,
                 (Drive drive, GameObject gameObject, long tick, World world) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     CartesianVector vector = new CartesianVector(data.getMovementData().getMovementX(),
                                                                  data.getMovementData().getMovementY());
                     PolarVector pv = vector.toPolarVector();
@@ -260,7 +259,7 @@ public class DrivePresets {
     public static Drive createHeli(float rotation) {
         Drive heli = new Drive(
                 (Drive drive, GameObject gameObject, long tick, World w) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
                                                                               data.getMovementData().getMovementY()));
                     current.updateAngleRange2Pi();
@@ -283,7 +282,7 @@ public class DrivePresets {
 
                 },
                 (Drive drive, GameObject gameObject, long tick, World w) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
                                                                               data.getMovementData().getMovementY()));
 
@@ -313,7 +312,7 @@ public class DrivePresets {
                 },
                 null,
                 (Drive drive, GameObject gameObject, long tick, World w) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
 
                     data.getPositionData().increaseRotation(-0.005);
 
@@ -326,7 +325,7 @@ public class DrivePresets {
                     data.getMovementData().setMovementY(PolarVector.yFromPolar(current));*/
                 },
                 (Drive drive, GameObject gameObject, long tick, World w) -> {
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
 
                     data.getPositionData().increaseRotation(+0.005);
 
@@ -341,7 +340,7 @@ public class DrivePresets {
                 },
                 (Drive drive, GameObject gameObject, long tick, World w) -> {
 
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
                                                                               data.getMovementData().getMovementY()));
 
@@ -354,7 +353,7 @@ public class DrivePresets {
                 },
                 (Drive drive, GameObject gameObject, long tick, World w) -> {
 
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
                                                                               data.getMovementData().getMovementY()));
 
@@ -367,7 +366,7 @@ public class DrivePresets {
                 },
                 (Drive drive, GameObject gameObject, long tick, World w) -> {
 
-                    DataObject data = (DataObject) gameObject.getData();
+                    MovableDataContainer data = (MovableDataContainer) gameObject.getDataContainer();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementData().getMovementX(),
                                                                               data.getMovementData().getMovementY()));
                     current.updateAngleRange2Pi();
@@ -442,7 +441,7 @@ public class DrivePresets {
 
     }
 
-    private static boolean getRichtung(DataObject d, double winkel) {
+    private static boolean getRichtung(DataContainer d, double winkel) {
         double deltaAng = winkel - d.getPositionData().getRotation();
         //    System.out.println("DElta1  " + deltaAng);
         deltaAng += Math.PI / 2;

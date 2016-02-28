@@ -2,10 +2,10 @@ package code;
 
 import code.menu.GamePanel;
 import yansuen.controller.ControllerInterface;
-import code.data.DataObject;
-import code.data.ImageData;
-import code.data.MovementData;
-import code.data.PositionData;
+import yansuen.data.DataContainer;
+import yansuen.data.ImageData;
+import yansuen.data.MovementData;
+import yansuen.data.PositionData;
 import code.game.World;
 import code.game.tank.Chassis;
 import code.presets.GraphicsPresets;
@@ -48,9 +48,9 @@ public class KeyTest {
         BufferedImage bulletImg = ImageIO.read(new File("cool_tank.png"));
 
         LogicInterface tankLogic = (GameObject gameObject, long tick, World w, MasterKeyManager manager) -> {
-            DataObject data = (DataObject) gameObject.getData();
+            DataContainer data = (DataContainer) gameObject.getDataContainer();
             if (manager.isKeyPressed(KeyEvent.VK_SPACE) && tick - bulletTick > 100) {
-                DataObject dataO = new DataObject(new PositionData(data.getPositionData().getX()
+                DataContainer dataO = new DataContainer(new PositionData(data.getPositionData().getX()
                         + data.getPositionData().getWidth() / 2
                         - 8,
                         data.getPositionData().getY()
@@ -80,7 +80,7 @@ public class KeyTest {
         BufferedImage tankImg = ImageIO.read(new File("cool_tank.png"));
 
         ControllerInterface playerController = (GameObject gameObject, long tick, World w, MasterKeyManager manager) -> {
-            DataObject data = (DataObject) gameObject.getData();
+            DataContainer data = (DataContainer) gameObject.getDataContainer();
             MovementData mData = data.getMovementData();
             double ang = data.getPositionData().getRotation();
 

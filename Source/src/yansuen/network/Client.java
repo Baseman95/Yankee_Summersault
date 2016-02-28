@@ -24,6 +24,7 @@ public class Client extends Thread {
     private final BufferedReader in;
 
     public Client(NetworkServer server, Socket socket) throws IOException {
+        super("yasuen.network.Client");
         this.server = server;
         this.socket = socket;
         out = new PrintWriter(socket.getOutputStream(), true);

@@ -147,6 +147,7 @@ public class NetworkServer {
         private boolean run = true;
 
         public NewClientListener() {
+            super("yasuen.network.NetworkServer.NewClientListener");
             setDaemon(true);
         }
 

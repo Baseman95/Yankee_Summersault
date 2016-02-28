@@ -19,6 +19,7 @@ public class LogicLoop extends Thread {
     private final int tplLimit = 5;
 
     public LogicLoop(long tickLength, int sleepTime) {
+        super("yasuen.logic.LogicLoop");
         this.tickLength = tickLength;
         this.sleepTime = sleepTime;
         setDaemon(true);

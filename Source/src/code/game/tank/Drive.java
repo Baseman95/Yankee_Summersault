@@ -9,7 +9,6 @@ import code.game.World;
 import yansuen.game.GameObject;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;
-import yansuen.network.NetworkSerializable;
 
 /**
  *

@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package code.data;
+package yansuen.data;
 
 import java.awt.image.BufferedImage;
-import yansuen.data.Data;
 
 /**
  *
@@ -15,7 +14,7 @@ import yansuen.data.Data;
 public class ImageData implements Data {
 
     protected BufferedImage image;
-    DataObject parent = null;
+    DataContainer parent = null;
 
     public ImageData(BufferedImage image) {
         this.image = image;

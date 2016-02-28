@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package code.data;
+package yansuen.data;
 
 import yansuen.network.NetworkSerializable;
 
@@ -18,7 +18,7 @@ public class PositionData implements NetworkSerializable {
     protected float width;
     protected float height;
     protected double rotation;
-    DataObject parent;
+    DataContainer parent;
 
     public PositionData(float x, float y, float width, float height) {
         this.x = x;

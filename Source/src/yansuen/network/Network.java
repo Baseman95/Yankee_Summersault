@@ -22,7 +22,7 @@ import yansuen.network.commands.BroadcastCommand;
  */
 public class Network {
 
-    private final Application app;
+    private final Application application;
 
     private int id = -1;
     private Socket socket;
@@ -31,7 +31,7 @@ public class Network {
 
     private final ArrayList<Integer> clients = new ArrayList<>();
     private PrintWriter out;
-    private ServerListener sl;
+    private ServerListener serverListener;
     public final ArrayList<Packet> packetHistory = new ArrayList<>();
 
     public Network(String ip, int port, Application application) throws UnknownHostException {
@@ -40,22 +40,22 @@ public class Network {
 
     public Network(InetAddress ip, int port, Application application) {
         this.address = ip;
-        this.app = application;
+        this.application = application;
         this.port = port;
     }
 
     public void connect() throws IOException {
         this.socket = new Socket(address, port);
         out = new PrintWriter(socket.getOutputStream(), true);
-        sl = new ServerListener(socket.getInputStream());
-        sl.start();
+        serverListener = new ServerListener(socket.getInputStream());
+        serverListener.start();
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Connected to {0}.", socket.getInetAddress().getHostAddress());
     }
 
     public void disconnect() throws IOException {
         Logger.getLogger(ServerListener.class.getName()).log(Level.WARNING, "Stopped listening to server!");
         out.close();
-        sl.disable();
+        serverListener.disable();
         socket.close();
     }
 
@@ -77,6 +77,7 @@ public class Network {
         boolean run = true;
 
         public ServerListener(InputStream inputStream) {
+            super("yasuen.network.Network.ServerListener");
             in = new BufferedReader(new InputStreamReader(inputStream));
             setDaemon(true);
         }
@@ -92,7 +93,7 @@ public class Network {
                     packet.executeCommand(Network.this);
                 } catch (IOException ex) {
                     Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
-                    app.onConnectionLost();
+                    application.onConnectionLost();
                 }
             }
         }
@@ -124,7 +125,7 @@ public class Network {
     }
 
     public Application getApplication() {
-        return app;
+        return application;
     }
 
     public ArrayList<Integer> getClients() {

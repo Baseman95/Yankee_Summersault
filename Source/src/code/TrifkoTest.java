@@ -1,8 +1,6 @@
 package code;
 
 import code.game.Application;
-import code.menu.GamePanel;
-import code.game.World;
 import code.game.tank.Chassis;
 import code.game.tank.Weapon;
 import code.menu.Screen;
@@ -11,9 +9,6 @@ import code.presets.DrivePresets;
 import code.presets.GraphicsPresets;
 import code.presets.ImagePresets;
 import code.presets.WeaponPresets;
-import yansuen.graphics.GraphicsLoop;
-import yansuen.key.MasterKeyManager;
-import yansuen.logic.LogicLoop;
 import java.io.IOException;
 import javax.swing.JLabel;
 import yansuen.game.GameObject;

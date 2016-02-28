@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package code.data;
+package yansuen.data;
 
 import yansuen.data.Data;
+import yansuen.data.DataContainer;
 import yansuen.network.NetworkSerializable;
 
 /**
@@ -16,7 +17,7 @@ public class MovementData implements Data {
 
     protected float movementX;
     protected float movementY;
-    DataObject parent;
+    DataContainer parent;
 
     public MovementData() {
         movementX = 0;

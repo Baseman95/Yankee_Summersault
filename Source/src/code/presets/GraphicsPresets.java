@@ -5,15 +5,15 @@
  */
 package code.presets;
 
-import code.data.DataObject;
+import yansuen.data.DataContainer;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import yansuen.data.Data;
 import yansuen.graphics.Camera;
 import yansuen.graphics.GraphicsInterface;
+import yansuen.data.DataContainer;
 
 /**
  *
@@ -49,8 +49,8 @@ public class GraphicsPresets {
         return g2d;
     }
 
-    public static GraphicsInterface DEFAULT = (Data data, Camera camera, Graphics2D g2d) -> {
-        DataObject d = (DataObject) data;
+    public static GraphicsInterface DEFAULT = (DataContainer data, Camera camera, Graphics2D g2d) -> {
+        DataContainer d = (DataContainer) data;
         configureGraphics2D(g2d);
         AffineTransform at = new AffineTransform();
         at.rotate(d.getPositionData().getRotation(), d.getPositionData().getWidth() / 2, d.getPositionData().getHeight() / 2);
@@ -65,8 +65,8 @@ public class GraphicsPresets {
                 (int) d.getPositionData().getHeight(), null);
     };
 
-    public static GraphicsInterface ROTATION = (Data data, Camera camera, Graphics2D g2d) -> {
-        DataObject d = (DataObject) data;
+    public static GraphicsInterface ROTATION = (DataContainer data, Camera camera, Graphics2D g2d) -> {
+        DataContainer d = (DataContainer) data;
         configureGraphics2D(g2d);
         AffineTransform at = new AffineTransform();
         at.rotate(d.getPositionData().getRotation(), d.getPositionData().getWidth() / 2, d.getPositionData().getHeight() / 2);

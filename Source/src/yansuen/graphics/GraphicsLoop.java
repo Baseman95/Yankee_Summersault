@@ -18,6 +18,7 @@ public class GraphicsLoop extends Thread {
     private boolean paused = false;
 
     public GraphicsLoop(int sleepTime) {
+        super("yasuen.graphics.GraphicsLoop");
         this.sleepTime = sleepTime;
         setDaemon(true);
     }

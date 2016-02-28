@@ -1,10 +1,10 @@
 package code.game;
 
+import yansuen.data.MovableDataContainer;
 import yansuen.game.GameObject;
-import code.data.DataObject;
-import code.data.MovementData;
-import code.data.PositionData;
-import code.game.tank.Chassis;
+import yansuen.data.DataContainer;
+import yansuen.data.MovementData;
+import yansuen.data.PositionData;
 import code.network.CommandList;
 import code.network.UpdateObjectCommand;
 import yansuen.controller.ControllerInterface;
@@ -62,9 +62,9 @@ public class World implements LogicLooper {
     }
 
     protected void moveGameObject(GameObject gameObject) {
-        if (gameObject.getData() instanceof DataObject) {
-            PositionData pos = ((DataObject) gameObject.getData()).getPositionData();
-            MovementData move = ((DataObject) gameObject.getData()).getMovementData();
+        if (gameObject.getDataContainer() instanceof MovableDataContainer) {
+            PositionData pos = gameObject.getDataContainer().getPositionData();
+            MovementData move = ((MovableDataContainer) gameObject.getDataContainer()).getMovementData();
             if (pos != null && move != null) {
                 pos.increaseX(move.getMovementX());
                 pos.increaseY(move.getMovementY());
@@ -76,7 +76,7 @@ public class World implements LogicLooper {
         for (GameObject gameObject : gameObjects) {
             GraphicsInterface gi = gameObject.getGraphicsInterface();
             if (gi != null) {
-                gi.render(gameObject.getData(), camera, g2d);
+                gi.render(gameObject.getDataContainer(), camera, g2d);
             }
         }
     }

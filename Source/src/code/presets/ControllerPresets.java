@@ -5,7 +5,7 @@
  */
 package code.presets;
 
-import code.data.DataObject;
+import yansuen.data.DataContainer;
 import code.game.World;
 import code.game.tank.Chassis;
 import code.game.tank.Drive;
@@ -24,7 +24,7 @@ public class ControllerPresets {
 
     public static ControllerInterface createMoveToController(int x, int y) {
         ControllerInterface moveTo = (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-            DataObject data = (DataObject) gameObject.getData();
+            DataContainer data = (DataContainer) gameObject.getDataContainer();
             Chassis c = ((Chassis) gameObject);
             Drive d = c.getDrive();
             d.setAccelerate(true);

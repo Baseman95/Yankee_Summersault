@@ -3,11 +3,8 @@ package code.game;
 import code.menu.GamePanel;
 import code.menu.Screen;
 import java.awt.KeyboardFocusManager;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -27,8 +24,8 @@ public class Application implements ServerListener {
     protected Network network;
     protected boolean started = false;
 
-    protected LogicLoop ll = new LogicLoop(5000000L, 1);
-    protected GraphicsLoop gl = new GraphicsLoop(33);
+    protected LogicLoop logicLoop = new LogicLoop(5000000L, 1);
+    protected GraphicsLoop graphicsLoop = new GraphicsLoop(33);
     protected MasterKeyManager keyManager = new MasterKeyManager();
     protected World world;
     protected GamePanel gamePanel;
@@ -38,7 +35,6 @@ public class Application implements ServerListener {
 
     public Application(Screen screen) {
         this.screen = screen;
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyManager.getLocalKeyManager());
         // localPlayer.getTools().selectTool(localPlayer.getDrawTool());
     }
 
@@ -46,12 +42,13 @@ public class Application implements ServerListener {
         if (started)
             return;
         started = true;
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyManager.getLocalKeyManager());
         world = new World(keyManager, network);
         gamePanel = new GamePanel(world);
-        gl.setRepaintTarget(screen);
-        ll.setLogic(world);
-        ll.start();
-        gl.start();
+        graphicsLoop.setRepaintTarget(screen);
+        logicLoop.setLogic(world);
+        logicLoop.start();
+        graphicsLoop.start();
         mainPanel = (JPanel) screen.getContentPane();
         screen.setContentPane(gamePanel);
     }
@@ -133,20 +130,20 @@ public class Application implements ServerListener {
         this.started = started;
     }
 
-    public LogicLoop getLl() {
-        return ll;
+    public LogicLoop getLogicLoop() {
+        return logicLoop;
     }
 
-    public void setLl(LogicLoop ll) {
-        this.ll = ll;
+    public void setLogicLoop(LogicLoop ll) {
+        this.logicLoop = ll;
     }
 
-    public GraphicsLoop getGl() {
-        return gl;
+    public GraphicsLoop getGraphicsLoop() {
+        return graphicsLoop;
     }
 
-    public void setGl(GraphicsLoop gl) {
-        this.gl = gl;
+    public void setGraphicsLoop(GraphicsLoop gl) {
+        this.graphicsLoop = gl;
     }
 
     public MasterKeyManager getKeyManager() {

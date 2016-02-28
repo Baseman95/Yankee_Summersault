@@ -12,8 +12,11 @@ import code.network.CommandList;
 import code.network.KeyPressedCommand;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 import yansuen.game.GameObject;
 
 /**
@@ -23,8 +26,33 @@ import yansuen.game.GameObject;
 public class LinkTest extends Application {
 
     public static void main(String args[]) throws Exception {
+        for (Handler handler : Logger.getLogger("").getHandlers()) {
+            handler.setLevel(Level.ALL);
+        }
         Screen screen = new Screen();
         Application application = new LinkTest(screen);
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher((KeyEvent e) -> {
+            Thread t = new Thread(() -> {
+                int pressed = 0;
+                switch (e.paramString().split(",")[0]) {
+                    case "KEY_PRESSED":
+                        if (application.getKeyManager().isKeyPressed(e.getKeyCode()))
+                            break;
+                        pressed = 1;
+                    case "KEY_RELEASED":
+                        ArrayList<String> arguments = new ArrayList<>();
+                        arguments.add(0, application.getNetwork().getId() + "");
+                        arguments.add(1, pressed + "");
+                        arguments.add(2, e.getKeyCode() + "");
+                        //System.out.println("Sending(" + network.getId() + "): " + pressed + ":" + e.getKeyCode());
+                        application.getNetwork().sendBroadcastCommand(CommandList.getCommandId(KeyPressedCommand.class), arguments.toArray(new String[0]));
+                        break;
+                }
+            });
+            t.setName("KeySynchronizer");
+            t.start();
+            return false;
+        });
         screen.setApplication(application);
         screen.setVisible(true);
     }
@@ -36,37 +64,19 @@ public class LinkTest extends Application {
     @Override
     public void start() {
         super.start();
-        Chassis zank = new Chassis(10, 10, ImagePresets.Vehicle.WTANK_LAV300_R, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Chassis zank = new Chassis(50, 50, ImagePresets.Vehicle.CAR_TECHNICAL_B, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         zank.getWeapons().add(WeaponPresets.createRocketLauncher(zank));
         zank.setDrive(DrivePresets.createSimpleDrive());
         world.addGameObject(zank);
 
-        Chassis julia = new Chassis(50, 50, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Chassis julia = new Chassis(150, 50, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         julia.setDrive(DrivePresets.createSimpleDrive());
         world.addGameObject(julia);
 
-        Chassis peter = new Chassis(50, 50, ImagePresets.Vehicle.HELI_APACHE_B, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Chassis peter = new Chassis(250, 50, ImagePresets.Vehicle.HELI_APACHE_B, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         peter.setDrive(DrivePresets.createSimpleDrive());
         world.addGameObject(peter);
 
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher((KeyEvent e) -> {
-            new Thread(() -> {
-                int pressed = 0;
-                switch (e.paramString().split(",")[0]) {
-                    case "KEY_PRESSED":
-                        pressed = 1;
-                    case "KEY_RELEASED":
-                        ArrayList<String> args = new ArrayList<>();
-                        args.add(0, network.getId() + "");
-                        args.add(1, pressed + "");
-                        args.add(2, e.getKeyCode() + "");
-                        //System.out.println("Sending(" + network.getId() + "): " + pressed + ":" + e.getKeyCode());
-                        network.sendBroadcastCommand(CommandList.getCommandId(KeyPressedCommand.class), args.toArray(new String[0]));
-                        break;
-                }
-            }).start();
-            return true;
-        });
         keyManager.setNetwork(network);
         zank.setNetworkProjectionId(0);
         zank.setObjectId(GameObject.getNewObjectID());
