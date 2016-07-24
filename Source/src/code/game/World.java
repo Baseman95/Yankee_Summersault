@@ -1,13 +1,9 @@
 package code.game;
 
-import yansuen.data.MovableDataContainer;
+import yansuen.data.ChassisData;
 import yansuen.game.GameObject;
-import yansuen.data.DataContainer;
-import yansuen.data.MovementData;
-import yansuen.data.PositionData;
 import code.network.CommandList;
 import code.network.UpdateObjectCommand;
-import yansuen.controller.ControllerInterface;
 import yansuen.graphics.Camera;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;
@@ -15,6 +11,7 @@ import yansuen.logic.LogicLooper;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import yansuen.logic.LogicInterface;
 import yansuen.network.Network;
 
 /**
@@ -42,9 +39,9 @@ public class World implements LogicLooper {
     public synchronized void onLogicLoop(long tick) {
         for (GameObject gameObject : gameObjects) {
             gameObject.doLogic(gameObject, tick, this, keyManager);
-            ControllerInterface ci = gameObject.getControllerInterface();
+            LogicInterface ci = gameObject.getLogicInterface();
             if (ci != null)
-                ci.control(gameObject, tick, this, keyManager);
+                ci.doLogic(gameObject, tick, this, keyManager);
             moveGameObject(gameObject);
             if (network != null && network.getId() == 0 && gameObject.getObjectId() != -1 && synchronizeTick < tick) {
                 ArrayList<String> args = new ArrayList();
@@ -62,13 +59,9 @@ public class World implements LogicLooper {
     }
 
     protected void moveGameObject(GameObject gameObject) {
-        if (gameObject.getDataContainer() instanceof MovableDataContainer) {
-            PositionData pos = gameObject.getDataContainer().getPositionData();
-            MovementData move = ((MovableDataContainer) gameObject.getDataContainer()).getMovementData();
-            if (pos != null && move != null) {
-                pos.increaseX(move.getMovementX());
-                pos.increaseY(move.getMovementY());
-            }
+        if (gameObject.getData() instanceof ChassisData) {
+            gameObject.getData().increaseX(((ChassisData) gameObject.getData()).getMovementX());
+            gameObject.getData().increaseY(((ChassisData) gameObject.getData()).getMovementY());
         }
     }
 
@@ -76,7 +69,7 @@ public class World implements LogicLooper {
         for (GameObject gameObject : gameObjects) {
             GraphicsInterface gi = gameObject.getGraphicsInterface();
             if (gi != null) {
-                gi.render(gameObject.getDataContainer(), camera, g2d);
+                gi.render(gameObject.getData(), camera, g2d);
             }
         }
     }

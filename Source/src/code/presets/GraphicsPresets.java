@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package code.presets;
 
-import yansuen.data.DataContainer;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
@@ -13,7 +7,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import yansuen.graphics.Camera;
 import yansuen.graphics.GraphicsInterface;
-import yansuen.data.DataContainer;
+import yansuen.data.GameData;
 
 /**
  *
@@ -49,36 +43,36 @@ public class GraphicsPresets {
         return g2d;
     }
 
-    public static GraphicsInterface DEFAULT = (DataContainer data, Camera camera, Graphics2D g2d) -> {
-        DataContainer d = (DataContainer) data;
+    public static GraphicsInterface DEFAULT = (GameData data, Camera camera, Graphics2D g2d) -> {
+        GameData d = (GameData) data;
         configureGraphics2D(g2d);
         AffineTransform at = new AffineTransform();
-        at.rotate(d.getPositionData().getRotation(), d.getPositionData().getWidth() / 2, d.getPositionData().getHeight() / 2);
+        at.rotate(d.getRotation(), d.getWidth() / 2, d.getHeight() / 2);
         AffineTransformOp ato = new AffineTransformOp(at, AffineTransformOp.TYPE_BICUBIC);
-        BufferedImage after = new BufferedImage(d.getImageData().getImage().getColorModel(),
-                d.getImageData().getImage().copyData(null),
-                d.getImageData().getImage().isAlphaPremultiplied(), null);
-        ato.filter(d.getImageData().getImage(), after);
-        g2d.drawImage(after, (int) d.getPositionData().getX(),
-                (int) d.getPositionData().getY(),
-                (int) d.getPositionData().getWidth(),
-                (int) d.getPositionData().getHeight(), null);
+        BufferedImage after = new BufferedImage(d.getImage().getColorModel(),
+                d.getImage().copyData(null),
+                d.getImage().isAlphaPremultiplied(), null);
+        ato.filter(d.getImage(), after);
+        g2d.drawImage(after, (int) d.getX(),
+                (int) d.getY(),
+                (int) d.getWidth(),
+                (int) d.getHeight(), null);
     };
 
-    public static GraphicsInterface ROTATION = (DataContainer data, Camera camera, Graphics2D g2d) -> {
-        DataContainer d = (DataContainer) data;
+    public static GraphicsInterface ROTATION = (GameData data, Camera camera, Graphics2D g2d) -> {
+        GameData d = (GameData) data;
         configureGraphics2D(g2d);
         AffineTransform at = new AffineTransform();
-        at.rotate(d.getPositionData().getRotation(), d.getPositionData().getWidth() / 2, d.getPositionData().getHeight() / 2);
+        at.rotate(d.getRotation(), d.getWidth() / 2, d.getHeight() / 2);
         AffineTransformOp ato = new AffineTransformOp(at, AffineTransformOp.TYPE_BICUBIC);
-        BufferedImage after = new BufferedImage(d.getImageData().getImage().getColorModel(),
-                d.getImageData().getImage().copyData(null),
-                d.getImageData().getImage().isAlphaPremultiplied(), null);
-        ato.filter(d.getImageData().getImage(), after);
-        g2d.drawImage(after, (int) d.getPositionData().getX(),
-                (int) d.getPositionData().getY(),
-                (int) d.getPositionData().getWidth(),
-                (int) d.getPositionData().getHeight(), null);
+        BufferedImage after = new BufferedImage(d.getImage().getColorModel(),
+                d.getImage().copyData(null),
+                d.getImage().isAlphaPremultiplied(), null);
+        ato.filter(d.getImage(), after);
+        g2d.drawImage(after, (int) d.getX(),
+                (int) d.getY(),
+                (int) d.getWidth(),
+                (int) d.getHeight(), null);
     };
 
 }

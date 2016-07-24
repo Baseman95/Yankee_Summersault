@@ -9,10 +9,10 @@ import code.game.World;
 import code.game.tank.Chassis;
 import code.game.tank.Weapon;
 import java.awt.image.BufferedImage;
-import yansuen.controller.ControllerInterface;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;
+import yansuen.logic.LogicInterface;
 
 /**
  *
@@ -27,7 +27,7 @@ public class Projectile extends Chassis {
     protected boolean impact = false;
 
     public Projectile(Weapon weapon, long deathtick, ImpactInterface impactInterface, float x, float y, BufferedImage img,
-            GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+            GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {
         super(x, y, img, graphicsInterface, controllerInterface);
         this.weapon = weapon;
         this.impactInterface = impactInterface;
