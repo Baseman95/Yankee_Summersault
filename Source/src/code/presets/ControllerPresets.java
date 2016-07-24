@@ -4,6 +4,7 @@ import code.game.World;
 import code.game.tank.Vehicle;
 import java.awt.event.KeyEvent;
 import code.data.VehicleData;
+import code.data.WeaponData;
 import yansuen.game.GameObject;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;
@@ -61,7 +62,6 @@ public class ControllerPresets {
     public static LogicInterface PLAYER = (GameObject gameObject, long tick, World w, MasterKeyManager manager) -> {
         Vehicle c = ((Vehicle) gameObject);
         VehicleData data = ((VehicleData) c.getData());
-
         data.accelerate = manager.isKeyPressed(KeyEvent.VK_W, c.getNetworkProjectionId());
         data.decelerate = manager.isKeyPressed(KeyEvent.VK_S, c.getNetworkProjectionId());
         data.breaks = manager.isKeyPressed(KeyEvent.VK_SPACE, c.getNetworkProjectionId());
@@ -70,7 +70,7 @@ public class ControllerPresets {
         data.strafeLeft = manager.isKeyPressed(KeyEvent.VK_Q, c.getNetworkProjectionId());
         data.strafeRight = manager.isKeyPressed(KeyEvent.VK_E, c.getNetworkProjectionId());
         for (int i = 0; i < c.getWeapons().size(); i++) {
-            c.getWeapons().get(i).setShoot(manager.isKeyPressed(KeyEvent.VK_1 + i, gameObject.getNetworkProjectionId()));
+            ((WeaponData) c.getWeapons().get(i).getData()).setShooting(manager.isKeyPressed(KeyEvent.VK_1 + i, gameObject.getNetworkProjectionId()));
         }
     };
 

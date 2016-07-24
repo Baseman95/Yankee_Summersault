@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import code.data.VehicleData;
+import code.data.WeaponData;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;
@@ -23,13 +24,11 @@ public class Vehicle extends GameObject {
     protected GameDataListener weaponUpdater = new GameDataListenerAdapter() {
         @Override
         public void onPositionChanged(GameData data, float xOld, float yOld) {
-            GameData d = ((GameData) data);
+            VehicleData vd = ((VehicleData) data);
             for (Weapon weapon : weapons) {
-                GameData wd = ((GameData) weapon.getData());
-                wd.setX(d.getX() + d.getWidth() / 2
-                        + weapon.getRelativeX() - ((GameData) weapon.getData()).getWidth() / 2);
-                wd.setY(d.getY() + d.getHeight() / 2
-                        + weapon.getRelativeY() - ((GameData) weapon.getData()).getHeight() / 2);
+                WeaponData wd = ((WeaponData) weapon.getData());
+                wd.setX(vd.getX() + vd.getWidth() / 2 + wd.getRelativeX() - vd.getWidth() / 2);
+                wd.setY(vd.getY() + vd.getHeight() / 2 + wd.getRelativeY() - vd.getHeight() / 2);
             }
         }
 
@@ -37,11 +36,10 @@ public class Vehicle extends GameObject {
         public void onRotationChanged(GameData data, double rOld) {
             GameData d = ((GameData) data);
             for (Weapon weapon : weapons) {
-                GameData wd = ((GameData) weapon.getData());
-                wd.setRotation(d.getRotation() - weapon.getRelativeRotation());
+                WeaponData wd = ((WeaponData) weapon.getData());
+                wd.setRotation(d.getRotation() - wd.getRelativeRotation());
             }
         }
-
     };
 
     public Vehicle() {
