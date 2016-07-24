@@ -1,7 +1,7 @@
 package code;
 
 import code.game.Application;
-import code.game.tank.Chassis;
+import code.game.tank.Vehicle;
 import code.game.tank.Weapon;
 import code.menu.Screen;
 import code.presets.ControllerPresets;
@@ -38,7 +38,7 @@ public class TrifkoTest extends Application {
     @Override
     public void start() {
         super.start();
-        Chassis heli = new Chassis(300, 200, ImagePresets.Vehicle.Air.APACHE_B2, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Vehicle heli = new Vehicle(300, 200, ImagePresets.Vehicle.Air.APACHE_B2, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         heli.setDrive(DrivePresets.createHeli(0.006f));
 
         Weapon tracer = WeaponPresets.createTracer(heli);

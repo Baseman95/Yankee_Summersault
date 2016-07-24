@@ -1,6 +1,6 @@
 package code.game;
 
-import yansuen.data.ChassisData;
+import code.data.VehicleData;
 import yansuen.game.GameObject;
 import code.network.CommandList;
 import code.network.UpdateObjectCommand;
@@ -59,9 +59,9 @@ public class World implements LogicLooper {
     }
 
     protected void moveGameObject(GameObject gameObject) {
-        if (gameObject.getData() instanceof ChassisData) {
-            gameObject.getData().increaseX(((ChassisData) gameObject.getData()).getMovementX());
-            gameObject.getData().increaseY(((ChassisData) gameObject.getData()).getMovementY());
+        if (gameObject.getData() instanceof VehicleData) {
+            gameObject.getData().increaseX(((VehicleData) gameObject.getData()).getMovementX());
+            gameObject.getData().increaseY(((VehicleData) gameObject.getData()).getMovementY());
         }
     }
 

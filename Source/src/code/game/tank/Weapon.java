@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package code.game.tank;
 
 import yansuen.data.GameData;
@@ -19,12 +14,11 @@ import java.util.Arrays;
 import yansuen.network.NetworkSerializable;
 
 /**
- *
  * @author Link
  */
 public class Weapon extends GameObject implements NetworkSerializable {
 
-    protected Chassis chassis;
+    protected Vehicle vehicle;
     protected ShotInterface shotFunction;
     protected LogicInterface reloadFunction;
     protected ImpactInterface impactBehavior;
@@ -38,14 +32,14 @@ public class Weapon extends GameObject implements NetworkSerializable {
     protected float xRelative = 0;
     protected float yRelative = 0;
 
-    public Weapon(Chassis chassis, long cooldown, ShotInterface shotFunction, LogicInterface reloadFunction,
+    public Weapon(Vehicle vehicle, long cooldown, ShotInterface shotFunction, LogicInterface reloadFunction,
             ImpactInterface impactBehavior, LogicInterface projectileBehavior, float x, float y, float w, float h,
             BufferedImage img, GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {
-        super(((GameData) chassis.getData()).getX() + ((GameData) chassis.getData()).getWidth() / 2
+        super(((GameData) vehicle.getData()).getX() + ((GameData) vehicle.getData()).getWidth() / 2
               + x - w / 2,
-              ((GameData) chassis.getData()).getY() + ((GameData) chassis.getData()).getHeight() / 2
+              ((GameData) vehicle.getData()).getY() + ((GameData) vehicle.getData()).getHeight() / 2
               + y - h / 2, w, h, img, graphicsInterface, controllerInterface);
-        this.chassis = chassis;
+        this.vehicle = vehicle;
         this.cooldown = cooldown;
         this.shotFunction = shotFunction;
         this.reloadFunction = reloadFunction;
@@ -53,14 +47,14 @@ public class Weapon extends GameObject implements NetworkSerializable {
         this.projectileBehavior = projectileBehavior;
     }
 
-    public Weapon(Chassis chassis, long cooldown, ShotInterface shootFunction, LogicInterface reloadFunction,
+    public Weapon(Vehicle vehicle, long cooldown, ShotInterface shootFunction, LogicInterface reloadFunction,
             ImpactInterface impactBehavior, LogicInterface projectileBehavior, float x, float y,
             BufferedImage img, GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {
-        super(((GameData) chassis.getData()).getX() + ((GameData) chassis.getData()).getWidth() / 2
+        super(((GameData) vehicle.getData()).getX() + ((GameData) vehicle.getData()).getWidth() / 2
               + x - img.getWidth() / 2,
-              ((GameData) chassis.getData()).getY() + ((GameData) chassis.getData()).getHeight() / 2
+              ((GameData) vehicle.getData()).getY() + ((GameData) vehicle.getData()).getHeight() / 2
               + y - img.getHeight() / 2, img, graphicsInterface, controllerInterface);
-        this.chassis = chassis;
+        this.vehicle = vehicle;
         this.cooldown = cooldown;
         this.shotFunction = shootFunction;
         this.reloadFunction = reloadFunction;
@@ -103,12 +97,12 @@ public class Weapon extends GameObject implements NetworkSerializable {
         this.yRelative = yRelativeY;
     }
 
-    public Chassis getChassis() {
-        return chassis;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public void setChassis(Chassis chassis) {
-        this.chassis = chassis;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     public long getCooldown() {

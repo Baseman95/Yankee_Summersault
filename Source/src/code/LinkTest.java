@@ -1,6 +1,6 @@
 package code;
 
-import code.game.tank.Chassis;
+import code.game.tank.Vehicle;
 import code.menu.Screen;
 import code.presets.ControllerPresets;
 import code.presets.DrivePresets;
@@ -64,16 +64,16 @@ public class LinkTest extends Application {
     @Override
     public void start() {
         super.start();
-        Chassis zank = new Chassis(50, 50, ImagePresets.Vehicle.Land.TECHNICAL_B, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Vehicle zank = new Vehicle(50, 50, ImagePresets.Vehicle.Land.TECHNICAL_B, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         zank.getWeapons().add(WeaponPresets.createRocketLauncher(zank));
         zank.setDrive(DrivePresets.createSimpleDrive());
         world.addGameObject(zank);
 
-        Chassis julia = new Chassis(150, 50, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Vehicle julia = new Vehicle(150, 50, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         julia.setDrive(DrivePresets.createSimpleDrive());
         world.addGameObject(julia);
 
-        Chassis peter = new Chassis(250, 50, ImagePresets.Vehicle.Air.APACHE_B2, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Vehicle peter = new Vehicle(250, 50, ImagePresets.Vehicle.Air.APACHE_B2, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         peter.setDrive(DrivePresets.createSimpleDrive());
         world.addGameObject(peter);
 

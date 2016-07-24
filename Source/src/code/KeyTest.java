@@ -7,7 +7,7 @@ import yansuen.data.ImageData;
 import yansuen.data.MovementData;
 import yansuen.data.PositionData;
 import code.game.World;
-import code.game.tank.Chassis;
+import code.game.tank.Vehicle;
 import code.presets.GraphicsPresets;
 import yansuen.graphics.GraphicsLoop;
 import yansuen.key.MasterKeyManager;
@@ -120,7 +120,7 @@ public class KeyTest {
 
         };
 
-        Chassis tank = new Chassis(10, 10, tankImg, GraphicsPresets.ROTATION, playerController);
+        Vehicle tank = new Vehicle(10, 10, tankImg, GraphicsPresets.ROTATION, playerController);
         GameObject tank2 = new GameObject(500, 300, tankImg, GraphicsPresets.ROTATION, null);
         world.getGameObjects().add(tank);
         world.getGameObjects().add(tank2);

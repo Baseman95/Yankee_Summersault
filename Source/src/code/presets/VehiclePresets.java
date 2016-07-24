@@ -9,6 +9,6 @@ package code.presets;
  *
  * @author Eris
  */
-public class ChassisPresets {
+public class VehiclePresets {
 
 }

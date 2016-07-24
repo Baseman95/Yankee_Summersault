@@ -4,7 +4,7 @@ import code.game.World;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
-import yansuen.data.ChassisData;
+import code.data.VehicleData;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;
@@ -16,7 +16,7 @@ import yansuen.logic.LogicInterface;
 /**
  * @author Link
  */
-public class Chassis extends GameObject {
+public class Vehicle extends GameObject {
 
     protected Drive drive;
     protected ArrayList<Weapon> weapons = new ArrayList<>();
@@ -44,22 +44,22 @@ public class Chassis extends GameObject {
 
     };
 
-    public Chassis() {
+    public Vehicle() {
         super();
         ((GameData) data).addDataObjectListener(weaponUpdater);
     }
 
-    public Chassis(float x, float y, BufferedImage img,
+    public Vehicle(float x, float y, BufferedImage img,
             GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {
         this(x, y, img.getWidth(), img.getHeight(), img, graphicsInterface, controllerInterface);
     }
 
-    public Chassis(float x, float y, float w, float h, BufferedImage img,
+    public Vehicle(float x, float y, float w, float h, BufferedImage img,
             GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {
-        this(new ChassisData(x, y, w, h, img), graphicsInterface, controllerInterface);
+        this(new VehicleData(x, y, w, h, img), graphicsInterface, controllerInterface);
     }
 
-    public Chassis(GameData dataObject,
+    public Vehicle(GameData dataObject,
             GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {
         super(dataObject, graphicsInterface, controllerInterface);
         ((GameData) dataObject).addDataObjectListener(weaponUpdater);

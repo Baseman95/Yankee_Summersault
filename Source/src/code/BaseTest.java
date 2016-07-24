@@ -1,7 +1,7 @@
 package code;
 
 import code.game.Application;
-import code.game.tank.Chassis;
+import code.game.tank.Vehicle;
 import code.game.tank.Weapon;
 import code.menu.Screen;
 import java.io.IOException;
@@ -38,16 +38,14 @@ public class BaseTest extends Application {
         dataO.getMovementData().setMovementY(bulletTrajectory.y + hostMovement.y);
         
  </editor-fold>*/
-        Chassis zank = new Chassis(10, 10, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Vehicle zank = new Vehicle(10, 10, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         zank.setDrive(DrivePresets.createSimpleDrive());
-        
+
         //Chassis choppah = new Chassis(300, 300, ImagePresets.Chassis.HELI_APACHE_R, GraphicsPresets.ROTATION, null);
-        Chassis choppah = new Chassis(300, 300, ImagePresets.Vehicle.Air.APACHE_B2, GraphicsPresets.ROTATION, null);
+        Vehicle choppah = new Vehicle(300, 300, ImagePresets.Vehicle.Air.APACHE_B2, GraphicsPresets.ROTATION, null);
         //choppah.setDrive(DrivePresets.createHeli(0.006f));
-        
-        Chassis hydra = new Chassis(300, 350, ImagePresets.Vehicle.Air.HARRIER_R, GraphicsPresets.ROTATION, null);
-        
-        
+
+        Vehicle hydra = new Vehicle(300, 350, ImagePresets.Vehicle.Air.HARRIER_R, GraphicsPresets.ROTATION, null);
 
         Weapon mg = WeaponPresets.createMinigun(zank);
         Weapon shotgun = WeaponPresets.createShotgun(zank);
@@ -62,7 +60,7 @@ public class BaseTest extends Application {
         world.addGameObject(zank);
         world.addGameObject(choppah);
         world.addGameObject(hydra);
-        
+
         world.addGameObject(shotgun);
         world.addGameObject(tvmissile);
         world.addGameObject(smoke);
