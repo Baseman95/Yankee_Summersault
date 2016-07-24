@@ -11,7 +11,6 @@ import yansuen.key.MasterKeyManager;
 import code.game.tank.projectile.ShotInterface;
 import java.awt.image.BufferedImage;
 import java.util.Random;
-import yansuen.controller.ControllerInterface;
 import yansuen.game.GameObject;
 import yansuen.logic.LogicInterface;
 import yansuen.physic.PolarVector;
@@ -54,7 +53,7 @@ public class WeaponPresets {
     
      */
     public static Weapon createWeapon(Chassis chassis, Float weaponOffsetX, Float weaponOffsetY, Long cooldown, BufferedImage weaponImage,
-            ControllerInterface weaponController, Drive weaponDrive, ShotInterface si) {
+            LogicInterface weaponController, Drive weaponDrive, ShotInterface si) {
 
         if (weaponOffsetX == null)
             weaponOffsetX = 0f;
@@ -126,7 +125,7 @@ public class WeaponPresets {
         return simpleShot;
     }
 
-    public static ShotInterface createAIControlledSingleShotInterface(BufferedImage texture, float travelSpeed, long travelDistance, float deviationPerSide, int weaponLength, ControllerInterface c) {
+    public static ShotInterface createAIControlledSingleShotInterface(BufferedImage texture, float travelSpeed, long travelDistance, float deviationPerSide, int weaponLength, LogicInterface c) {
         ShotInterface si = (Weapon weapon, long tick, ImpactInterface impactInterface, World world) -> {
             GameData data = ((GameData) weapon.getData());
 
@@ -176,7 +175,7 @@ public class WeaponPresets {
 
     public static Weapon createAIGuidedRocketLauncher(Chassis chassis) {
 
-        ControllerInterface guidedController = ControllerPresets.createMoveToController(500, 500);
+        LogicInterface guidedController = ControllerPresets.createMoveToController(500, 500);
         ShotInterface si = createAIControlledSingleShotInterface(ImagePresets.Weapon.SHOT_RL_1, 3, 700, 0.005f, WEAPON_MG_LENGTH, guidedController);
         return createWeapon(chassis, null, null, 100L, ImagePresets.Weapon.WEAPON_RL_1, null, null, si);
     }

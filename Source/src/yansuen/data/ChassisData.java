@@ -11,6 +11,14 @@ public class ChassisData extends GameData {
 
     protected float movementX;
     protected float movementY;
+    
+    public boolean accelerate = false;
+    public boolean decelerate = false;
+    public boolean breaks = false;
+    public boolean turnLeft = false;
+    public boolean turnRight = false;
+    public boolean strafeLeft = false;
+    public boolean strafeRight = false;
 
     public ChassisData(float movementX, float movementY, float x, float y, float width, float height, double rotation, BufferedImage image) {
         super(x, y, width, height, rotation, image);
@@ -57,6 +65,8 @@ public class ChassisData extends GameData {
     public void increaseMovementY(float movementY) {
         setMovementX(this.movementY + movementY);
     }
+    
+    
 
     public float getMovementX() {
         return movementX;

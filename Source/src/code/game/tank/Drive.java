@@ -1,42 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package code.game.tank;
 
 import code.game.World;
+import yansuen.data.ChassisData;
 import yansuen.game.GameObject;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;
 
 /**
- *
  * @author Link
  */
 public class Drive implements LogicInterface {
 
-    protected DriveLogicInterface accelerateFunction;
-    protected DriveLogicInterface decelerateFunction;
-    protected DriveLogicInterface breaksFunction;
-    protected DriveLogicInterface turnLeftFunction;
-    protected DriveLogicInterface turnRightFunction;
-    protected DriveLogicInterface strafeLeftFunction;
-    protected DriveLogicInterface strafeRightFunction;
-    protected DriveLogicInterface driveLogicInterface;
+    protected LogicInterface accelerateFunction;
+    protected LogicInterface decelerateFunction;
+    protected LogicInterface breaksFunction;
+    protected LogicInterface turnLeftFunction;
+    protected LogicInterface turnRightFunction;
+    protected LogicInterface strafeLeftFunction;
+    protected LogicInterface strafeRightFunction;
+    protected LogicInterface driveLogicInterface;
 
-    protected boolean accelerate = false;
-    protected boolean decelerate = false;
-    protected boolean breaks = false;
-    protected boolean turnLeft = false;
-    protected boolean turnRight = false;
-    protected boolean strafeLeft = false;
-    protected boolean strafeRight = false;
-
-    public Drive(DriveLogicInterface accelerateFunction, DriveLogicInterface decelerateFunction,
-            DriveLogicInterface breaksFunction, DriveLogicInterface turnLeftFunction,
-            DriveLogicInterface turnRightFunction, DriveLogicInterface strafeLeftFunction,
-            DriveLogicInterface strafeRightFunction, DriveLogicInterface logicInterface) {
+    public Drive(LogicInterface accelerateFunction, LogicInterface decelerateFunction,
+            LogicInterface breaksFunction, LogicInterface turnLeftFunction,
+            LogicInterface turnRightFunction, LogicInterface strafeLeftFunction,
+            LogicInterface strafeRightFunction, LogicInterface logicInterface) {
         this.accelerateFunction = accelerateFunction;
         this.decelerateFunction = decelerateFunction;
         this.breaksFunction = breaksFunction;
@@ -49,142 +36,90 @@ public class Drive implements LogicInterface {
 
     @Override
     public void doLogic(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
+        if (!(gameObject instanceof Chassis))
+            return;
+
+        ChassisData data = ((ChassisData) gameObject.getData());
         if (driveLogicInterface != null)
-            driveLogicInterface.doDriveLogic(this, gameObject, tick, world);
-        if (accelerateFunction != null && accelerate)
-            accelerateFunction.doDriveLogic(this, gameObject, tick, world);
-        if (decelerateFunction != null && decelerate)
-            decelerateFunction.doDriveLogic(this, gameObject, tick, world);
-        if (breaksFunction != null && breaks)
-            breaksFunction.doDriveLogic(this, gameObject, tick, world);
-        if (turnLeftFunction != null && turnLeft)
-            turnLeftFunction.doDriveLogic(this, gameObject, tick, world);
-        if (turnRightFunction != null && turnRight)
-            turnRightFunction.doDriveLogic(this, gameObject, tick, world);
-        if (strafeLeftFunction != null && strafeLeft)
-            strafeLeftFunction.doDriveLogic(this, gameObject, tick, world);
-        if (strafeRightFunction != null && strafeRight)
-            strafeRightFunction.doDriveLogic(this, gameObject, tick, world);
+            driveLogicInterface.doLogic(gameObject, tick, world, manager);
+        if (accelerateFunction != null && data.accelerate)
+            accelerateFunction.doLogic(gameObject, tick, world, manager);
+        if (decelerateFunction != null && data.decelerate)
+            decelerateFunction.doLogic(gameObject, tick, world, manager);
+        if (breaksFunction != null && data.breaks)
+            breaksFunction.doLogic(gameObject, tick, world, manager);
+        if (turnLeftFunction != null && data.turnLeft)
+            turnLeftFunction.doLogic(gameObject, tick, world, manager);
+        if (turnRightFunction != null && data.turnRight)
+            turnRightFunction.doLogic(gameObject, tick, world, manager);
+        if (strafeLeftFunction != null && data.strafeLeft)
+            strafeLeftFunction.doLogic(gameObject, tick, world, manager);
+        if (strafeRightFunction != null && data.strafeRight)
+            strafeRightFunction.doLogic(gameObject, tick, world, manager);
     }
 
-    public DriveLogicInterface getDriveLogicInterface() {
+    public LogicInterface getLogicInterface() {
         return driveLogicInterface;
     }
 
-    public void setDriveLogicInterface(DriveLogicInterface driveLogicInterface) {
+    public void setLogicInterface(LogicInterface driveLogicInterface) {
         this.driveLogicInterface = driveLogicInterface;
     }
 
-    public DriveLogicInterface getAccelerateFunction() {
+    public LogicInterface getAccelerateFunction() {
         return accelerateFunction;
     }
 
-    public void setAccelerateFunction(DriveLogicInterface accelerateFunction) {
+    public void setAccelerateFunction(LogicInterface accelerateFunction) {
         this.accelerateFunction = accelerateFunction;
     }
 
-    public DriveLogicInterface getDecelerateFunction() {
+    public LogicInterface getDecelerateFunction() {
         return decelerateFunction;
     }
 
-    public void setDecelerateFunction(DriveLogicInterface deccelerateFunction) {
+    public void setDecelerateFunction(LogicInterface deccelerateFunction) {
         this.decelerateFunction = deccelerateFunction;
     }
 
-    public DriveLogicInterface getBreaksFunction() {
+    public LogicInterface getBreaksFunction() {
         return breaksFunction;
     }
 
-    public void setBreaksFunction(DriveLogicInterface breaksFunction) {
+    public void setBreaksFunction(LogicInterface breaksFunction) {
         this.breaksFunction = breaksFunction;
     }
 
-    public DriveLogicInterface getTurnLeftFunction() {
+    public LogicInterface getTurnLeftFunction() {
         return turnLeftFunction;
     }
 
-    public void setTurnLeftFunction(DriveLogicInterface turnLeftFunction) {
+    public void setTurnLeftFunction(LogicInterface turnLeftFunction) {
         this.turnLeftFunction = turnLeftFunction;
     }
 
-    public DriveLogicInterface getTurnRightFunction() {
+    public LogicInterface getTurnRightFunction() {
         return turnRightFunction;
     }
 
-    public void setTurnRightFunction(DriveLogicInterface turnRightFunction) {
+    public void setTurnRightFunction(LogicInterface turnRightFunction) {
         this.turnRightFunction = turnRightFunction;
     }
 
-    public DriveLogicInterface getStrafeLeftFunction() {
+    public LogicInterface getStrafeLeftFunction() {
         return strafeLeftFunction;
     }
 
-    public void setStrafeLeftFunction(DriveLogicInterface strafeLeftFunction) {
+    public void setStrafeLeftFunction(LogicInterface strafeLeftFunction) {
         this.strafeLeftFunction = strafeLeftFunction;
     }
 
-    public DriveLogicInterface getStrafeRightFunction() {
+    public LogicInterface getStrafeRightFunction() {
         return strafeRightFunction;
     }
 
-    public void setStrafeRightFunction(DriveLogicInterface strafeRightFunction) {
+    public void setStrafeRightFunction(LogicInterface strafeRightFunction) {
         this.strafeRightFunction = strafeRightFunction;
-    }
-
-    public boolean isAccelerate() {
-        return accelerate;
-    }
-
-    public void setAccelerate(boolean accelerate) {
-        this.accelerate = accelerate;
-    }
-
-    public boolean isDecelerate() {
-        return decelerate;
-    }
-
-    public void setDecelerate(boolean deccelerate) {
-        this.decelerate = deccelerate;
-    }
-
-    public boolean isBreaks() {
-        return breaks;
-    }
-
-    public void setBreaks(boolean breaks) {
-        this.breaks = breaks;
-    }
-
-    public boolean isTurnLeft() {
-        return turnLeft;
-    }
-
-    public void setTurnLeft(boolean turnLeft) {
-        this.turnLeft = turnLeft;
-    }
-
-    public boolean isTurnRight() {
-        return turnRight;
-    }
-
-    public void setTurnRight(boolean turnRight) {
-        this.turnRight = turnRight;
-    }
-
-    public boolean isStrafeLeft() {
-        return strafeLeft;
-    }
-
-    public void setStrafeLeft(boolean strafeLeft) {
-        this.strafeLeft = strafeLeft;
-    }
-
-    public boolean isStrafeRight() {
-        return strafeRight;
-    }
-
-    public void setStrafeRight(boolean strafeRight) {
-        this.strafeRight = strafeRight;
     }
 
     //<editor-fold defaultstate="collapsed" desc="NetworkSerializeStuff">

@@ -9,7 +9,6 @@ import yansuen.data.GameData;
 import code.game.World;
 import code.game.tank.projectile.ImpactInterface;
 import java.awt.image.BufferedImage;
-import yansuen.controller.ControllerInterface;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;
@@ -29,7 +28,7 @@ public class Weapon extends GameObject implements NetworkSerializable {
     protected ShotInterface shotFunction;
     protected LogicInterface reloadFunction;
     protected ImpactInterface impactBehavior;
-    protected ControllerInterface projectileBehavior;
+    protected LogicInterface projectileBehavior;
 
     protected boolean shot = false;
     protected boolean reload = false;
@@ -40,8 +39,8 @@ public class Weapon extends GameObject implements NetworkSerializable {
     protected float yRelative = 0;
 
     public Weapon(Chassis chassis, long cooldown, ShotInterface shotFunction, LogicInterface reloadFunction,
-            ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y, float w, float h,
-            BufferedImage img, GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+            ImpactInterface impactBehavior, LogicInterface projectileBehavior, float x, float y, float w, float h,
+            BufferedImage img, GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {
         super(((GameData) chassis.getData()).getX() + ((GameData) chassis.getData()).getWidth() / 2
               + x - w / 2,
               ((GameData) chassis.getData()).getY() + ((GameData) chassis.getData()).getHeight() / 2
@@ -55,8 +54,8 @@ public class Weapon extends GameObject implements NetworkSerializable {
     }
 
     public Weapon(Chassis chassis, long cooldown, ShotInterface shootFunction, LogicInterface reloadFunction,
-            ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y,
-            BufferedImage img, GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+            ImpactInterface impactBehavior, LogicInterface projectileBehavior, float x, float y,
+            BufferedImage img, GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {
         super(((GameData) chassis.getData()).getX() + ((GameData) chassis.getData()).getWidth() / 2
               + x - img.getWidth() / 2,
               ((GameData) chassis.getData()).getY() + ((GameData) chassis.getData()).getHeight() / 2
@@ -144,11 +143,11 @@ public class Weapon extends GameObject implements NetworkSerializable {
         this.impactBehavior = impactBehavior;
     }
 
-    public ControllerInterface getProjectileBehavior() {
+    public LogicInterface getProjectileBehavior() {
         return projectileBehavior;
     }
 
-    public void setProjectileBehavior(ControllerInterface projectileBehavior) {
+    public void setProjectileBehavior(LogicInterface projectileBehavior) {
         this.projectileBehavior = projectileBehavior;
     }
 

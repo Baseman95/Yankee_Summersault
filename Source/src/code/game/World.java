@@ -4,7 +4,6 @@ import yansuen.data.ChassisData;
 import yansuen.game.GameObject;
 import code.network.CommandList;
 import code.network.UpdateObjectCommand;
-import yansuen.controller.ControllerInterface;
 import yansuen.graphics.Camera;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;
@@ -12,6 +11,7 @@ import yansuen.logic.LogicLooper;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import yansuen.logic.LogicInterface;
 import yansuen.network.Network;
 
 /**
@@ -39,9 +39,9 @@ public class World implements LogicLooper {
     public synchronized void onLogicLoop(long tick) {
         for (GameObject gameObject : gameObjects) {
             gameObject.doLogic(gameObject, tick, this, keyManager);
-            ControllerInterface ci = gameObject.getControllerInterface();
+            LogicInterface ci = gameObject.getLogicInterface();
             if (ci != null)
-                ci.control(gameObject, tick, this, keyManager);
+                ci.doLogic(gameObject, tick, this, keyManager);
             moveGameObject(gameObject);
             if (network != null && network.getId() == 0 && gameObject.getObjectId() != -1 && synchronizeTick < tick) {
                 ArrayList<String> args = new ArrayList();

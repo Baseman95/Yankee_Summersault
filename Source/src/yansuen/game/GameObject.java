@@ -1,6 +1,5 @@
 package yansuen.game;
 
-import yansuen.controller.ControllerInterface;
 import code.game.World;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.logic.LogicInterface;
@@ -18,23 +17,23 @@ public class GameObject implements LogicInterface, NetworkSerializable {
     protected int objectId = -1;
     protected GameData data;
     protected GraphicsInterface graphicsInterface;
-    protected ControllerInterface controllerInterface;
+    protected LogicInterface controllerInterface;
 
     public GameObject() {
     }
 
     public GameObject(float x, float y, BufferedImage img,
-            GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+            GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {
         this(x, y, img.getWidth(), img.getHeight(), img, graphicsInterface, controllerInterface);
     }
 
     public GameObject(float x, float y, float w, float h, BufferedImage img,
-            GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+            GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {
         this(new GameData(x, y, w, h, img), graphicsInterface, controllerInterface);
     }
 
     public GameObject(GameData dataObject,
-            GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
+            GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {
         this.data = dataObject;
         this.graphicsInterface = graphicsInterface;
         this.controllerInterface = controllerInterface;
@@ -65,11 +64,11 @@ public class GameObject implements LogicInterface, NetworkSerializable {
         this.graphicsInterface = graphicsInterface;
     }
 
-    public ControllerInterface getControllerInterface() {
+    public LogicInterface getLogicInterface() {
         return controllerInterface;
     }
 
-    public void setControllerInterface(ControllerInterface controllerInterface) {
+    public void setLogicInterface(LogicInterface controllerInterface) {
         this.controllerInterface = controllerInterface;
     }
 

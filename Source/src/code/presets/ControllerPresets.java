@@ -1,13 +1,12 @@
 package code.presets;
 
-import yansuen.data.GameData;
 import code.game.World;
 import code.game.tank.Chassis;
-import code.game.tank.Drive;
 import java.awt.event.KeyEvent;
-import yansuen.controller.ControllerInterface;
+import yansuen.data.ChassisData;
 import yansuen.game.GameObject;
 import yansuen.key.MasterKeyManager;
+import yansuen.logic.LogicInterface;
 import yansuen.physic.CartesianVector;
 import yansuen.physic.PolarVector;
 
@@ -16,12 +15,11 @@ import yansuen.physic.PolarVector;
  */
 public class ControllerPresets {
 
-    public static ControllerInterface createMoveToController(int x, int y) {
-        ControllerInterface moveTo = (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-            GameData data = (GameData) gameObject.getData();
+    public static LogicInterface createMoveToController(int x, int y) {
+        LogicInterface moveTo = (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
             Chassis c = ((Chassis) gameObject);
-            Drive d = c.getDrive();
-            d.setAccelerate(true);
+            ChassisData data = ((ChassisData) c.getData());
+            data.accelerate = true;
 
             double chassisRot = data.getRotation();
 
@@ -35,42 +33,42 @@ public class ControllerPresets {
             deltaVector.updateAngleRangePi();
 
             //System.out.println(deltaVector.angle);
-            d.setTurnLeft(deltaVector.angle < 0);
-            d.setTurnRight(deltaVector.angle > 0);
+            data.turnLeft = deltaVector.angle < 0;
+            data.turnRight = deltaVector.angle > 0;
             //System.out.println(data);
 
         };
         return moveTo;
     }
-    public static ControllerInterface HOLD_ACCELERATE = ControllerPresets.hold(true, false, false, false, false, false, false);
+    public static LogicInterface HOLD_ACCELERATE = ControllerPresets.hold(true, false, false, false, false, false, false);
 
-    public static ControllerInterface hold(boolean accelerate, boolean decelerate, boolean breaks,
+    public static LogicInterface hold(boolean accelerate, boolean decelerate, boolean breaks,
             boolean turnLeft, boolean turnRight, boolean strafeLeft, boolean strafeRight) {
-        ControllerInterface controller = (GameObject gameObject, long tick, World w, MasterKeyManager manager) -> {
+        LogicInterface controller = (GameObject gameObject, long tick, World w, MasterKeyManager manager) -> {
             Chassis c = ((Chassis) gameObject);
-            Drive d = c.getDrive();
-            d.setAccelerate(accelerate);
-            d.setDecelerate(decelerate);
-            d.setBreaks(breaks);
-            d.setTurnLeft(turnLeft);
-            d.setTurnRight(turnRight);
-            d.setStrafeLeft(strafeLeft);
-            d.setStrafeRight(strafeRight);
+            ChassisData data = ((ChassisData) c.getData());
+            data.accelerate = accelerate;
+            data.decelerate = decelerate;
+            data.breaks = breaks;
+            data.turnLeft = turnLeft;
+            data.turnRight = turnRight;
+            data.strafeLeft = strafeLeft;
+            data.strafeRight = strafeRight;
         };
         return controller;
     }
 
-    public static ControllerInterface PLAYER = (GameObject gameObject, long tick, World w, MasterKeyManager manager) -> {
+    public static LogicInterface PLAYER = (GameObject gameObject, long tick, World w, MasterKeyManager manager) -> {
         Chassis c = ((Chassis) gameObject);
-        Drive d = c.getDrive();
+        ChassisData data = ((ChassisData) c.getData());
 
-        d.setAccelerate(manager.isKeyPressed(KeyEvent.VK_W, c.getNetworkProjectionId()));
-        d.setDecelerate(manager.isKeyPressed(KeyEvent.VK_S, c.getNetworkProjectionId()));
-        d.setBreaks(manager.isKeyPressed(KeyEvent.VK_SPACE, c.getNetworkProjectionId()));
-        d.setTurnLeft(manager.isKeyPressed(KeyEvent.VK_A, c.getNetworkProjectionId()));
-        d.setTurnRight(manager.isKeyPressed(KeyEvent.VK_D, c.getNetworkProjectionId()));
-        d.setStrafeLeft(manager.isKeyPressed(KeyEvent.VK_Q, c.getNetworkProjectionId()));
-        d.setStrafeRight(manager.isKeyPressed(KeyEvent.VK_E, c.getNetworkProjectionId()));
+        data.accelerate = manager.isKeyPressed(KeyEvent.VK_W, c.getNetworkProjectionId());
+        data.decelerate = manager.isKeyPressed(KeyEvent.VK_S, c.getNetworkProjectionId());
+        data.breaks = manager.isKeyPressed(KeyEvent.VK_SPACE, c.getNetworkProjectionId());
+        data.turnLeft = manager.isKeyPressed(KeyEvent.VK_A, c.getNetworkProjectionId());
+        data.turnRight = manager.isKeyPressed(KeyEvent.VK_D, c.getNetworkProjectionId());
+        data.strafeLeft = manager.isKeyPressed(KeyEvent.VK_Q, c.getNetworkProjectionId());
+        data.strafeRight = manager.isKeyPressed(KeyEvent.VK_E, c.getNetworkProjectionId());
         for (int i = 0; i < c.getWeapons().size(); i++) {
             c.getWeapons().get(i).setShoot(manager.isKeyPressed(KeyEvent.VK_1 + i, gameObject.getNetworkProjectionId()));
         }
