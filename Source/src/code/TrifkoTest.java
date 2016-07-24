@@ -38,7 +38,7 @@ public class TrifkoTest extends Application {
     @Override
     public void start() {
         super.start();
-        Chassis heli = new Chassis(300, 200, ImagePresets.Vehicle.HELI_APACHE_B, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Chassis heli = new Chassis(300, 200, ImagePresets.Vehicle.Air.APACHE_B2, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         heli.setDrive(DrivePresets.createHeli(0.006f));
 
         Weapon tracer = WeaponPresets.createTracer(heli);
