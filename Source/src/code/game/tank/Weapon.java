@@ -14,7 +14,6 @@ import java.util.Arrays;
 import yansuen.network.NetworkSerializable;
 
 /**
- *
  * @author Link
  */
 public class Weapon extends GameObject implements NetworkSerializable {
