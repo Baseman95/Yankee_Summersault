@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package code.presets;
 
-import yansuen.data.DataContainer;
+import yansuen.data.GameData;
 import code.game.World;
 import code.game.tank.Chassis;
 import code.game.tank.Drive;
@@ -17,22 +12,21 @@ import yansuen.physic.CartesianVector;
 import yansuen.physic.PolarVector;
 
 /**
- *
  * @author Eris
  */
 public class ControllerPresets {
 
     public static ControllerInterface createMoveToController(int x, int y) {
         ControllerInterface moveTo = (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-            DataContainer data = (DataContainer) gameObject.getDataContainer();
+            GameData data = (GameData) gameObject.getData();
             Chassis c = ((Chassis) gameObject);
             Drive d = c.getDrive();
             d.setAccelerate(true);
 
-            double chassisRot = data.getPositionData().getRotation();
+            double chassisRot = data.getRotation();
 
-            int xDelta = x - (int) data.getPositionData().getX();
-            int yDelta = y - (int) data.getPositionData().getY();
+            int xDelta = x - (int) data.getX();
+            int yDelta = y - (int) data.getY();
             System.out.println(xDelta);
 
             PolarVector deltaVector = new PolarVector(new CartesianVector(xDelta, yDelta));

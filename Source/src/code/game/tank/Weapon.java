@@ -5,7 +5,7 @@
  */
 package code.game.tank;
 
-import yansuen.data.DataContainer;
+import yansuen.data.GameData;
 import code.game.World;
 import code.game.tank.projectile.ImpactInterface;
 import java.awt.image.BufferedImage;
@@ -42,9 +42,9 @@ public class Weapon extends GameObject implements NetworkSerializable {
     public Weapon(Chassis chassis, long cooldown, ShotInterface shotFunction, LogicInterface reloadFunction,
             ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y, float w, float h,
             BufferedImage img, GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
-        super(((DataContainer) chassis.getDataContainer()).getPositionData().getX() + ((DataContainer) chassis.getDataContainer()).getPositionData().getWidth() / 2
+        super(((GameData) chassis.getData()).getX() + ((GameData) chassis.getData()).getWidth() / 2
               + x - w / 2,
-              ((DataContainer) chassis.getDataContainer()).getPositionData().getY() + ((DataContainer) chassis.getDataContainer()).getPositionData().getHeight() / 2
+              ((GameData) chassis.getData()).getY() + ((GameData) chassis.getData()).getHeight() / 2
               + y - h / 2, w, h, img, graphicsInterface, controllerInterface);
         this.chassis = chassis;
         this.cooldown = cooldown;
@@ -57,9 +57,9 @@ public class Weapon extends GameObject implements NetworkSerializable {
     public Weapon(Chassis chassis, long cooldown, ShotInterface shootFunction, LogicInterface reloadFunction,
             ImpactInterface impactBehavior, ControllerInterface projectileBehavior, float x, float y,
             BufferedImage img, GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
-        super(((DataContainer) chassis.getDataContainer()).getPositionData().getX() + ((DataContainer) chassis.getDataContainer()).getPositionData().getWidth() / 2
+        super(((GameData) chassis.getData()).getX() + ((GameData) chassis.getData()).getWidth() / 2
               + x - img.getWidth() / 2,
-              ((DataContainer) chassis.getDataContainer()).getPositionData().getY() + ((DataContainer) chassis.getDataContainer()).getPositionData().getHeight() / 2
+              ((GameData) chassis.getData()).getY() + ((GameData) chassis.getData()).getHeight() / 2
               + y - img.getHeight() / 2, img, graphicsInterface, controllerInterface);
         this.chassis = chassis;
         this.cooldown = cooldown;

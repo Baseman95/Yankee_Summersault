@@ -1,26 +1,22 @@
 package yansuen.game;
 
 import yansuen.controller.ControllerInterface;
-import yansuen.data.ImageData;
-import yansuen.data.MovementData;
-import yansuen.data.PositionData;
 import code.game.World;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.logic.LogicInterface;
 import java.awt.image.BufferedImage;
 import yansuen.key.MasterKeyManager;
 import yansuen.network.NetworkSerializable;
-import yansuen.data.DataContainer;
+import yansuen.data.GameData;
 
 /**
- *
  * @author Link162534
  */
 public class GameObject implements LogicInterface, NetworkSerializable {
 
     protected int networkProjectionId = -1;
     protected int objectId = -1;
-    protected DataContainer data;
+    protected GameData data;
     protected GraphicsInterface graphicsInterface;
     protected ControllerInterface controllerInterface;
 
@@ -34,11 +30,10 @@ public class GameObject implements LogicInterface, NetworkSerializable {
 
     public GameObject(float x, float y, float w, float h, BufferedImage img,
             GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
-        this((DataContainer) (new DataContainer(new PositionData(x, y, w, h), new ImageData(img))),
-             graphicsInterface, controllerInterface);
+        this(new GameData(x, y, w, h, img), graphicsInterface, controllerInterface);
     }
 
-    public GameObject(DataContainer dataObject,
+    public GameObject(GameData dataObject,
             GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         this.data = dataObject;
         this.graphicsInterface = graphicsInterface;
@@ -50,15 +45,15 @@ public class GameObject implements LogicInterface, NetworkSerializable {
     }
 
     public void destroy(World world) {
-        if (data instanceof DataContainer)
-            ((DataContainer) data).getListenerList().clear();
+        if (data instanceof GameData)
+            ((GameData) data).getListenerList().clear();
     }
 
-    public DataContainer getDataContainer() {
+    public GameData getData() {
         return data;
     }
 
-    public void setData(DataContainer data) {
+    public void setData(GameData data) {
         this.data = data;
     }
 

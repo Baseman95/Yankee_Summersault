@@ -5,22 +5,19 @@
  */
 package code.game.tank;
 
-import yansuen.data.DataContainer;
-import yansuen.data.ImageData;
-import yansuen.data.MovementData;
-import yansuen.data.PositionData;
 import code.game.World;
+import com.sun.scenario.effect.ImageData;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import yansuen.controller.ControllerInterface;
-import yansuen.data.DataListenerAdapter;
 import java.util.Arrays;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;
-import yansuen.data.DataContainer;
-import yansuen.data.DataListener;
-import yansuen.data.MovableDataContainer;
+import yansuen.data.GameData;
+import yansuen.data.ChassisData;
+import yansuen.data.GameDataListener;
+import yansuen.data.GameDataListenerAdapter;
 
 /**
  *
@@ -30,25 +27,25 @@ public class Chassis extends GameObject {
 
     protected Drive drive;
     protected ArrayList<Weapon> weapons = new ArrayList<>();
-    protected DataListener weaponUpdater = new DataListenerAdapter() {
+    protected GameDataListener weaponUpdater = new GameDataListenerAdapter() {
         @Override
-        public void onPositionChanged(DataContainer data, float xOld, float yOld) {
-            DataContainer d = ((DataContainer) data);
+        public void onPositionChanged(GameData data, float xOld, float yOld) {
+            GameData d = ((GameData) data);
             for (Weapon weapon : weapons) {
-                DataContainer wd = ((DataContainer) weapon.getDataContainer());
-                wd.getPositionData().setX(d.getPositionData().getX() + d.getPositionData().getWidth() / 2
-                                          + weapon.getRelativeX() - ((DataContainer) weapon.getDataContainer()).getPositionData().getWidth() / 2);
-                wd.getPositionData().setY(d.getPositionData().getY() + d.getPositionData().getHeight() / 2
-                                          + weapon.getRelativeY() - ((DataContainer) weapon.getDataContainer()).getPositionData().getHeight() / 2);
+                GameData wd = ((GameData) weapon.getData());
+                wd.setX(d.getX() + d.getWidth() / 2
+                        + weapon.getRelativeX() - ((GameData) weapon.getData()).getWidth() / 2);
+                wd.setY(d.getY() + d.getHeight() / 2
+                        + weapon.getRelativeY() - ((GameData) weapon.getData()).getHeight() / 2);
             }
         }
 
         @Override
-        public void onRotationChanged(DataContainer data, double rOld) {
-            DataContainer d = ((DataContainer) data);
+        public void onRotationChanged(GameData data, double rOld) {
+            GameData d = ((GameData) data);
             for (Weapon weapon : weapons) {
-                DataContainer wd = ((DataContainer) weapon.getDataContainer());
-                wd.getPositionData().setRotation(d.getPositionData().getRotation() - weapon.getRelativeRotation());
+                GameData wd = ((GameData) weapon.getData());
+                wd.setRotation(d.getRotation() - weapon.getRelativeRotation());
             }
         }
 
@@ -56,7 +53,7 @@ public class Chassis extends GameObject {
 
     public Chassis() {
         super();
-        ((DataContainer) data).addDataObjectListener(weaponUpdater);
+        ((GameData) data).addDataObjectListener(weaponUpdater);
     }
 
     public Chassis(float x, float y, BufferedImage img,
@@ -66,14 +63,13 @@ public class Chassis extends GameObject {
 
     public Chassis(float x, float y, float w, float h, BufferedImage img,
             GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
-        this((DataContainer) (new MovableDataContainer(new PositionData(x, y, w, h), new ImageData(img), new MovementData())),
-             graphicsInterface, controllerInterface);
+        this(new ChassisData(x, y, w, h, img), graphicsInterface, controllerInterface);
     }
 
-    public Chassis(DataContainer dataObject,
+    public Chassis(GameData dataObject,
             GraphicsInterface graphicsInterface, ControllerInterface controllerInterface) {
         super(dataObject, graphicsInterface, controllerInterface);
-        ((DataContainer) dataObject).addDataObjectListener(weaponUpdater);
+        ((GameData) dataObject).addDataObjectListener(weaponUpdater);
     }
 
     @Override
