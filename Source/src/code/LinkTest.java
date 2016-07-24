@@ -64,7 +64,7 @@ public class LinkTest extends Application {
     @Override
     public void start() {
         super.start();
-        Vehicle zank = new Vehicle(50, 50, ImagePresets.Vehicle.CAR_TECHNICAL_B, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Vehicle zank = new Vehicle(50, 50, ImagePresets.Vehicle.Land.TECHNICAL_B, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         zank.getWeapons().add(WeaponPresets.createRocketLauncher(zank));
         zank.setDrive(DrivePresets.createSimpleDrive());
         world.addGameObject(zank);
@@ -73,7 +73,7 @@ public class LinkTest extends Application {
         julia.setDrive(DrivePresets.createSimpleDrive());
         world.addGameObject(julia);
 
-        Vehicle peter = new Vehicle(250, 50, ImagePresets.Vehicle.HELI_APACHE_B, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Vehicle peter = new Vehicle(250, 50, ImagePresets.Vehicle.Air.APACHE_B2, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         peter.setDrive(DrivePresets.createSimpleDrive());
         world.addGameObject(peter);
 
