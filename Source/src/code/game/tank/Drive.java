@@ -1,7 +1,7 @@
 package code.game.tank;
 
 import code.game.World;
-import yansuen.data.ChassisData;
+import yansuen.data.VehicleData;
 import yansuen.game.GameObject;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;
@@ -36,10 +36,10 @@ public class Drive implements LogicInterface {
 
     @Override
     public void doLogic(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
-        if (!(gameObject instanceof Chassis))
+        if (!(gameObject instanceof Vehicle))
             return;
 
-        ChassisData data = ((ChassisData) gameObject.getData());
+        VehicleData data = ((VehicleData) gameObject.getData());
         if (driveLogicInterface != null)
             driveLogicInterface.doLogic(gameObject, tick, world, manager);
         if (accelerateFunction != null && data.accelerate)

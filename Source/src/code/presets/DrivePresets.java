@@ -1,7 +1,7 @@
 package code.presets;
 
 import code.TrifkoTest;
-import yansuen.data.ChassisData;
+import yansuen.data.VehicleData;
 import yansuen.data.GameData;
 import code.game.World;
 import code.game.tank.Drive;
@@ -29,7 +29,7 @@ public class DrivePresets {
         Drive drive;
         drive = new Drive(
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
 
                     double ang = data.getRotation();
                     PolarVector mv = new PolarVector(ang, acceleration);
@@ -37,7 +37,7 @@ public class DrivePresets {
                     data.setMovementY(PolarVector.yFromPolar(mv) + data.getMovementY());
                 },
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
 
                     double ang = data.getRotation();
                     PolarVector mv = new PolarVector(ang, deceleration);
@@ -46,22 +46,22 @@ public class DrivePresets {
                     data.setMovementY(data.getMovementY() - PolarVector.yFromPolar(mv));
                 },
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     data.setMovementX(data.getMovementX() * breakMultiplicator);
                     data.setMovementY(data.getMovementY() * breakMultiplicator);
                 },
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     data.increaseRotation(-rotation);
                 },
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     data.increaseRotation(+rotation);
                 },
                 null,
                 null,
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     CartesianVector vector = new CartesianVector(data.getMovementX(),
                                                                  data.getMovementY());
                     PolarVector pv = vector.toPolarVector();
@@ -78,14 +78,14 @@ public class DrivePresets {
         Drive drive = new Drive(
                 null, null, null,
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     data.increaseRotation(-rotationspeed);
                 }, (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     data.increaseRotation(rotationspeed);
                 }, null, null,
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     PolarVector p = new PolarVector(data.getRotation(), travelspeed);
                     data.setMovementX(PolarVector.xFromPolar(p));
                     data.setMovementY(PolarVector.yFromPolar(p));
@@ -96,7 +96,7 @@ public class DrivePresets {
     public static Drive createStraightDrive(float speed, double rotation) {
         Drive straight = new Drive(null, null, null, null, null, null, null,
                                    (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                                       ChassisData data = (ChassisData) gameObject.getData();
+                                       VehicleData data = (VehicleData) gameObject.getData();
 
                                        PolarVector pv = new PolarVector(rotation, speed);
                                        data.setMovementX(PolarVector.xFromPolar(pv));
@@ -108,7 +108,7 @@ public class DrivePresets {
     public static Drive createTrack(float rotation) {
         Drive track = new Drive(
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementX(),
                                                                               data.getMovementY()));
                     current.updateAngleRange2Pi();
@@ -131,7 +131,7 @@ public class DrivePresets {
                                       : data.getMovementY());
                 },
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementX(),
                                                                               data.getMovementY()));
 
@@ -151,7 +151,7 @@ public class DrivePresets {
                     data.setMovementY(data.getMovementY() - PolarVector.yFromPolar(mv));
                 },
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
 
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementX(),
                                                                               data.getMovementY()));
@@ -161,7 +161,7 @@ public class DrivePresets {
 
                 },
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
 
                     data.increaseRotation(-0.004);
 
@@ -175,7 +175,7 @@ public class DrivePresets {
                     data.setMovementY(PolarVector.yFromPolar(current));
                 },
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
 
                     data.increaseRotation(+0.004);
 
@@ -191,7 +191,7 @@ public class DrivePresets {
                 null,
                 null,
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     CartesianVector vector = new CartesianVector(data.getMovementX(),
                                                                  data.getMovementY());
                     PolarVector pv = vector.toPolarVector();
@@ -254,7 +254,7 @@ public class DrivePresets {
     public static Drive createHeli(float rotation) {
         Drive heli = new Drive(
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementX(),
                                                                               data.getMovementY()));
                     current.updateAngleRange2Pi();
@@ -277,7 +277,7 @@ public class DrivePresets {
 
                 },
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementX(),
                                                                               data.getMovementY()));
 
@@ -307,7 +307,7 @@ public class DrivePresets {
                 },
                 null,
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
 
                     data.increaseRotation(-0.005);
 
@@ -320,7 +320,7 @@ public class DrivePresets {
                     data.setMovementY(PolarVector.yFromPolar(current));*/
                 },
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
 
                     data.increaseRotation(+0.005);
 
@@ -335,7 +335,7 @@ public class DrivePresets {
                 },
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
 
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementX(),
                                                                               data.getMovementY()));
 
@@ -348,7 +348,7 @@ public class DrivePresets {
                 },
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
 
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementX(),
                                                                               data.getMovementY()));
 
@@ -361,7 +361,7 @@ public class DrivePresets {
                 },
                 (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
 
-                    ChassisData data = (ChassisData) gameObject.getData();
+                    VehicleData data = (VehicleData) gameObject.getData();
                     PolarVector current = new PolarVector(new CartesianVector(data.getMovementX(),
                                                                               data.getMovementY()));
                     current.updateAngleRange2Pi();

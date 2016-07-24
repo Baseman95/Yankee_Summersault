@@ -7,7 +7,7 @@ import yansuen.network.NetworkSerializable;
 /**
  * @author Link
  */
-public class ChassisData extends GameData {
+public class VehicleData extends GameData {
 
     protected float movementX;
     protected float movementY;
@@ -20,17 +20,17 @@ public class ChassisData extends GameData {
     public boolean strafeLeft = false;
     public boolean strafeRight = false;
 
-    public ChassisData(float movementX, float movementY, float x, float y, float width, float height, double rotation, BufferedImage image) {
+    public VehicleData(float movementX, float movementY, float x, float y, float width, float height, double rotation, BufferedImage image) {
         super(x, y, width, height, rotation, image);
         this.movementX = movementX;
         this.movementY = movementY;
     }
 
-    public ChassisData(float x, float y, float width, float height, double rotation, BufferedImage image) {
+    public VehicleData(float x, float y, float width, float height, double rotation, BufferedImage image) {
         this(0, 0, x, y, width, height, rotation, image);
     }
 
-    public ChassisData(float x, float y, float width, float height, BufferedImage image) {
+    public VehicleData(float x, float y, float width, float height, BufferedImage image) {
         this(x, y, width, height, 0, image);
     }
 
@@ -41,8 +41,8 @@ public class ChassisData extends GameData {
         if (!listening)
             return;
         listenerList.stream().forEach((dol) -> {
-            if (dol instanceof ChassisDataListener)
-                ((ChassisDataListener) (dol)).onMovementChanged(this, old, this.movementY);
+            if (dol instanceof VehicleDataListener)
+                ((VehicleDataListener) (dol)).onMovementChanged(this, old, this.movementY);
         });
     }
 
@@ -53,8 +53,8 @@ public class ChassisData extends GameData {
         if (!listening)
             return;
         listenerList.stream().forEach((dol) -> {
-            if (dol instanceof ChassisDataListener)
-                ((ChassisDataListener) (dol)).onMovementChanged(this, this.movementX, old);
+            if (dol instanceof VehicleDataListener)
+                ((VehicleDataListener) (dol)).onMovementChanged(this, this.movementX, old);
         });
     }
 
@@ -100,6 +100,6 @@ public class ChassisData extends GameData {
 
     @Override
     public String toString() {
-        return "ChassisData{" + x + "x, " + y + "y, " + movementX + "mx, " + movementY + "my, " + width + "w, " + height + "h, " + rotation + "r, " + '}';
+        return "VehicleData{" + x + "x, " + y + "y, " + movementX + "mx, " + movementY + "my, " + width + "w, " + height + "h, " + rotation + "r, " + '}';
     }
 }

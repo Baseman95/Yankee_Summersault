@@ -1,7 +1,7 @@
 package code;
 
 import code.game.Application;
-import code.game.tank.Chassis;
+import code.game.tank.Vehicle;
 import code.game.tank.Weapon;
 import code.menu.Screen;
 import java.io.IOException;
@@ -38,13 +38,13 @@ public class BaseTest extends Application {
         dataO.getMovementData().setMovementY(bulletTrajectory.y + hostMovement.y);
         
  </editor-fold>*/
-        Chassis zank = new Chassis(10, 10, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Vehicle zank = new Vehicle(10, 10, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         zank.setDrive(DrivePresets.createSimpleDrive());
         
-        Chassis choppah = new Chassis(300, 300, ImagePresets.Vehicle.HELI_APACHE_R, GraphicsPresets.ROTATION, null);
+        Vehicle choppah = new Vehicle(300, 300, ImagePresets.Vehicle.HELI_APACHE_R, GraphicsPresets.ROTATION, null);
         //choppah.setDrive(DrivePresets.createHeli(0.006f));
         
-        Chassis hydra = new Chassis(300, 350, ImagePresets.Vehicle.PLANE_HARRIER_R, GraphicsPresets.ROTATION, null);
+        Vehicle hydra = new Vehicle(300, 350, ImagePresets.Vehicle.PLANE_HARRIER_R, GraphicsPresets.ROTATION, null);
         
         
 

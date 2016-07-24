@@ -2,7 +2,7 @@ package code.presets;
 
 import yansuen.data.GameData;
 import code.game.World;
-import code.game.tank.Chassis;
+import code.game.tank.Vehicle;
 import code.game.tank.Drive;
 import code.game.tank.Weapon;
 import code.game.tank.projectile.ImpactInterface;
@@ -52,7 +52,7 @@ public class WeaponPresets {
         Smoke(Abwehrmaßnahme)
     
      */
-    public static Weapon createWeapon(Chassis chassis, Float weaponOffsetX, Float weaponOffsetY, Long cooldown, BufferedImage weaponImage,
+    public static Weapon createWeapon(Vehicle vehicle, Float weaponOffsetX, Float weaponOffsetY, Long cooldown, BufferedImage weaponImage,
             LogicInterface weaponController, Drive weaponDrive, ShotInterface si) {
 
         if (weaponOffsetX == null)
@@ -68,7 +68,7 @@ public class WeaponPresets {
             weaponImage = ImagePresets.Default.NO_IMAGE;
 
         //Controller       
-        Weapon mg = new Weapon(chassis, cooldown, si, fastReload, bulletImpact, ControllerPresets.HOLD_ACCELERATE,
+        Weapon mg = new Weapon(vehicle, cooldown, si, fastReload, bulletImpact, ControllerPresets.HOLD_ACCELERATE,
                                weaponOffsetX, weaponOffsetY, weaponImage, GraphicsPresets.ROTATION, weaponController);
 
         return mg;
@@ -147,8 +147,8 @@ public class WeaponPresets {
 //</editor-fold>
 
     /*
-    public static Weapon createMG(Chassis chassis) {
-        return createWeapon(chassis, null, null, null, ImagePresets.Weapon.SHOT_MG_1, null, null, MG_SHOTINTERFACE);
+    public static Weapon createMG(Vehicle vehicle) {
+        return createWeapon(vehicle, null, null, null, ImagePresets.Weapon.SHOT_MG_1, null, null, MG_SHOTINTERFACE);
     }
     protected static ShotInterface MG_SHOTINTERFACE = createSingleShotInterface(projectileImage, travelspeed, ticksToLive, deviationPerSide, weaponLength);
     
@@ -157,33 +157,33 @@ public class WeaponPresets {
     protected static ShotInterface MG_SHOTINTERFACE = createSimpleSingleShotInterface(ImagePresets.Weapon.SHOT_MG_1, 3, 500, 0.01f, WEAPON_MG_LENGTH);
     protected static ShotInterface MINIGUN_SHOTINTERFACE = createSimpleSingleShotInterface(ImagePresets.Weapon.SHOT_MG_2, 8, 400, 0.005f, WEAPON_MG_LENGTH);
 
-    public static Weapon createMG(Chassis chassis) {
-        return createWeapon(chassis, null, null, 10L, ImagePresets.Weapon.WEAPON_MG_1, null, null, MG_SHOTINTERFACE);
+    public static Weapon createMG(Vehicle vehicle) {
+        return createWeapon(vehicle, null, null, 10L, ImagePresets.Weapon.WEAPON_MG_1, null, null, MG_SHOTINTERFACE);
     }
 
-    public static Weapon createMinigun(Chassis chassis) {
-        return createWeapon(chassis, null, null, 20L, ImagePresets.Weapon.WEAPON_MG_1, null, null, MINIGUN_SHOTINTERFACE);
+    public static Weapon createMinigun(Vehicle vehicle) {
+        return createWeapon(vehicle, null, null, 20L, ImagePresets.Weapon.WEAPON_MG_1, null, null, MINIGUN_SHOTINTERFACE);
     }
 //</editor-fold>    
 
 //<editor-fold defaultstate="expanded" desc="RocketLaunchers">
     protected static ShotInterface RL_SHOTINTERFACE = createSimpleSingleShotInterface(ImagePresets.Weapon.SHOT_RL_2, 3, 700, 0.005f, WEAPON_MG_LENGTH);
 
-    public static Weapon createRocketLauncher(Chassis chassis) {
-        return createWeapon(chassis, null, null, 100L, ImagePresets.Weapon.WEAPON_RL_1, null, null, RL_SHOTINTERFACE);
+    public static Weapon createRocketLauncher(Vehicle vehicle) {
+        return createWeapon(vehicle, null, null, 100L, ImagePresets.Weapon.WEAPON_RL_1, null, null, RL_SHOTINTERFACE);
     }
 
-    public static Weapon createAIGuidedRocketLauncher(Chassis chassis) {
+    public static Weapon createAIGuidedRocketLauncher(Vehicle vehicle) {
 
         LogicInterface guidedController = ControllerPresets.createMoveToController(500, 500);
         ShotInterface si = createAIControlledSingleShotInterface(ImagePresets.Weapon.SHOT_RL_1, 3, 700, 0.005f, WEAPON_MG_LENGTH, guidedController);
-        return createWeapon(chassis, null, null, 100L, ImagePresets.Weapon.WEAPON_RL_1, null, null, si);
+        return createWeapon(vehicle, null, null, 100L, ImagePresets.Weapon.WEAPON_RL_1, null, null, si);
     }
 
-    public static Weapon createUserControlledRocketLauncher(Chassis chassis) {
+    public static Weapon createUserControlledRocketLauncher(Vehicle vehicle) {
 
         ShotInterface si = createAIControlledSingleShotInterface(ImagePresets.Weapon.SHOT_RL_1, 3, 700, 0.005f, WEAPON_MG_LENGTH, ControllerPresets.PLAYER);
-        return createWeapon(chassis, null, null, 100L, ImagePresets.Weapon.WEAPON_RL_1, null, null, si);
+        return createWeapon(vehicle, null, null, 100L, ImagePresets.Weapon.WEAPON_RL_1, null, null, si);
     }
 
 //</editor-fold>
@@ -191,12 +191,12 @@ public class WeaponPresets {
     protected static ShotInterface SHOTGUN_SHOTINTERFACE = createSimpleMultiShotInterface(ImagePresets.Weapon.SHOT_MG_1, 3f, 200, 0.03f, WEAPON_MG_LENGTH, 10, 0.3f);
     protected static ShotInterface ROUNDHOUSE_SHOTINTERFACE = createSimpleMultiShotInterface(ImagePresets.Weapon.SHOT_MG_1, 3f, 200, 1f, WEAPON_MG_LENGTH, 50, null);
 
-    public static Weapon createShotgun(Chassis chassis) {
-        return createWeapon(chassis, null, null, 200L, ImagePresets.Default.NOTHING, null, null, SHOTGUN_SHOTINTERFACE);
+    public static Weapon createShotgun(Vehicle vehicle) {
+        return createWeapon(vehicle, null, null, 200L, ImagePresets.Default.NOTHING, null, null, SHOTGUN_SHOTINTERFACE);
     }
 
-    public static Weapon createRoundShotGund(Chassis chassis) {
-        return createWeapon(chassis, null, null, 400L, ImagePresets.Default.NOTHING, null, null, ROUNDHOUSE_SHOTINTERFACE);
+    public static Weapon createRoundShotGund(Vehicle vehicle) {
+        return createWeapon(vehicle, null, null, 400L, ImagePresets.Default.NOTHING, null, null, ROUNDHOUSE_SHOTINTERFACE);
     }
 //</editor-fold>
 
@@ -205,12 +205,12 @@ public class WeaponPresets {
 
     protected static ShotInterface SMOKE_SHOTINTERFACE = createSimpleSingleShotInterface(ImagePresets.Test.SMOKE, 0, 500, 0, 0);
 
-    public static Weapon createTracer(Chassis chassis) {
-        return createWeapon(chassis, null, null, 5L, ImagePresets.Default.NOTHING, null, null, TRACER_SHOTINTERFACE);
+    public static Weapon createTracer(Vehicle vehicle) {
+        return createWeapon(vehicle, null, null, 5L, ImagePresets.Default.NOTHING, null, null, TRACER_SHOTINTERFACE);
     }
 
-    public static Weapon createSmoke(Chassis chassis) {
-        return createWeapon(chassis, null, null, 20L, ImagePresets.Default.NOTHING, null, null, SMOKE_SHOTINTERFACE);
+    public static Weapon createSmoke(Vehicle vehicle) {
+        return createWeapon(vehicle, null, null, 20L, ImagePresets.Default.NOTHING, null, null, SMOKE_SHOTINTERFACE);
     }
 
 //</editor-fold>
