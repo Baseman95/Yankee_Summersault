@@ -4,7 +4,7 @@ import code.game.World;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
-import yansuen.data.VehicleData;
+import code.data.VehicleData;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;

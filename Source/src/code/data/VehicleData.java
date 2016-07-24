@@ -1,7 +1,7 @@
-package yansuen.data;
+package code.data;
 
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
+import yansuen.data.GameData;
 import yansuen.network.NetworkSerializable;
 
 /**

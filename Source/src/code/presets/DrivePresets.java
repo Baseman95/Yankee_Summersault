@@ -1,7 +1,7 @@
 package code.presets;
 
 import code.TrifkoTest;
-import yansuen.data.VehicleData;
+import code.data.VehicleData;
 import yansuen.data.GameData;
 import code.game.World;
 import code.game.tank.Drive;

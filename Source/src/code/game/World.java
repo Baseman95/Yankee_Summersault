@@ -1,6 +1,6 @@
 package code.game;
 
-import yansuen.data.VehicleData;
+import code.data.VehicleData;
 import yansuen.game.GameObject;
 import code.network.CommandList;
 import code.network.UpdateObjectCommand;

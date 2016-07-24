@@ -1,4 +1,6 @@
-package yansuen.data;
+package code.data;
+
+import yansuen.data.GameDataListenerAdapter;
 
 /**
  * @author Link

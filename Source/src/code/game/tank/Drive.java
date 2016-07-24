@@ -1,7 +1,7 @@
 package code.game.tank;
 
 import code.game.World;
-import yansuen.data.VehicleData;
+import code.data.VehicleData;
 import yansuen.game.GameObject;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;

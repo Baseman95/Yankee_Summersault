@@ -3,7 +3,7 @@ package code.presets;
 import code.game.World;
 import code.game.tank.Vehicle;
 import java.awt.event.KeyEvent;
-import yansuen.data.VehicleData;
+import code.data.VehicleData;
 import yansuen.game.GameObject;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;
