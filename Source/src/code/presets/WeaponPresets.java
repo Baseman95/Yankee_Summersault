@@ -158,11 +158,11 @@ public class WeaponPresets {
     protected static ShotInterface MINIGUN_SHOTINTERFACE = createSimpleSingleShotInterface(ImagePresets.Projectile.MACHINEGUN, 8, 400, 0.005f, WEAPON_MG_LENGTH);
 
     public static Weapon createMG(Vehicle vehicle) {
-        return createWeapon(vehicle, null, null, 10L, ImagePresets.Projectile.MISSILE, null, null, MG_SHOTINTERFACE);
+        return createWeapon(vehicle, null, null, 10L, ImagePresets.Projectile.MACHINEGUN, null, null, MG_SHOTINTERFACE);
     }
 
     public static Weapon createMinigun(Vehicle vehicle) {
-        return createWeapon(vehicle, null, null, 20L, ImagePresets.Projectile.MISSILE, null, null, MINIGUN_SHOTINTERFACE);
+        return createWeapon(vehicle, null, null, 20L, ImagePresets.Projectile.MACHINEGUN, null, null, MINIGUN_SHOTINTERFACE);
     }
 //</editor-fold>    
 

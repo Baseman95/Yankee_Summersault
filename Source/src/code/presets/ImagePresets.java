@@ -33,9 +33,8 @@ public class ImagePresets {
         @Deprecated
         public static BufferedImage TANK = loadImg("textures/vehicles_beta/load/m1128.png");
         public static BufferedImage TURRET_A = ImagePresets.loadImg("textures/weapons_beta/turrets/turretA.png");
-        public static BufferedImage TRACER = ImagePresets.loadImg("textures/weapons_beta/shots/tracer.png");
-        public static BufferedImage SMOKE = ImagePresets.loadImg("textures/weapons_beta/shots/smoke.png");      
-                
+        public static BufferedImage TRACER = ImagePresets.loadImg("textures/projectiles/tracer.png");
+        public static BufferedImage SMOKE = ImagePresets.loadImg("textures/weapons_beta/shots/smoke.png");
 
         private Test() {
         }
@@ -62,63 +61,65 @@ public class ImagePresets {
         private Surface() {
         }
     }
-    
-    public static class Vehicle {        
-        
-        public static class Air{
-            
-            public static BufferedImage HARRIER_R = ImagePresets.loadImg("textures/vehicle/ig/air/harrier_r.png");
-            public static BufferedImage APACHE_B2 = ImagePresets.loadImg("textures/vehicle/ig/air/apache_b1.png");
-        
-            private Air(){}
+
+    public static class Vehicle {
+
+        public static class Air {
+
+            public static BufferedImage HARRIER_R = ImagePresets.loadImg("textures/vehicles/ig/air/harrier_r.png");
+            public static BufferedImage APACHE_B2 = ImagePresets.loadImg("textures/vehicles/ig/air/apache_b2.png");
+
+            private Air() {
+            }
         }
-        public static class Amphibious{
-            
-            public static BufferedImage LAV300_B = ImagePresets.loadImg("textures/vehicle/ig/amphibious/lav300_b.png");            
-        
-            private Amphibious(){}
+
+        public static class Amphibious {
+
+            public static BufferedImage LAV300_B = ImagePresets.loadImg("textures/vehicles/ig/amphibious/lav300_b.png");
+
+            private Amphibious() {
+            }
         }
-        
-        public static class Land{
-            
-            public static BufferedImage TECHNICAL_B = ImagePresets.loadImg("textures/vehicle/ig/land/technical_b.png");
-        
-            private Land(){}
+
+        public static class Land {
+
+            public static BufferedImage M1128 = ImagePresets.loadImg("textures/vehicles/ig/land/m1128.png");
+            public static BufferedImage ABRAMS_R = ImagePresets.loadImg("textures/vehicles/ig/land/abrams_r.png");
+            public static BufferedImage TECHNICAL_B = ImagePresets.loadImg("textures/vehicles/ig/land/technical_b.png");
+
+            private Land() {
+            }
         }
-        
-        public static class Water{
-            
-            
-        
-            private Water(){}
-        }       
-          
-        
+
+        public static class Water {
+
+            private Water() {
+            }
+        }
+
         private Vehicle() {
         }
     }
 
-    public static class Weapon {        
-        
+    public static class Weapon {
+
         public static BufferedImage MG762 = ImagePresets.loadImg("textures/weapons/turretB.png");
-        public static BufferedImage SHELL = ImagePresets.loadImg("textures/weapons/turretA.png");        
+        public static BufferedImage SHELL = ImagePresets.loadImg("textures/weapons/turretA.png");
 
         private Weapon() {
         }
     }
-    
-    public static class Projectile {    
-        
+
+    public static class Projectile {
+
         public static BufferedImage MISSILE = ImagePresets.loadImg("textures/projectiles/missile.png");
-        public static BufferedImage PROJECTILE = ImagePresets.loadImg("textures/projectiles/missile.png");        
+        public static BufferedImage PROJECTILE = ImagePresets.loadImg("textures/projectiles/missile.png");
         public static BufferedImage MACHINEGUN = ImagePresets.loadImg("textures/projectiles/projectile_mini.png");
         public static BufferedImage SHELL = ImagePresets.loadImg("textures/projectiles/projectile_mini.png");
 
         private Projectile() {
         }
     }
-
-    
 
     protected static BufferedImage loadImg(String path) {
         try {

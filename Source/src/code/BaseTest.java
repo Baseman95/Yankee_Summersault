@@ -41,7 +41,6 @@ public class BaseTest extends Application {
         Vehicle zank = new Vehicle(10, 10, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         zank.setDrive(DrivePresets.createSimpleDrive());
 
-        //Chassis choppah = new Chassis(300, 300, ImagePresets.Chassis.HELI_APACHE_R, GraphicsPresets.ROTATION, null);
         Vehicle choppah = new Vehicle(300, 300, ImagePresets.Vehicle.Air.APACHE_B2, GraphicsPresets.ROTATION, null);
         //choppah.setDrive(DrivePresets.createHeli(0.006f));
 

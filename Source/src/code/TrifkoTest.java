@@ -38,15 +38,15 @@ public class TrifkoTest extends Application {
     @Override
     public void start() {
         super.start();
-        Vehicle heli = new Vehicle(300, 200, ImagePresets.Vehicle.Air.APACHE_B2, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
+        Vehicle heli = new Vehicle(300, 200, ImagePresets.Vehicle.Land.TECHNICAL_B, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         heli.setDrive(DrivePresets.createHeli(0.006f));
 
         Weapon tracer = WeaponPresets.createTracer(heli);
         heli.getWeapons().add(tracer);
         world.addGameObject(tracer);
-        Weapon mg = WeaponPresets.createMG(heli);
+        /*Weapon mg = WeaponPresets.createMG(heli);
         heli.getWeapons().add(mg);
-        world.addGameObject(mg);
+        world.addGameObject(mg);*/
         
         
 
