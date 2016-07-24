@@ -52,46 +52,73 @@ public class ImagePresets {
 
     public static class Surface {
 
-        public static BufferedImage SURFACE_WATER = ImagePresets.loadImg("textures/world/surface_alpha/water.png");
-        public static BufferedImage SURFACE_GRASS = ImagePresets.loadImg("textures/world/surface_alpha/grass.png");
-        public static BufferedImage SURFACE_DIRT = ImagePresets.loadImg("textures/world/surface_alpha/dirt.png");
-        public static BufferedImage SURFACE_CONCRETE = ImagePresets.loadImg("textures/world/surface_alpha/concrete.png");
-        public static BufferedImage SURFACE_SAND = ImagePresets.loadImg("textures/world/surface_alpha/sand.png");
-        public static BufferedImage SURFACE_ROAD = ImagePresets.loadImg("textures/world/surface_alpha/road.png");
+        public static BufferedImage WATER = ImagePresets.loadImg("textures/world/surface_alpha/water.png");
+        public static BufferedImage GRASS = ImagePresets.loadImg("textures/world/surface_alpha/grass.png");
+        public static BufferedImage DIRT = ImagePresets.loadImg("textures/world/surface_alpha/dirt.png");
+        public static BufferedImage CONCRETE = ImagePresets.loadImg("textures/world/surface_alpha/concrete.png");
+        public static BufferedImage SAND = ImagePresets.loadImg("textures/world/surface_alpha/sand.png");
+        public static BufferedImage ROAD = ImagePresets.loadImg("textures/world/surface_alpha/road.png");
 
         private Surface() {
         }
     }
-
-    public static class Weapon {
-
-        public static BufferedImage WEAPON_RL_1 = ImagePresets.loadImg("textures/weapons_beta/turrets/turretB.png");
-        public static BufferedImage WEAPON_MG_1 = ImagePresets.loadImg("textures/weapons_beta/turrets/turretA.png");
-        public static BufferedImage SHOT_RL_1 = ImagePresets.loadImg("textures/weapons_beta/shots/missile.png");
-        public static BufferedImage SHOT_RL_2 = ImagePresets.loadImg("textures/weapons_beta/shots/missile.png");        
-        public static BufferedImage SHOT_MG_1 = ImagePresets.loadImg("textures/weapons_beta/shots/projectile.png");
-        public static BufferedImage SHOT_MG_2 = ImagePresets.loadImg("textures/weapons_beta/shots/projectile_mini.png");
-
-        private Weapon() {
+    
+    public static class Vehicle {        
+        
+        public static class Air{
+            
+            public static BufferedImage HARRIER_R = ImagePresets.loadImg("textures/vehicle/ig/air/harrier_r.png");
+            public static BufferedImage APACHE_B2 = ImagePresets.loadImg("textures/vehicle/ig/air/apache_b1.png");
+        
+            private Air(){}
         }
-    }
-
-    public static class Vehicle {
-
-        public static BufferedImage TANK_ABRAMS_B = ImagePresets.loadImg("textures/vehicles_beta/load/abrams_b.png");
-        public static BufferedImage TANK_ABRAMS_R = ImagePresets.loadImg("textures/vehicles_beta/load/abrams_r.png");
-        public static BufferedImage HELI_APACHE_B = ImagePresets.loadImg("textures/vehicles_beta/load/apache_b.png");
-        public static BufferedImage HELI_APACHE_R = ImagePresets.loadImg("textures/vehicles_beta/load/apache_r.png");
-        public static BufferedImage PLANE_HARRIER_B = ImagePresets.loadImg("textures/vehicles_beta/load/harrier_b.png");
-        public static BufferedImage PLANE_HARRIER_R = ImagePresets.loadImg("textures/vehicles_beta/load/harrier_r.png");
-        public static BufferedImage WTANK_LAV300_B = ImagePresets.loadImg("textures/vehicles_beta/load/lav300_b.png");
-        public static BufferedImage WTANK_LAV300_R = ImagePresets.loadImg("textures/vehicles_beta/load/lav300_r.png");
-        public static BufferedImage CAR_TECHNICAL_B = ImagePresets.loadImg("textures/vehicles_beta/load/technical_b.png");
-        public static BufferedImage CAR_TECHNICAL_R = ImagePresets.loadImg("textures/vehicles_beta/load/technical_r.png");      
+        public static class Amphibious{
+            
+            public static BufferedImage LAV300_B = ImagePresets.loadImg("textures/vehicle/ig/amphibious/lav300_b.png");            
+        
+            private Amphibious(){}
+        }
+        
+        public static class Land{
+            
+            public static BufferedImage TECHNICAL_B = ImagePresets.loadImg("textures/vehicle/ig/land/technical_b.png");
+        
+            private Land(){}
+        }
+        
+        public static class Water{
+            
+            
+        
+            private Water(){}
+        }       
+          
         
         private Vehicle() {
         }
     }
+
+    public static class Weapon {        
+        
+        public static BufferedImage MG762 = ImagePresets.loadImg("textures/weapons/turretB.png");
+        public static BufferedImage SHELL = ImagePresets.loadImg("textures/weapons/turretA.png");        
+
+        private Weapon() {
+        }
+    }
+    
+    public static class Projectile {    
+        
+        public static BufferedImage MISSILE = ImagePresets.loadImg("textures/projectiles/missile.png");
+        public static BufferedImage PROJECTILE = ImagePresets.loadImg("textures/projectiles/missile.png");        
+        public static BufferedImage MACHINEGUN = ImagePresets.loadImg("textures/projectiles/projectile_mini.png");
+        public static BufferedImage SHELL = ImagePresets.loadImg("textures/projectiles/projectile_mini.png");
+
+        private Projectile() {
+        }
+    }
+
+    
 
     protected static BufferedImage loadImg(String path) {
         try {

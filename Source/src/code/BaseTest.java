@@ -41,10 +41,11 @@ public class BaseTest extends Application {
         Chassis zank = new Chassis(10, 10, ImagePresets.Test.TANK, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
         zank.setDrive(DrivePresets.createSimpleDrive());
         
-        Chassis choppah = new Chassis(300, 300, ImagePresets.Vehicle.HELI_APACHE_R, GraphicsPresets.ROTATION, null);
+        //Chassis choppah = new Chassis(300, 300, ImagePresets.Chassis.HELI_APACHE_R, GraphicsPresets.ROTATION, null);
+        Chassis choppah = new Chassis(300, 300, ImagePresets.Vehicle.Air.APACHE_B2, GraphicsPresets.ROTATION, null);
         //choppah.setDrive(DrivePresets.createHeli(0.006f));
         
-        Chassis hydra = new Chassis(300, 350, ImagePresets.Vehicle.PLANE_HARRIER_R, GraphicsPresets.ROTATION, null);
+        Chassis hydra = new Chassis(300, 350, ImagePresets.Vehicle.Air.HARRIER_R, GraphicsPresets.ROTATION, null);
         
         
 
