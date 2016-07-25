@@ -22,13 +22,16 @@ public class Vehicle extends GameObject {
     protected Drive drive;
     protected ArrayList<Weapon> weapons = new ArrayList<>();
     protected GameDataListener weaponUpdater = new GameDataListenerAdapter() {
+        
+        
+        
         @Override
         public void onPositionChanged(GameData data, float xOld, float yOld) {
-            VehicleData vd = ((VehicleData) data);
+            VehicleData vd = ((VehicleData) Vehicle.this.data);
             for (Weapon weapon : weapons) {
                 WeaponData wd = ((WeaponData) weapon.getData());
-                wd.setX(vd.getX() + vd.getWidth() / 2 + wd.getRelativeX() - vd.getWidth() / 2);
-                wd.setY(vd.getY() + vd.getHeight() / 2 + wd.getRelativeY() - vd.getHeight() / 2);
+                wd.setX(vd.getX() + vd.getWidth() / 2   + wd.getRelativeX() -  wd.getWidth() / 2);
+                wd.setY(vd.getY() + vd.getHeight() / 2   + wd.getRelativeY() - wd.getHeight() / 2);
             }
         }
 
@@ -68,9 +71,6 @@ public class Vehicle extends GameObject {
         super.doLogic(gameObject, tick, world, manager);
         if (drive != null)
             drive.doLogic(gameObject, tick, world, manager);
-        for (Weapon weapon : weapons) {
-            weapon.doLogic(gameObject, tick, world, manager);
-        }
     }
 
     public ArrayList<Weapon> getWeapons() {

@@ -77,7 +77,7 @@ public class WeaponPresets {
     //<editor-fold defaultstate="collapsed" desc="create ShotInterfaces">
     public static ShotInterface createSimpleSingleShotInterface(BufferedImage texture, float travelSpeed, long ticksToLive, float deviationPerSide, int weaponLength) {
         ShotInterface simpleShot = (Weapon weapon, long tick, ImpactInterface impactInterface, World world) -> {
-            GameData data = ((GameData) weapon.getData());
+            GameData data =  weapon.getData();
 
             PolarVector pv = new PolarVector(data.getRotation(), weaponLength);
 
@@ -87,7 +87,7 @@ public class WeaponPresets {
 
             double random = Math.abs(generateGaussianRandom(deviationPerSide));
 
-            data.setRotation(data.getRotation() + random);
+            p.getData().setRotation(data.getRotation() + random);
             p.setDrive(DrivePresets.createStraightDrive(travelSpeed, data.getRotation() + random));
             world.addGameObject(p);
 
@@ -97,7 +97,7 @@ public class WeaponPresets {
 
     public static ShotInterface createSimpleMultiShotInterface(BufferedImage texture, float projectileSpeed, long ticksToLive, float deviationPerSide, int weaponLength, int projectileCount, Float speedDeviation) {
         ShotInterface simpleShot = (Weapon weapon, long tick, ImpactInterface impactInterface, World world) -> {
-            GameData data = ((GameData) weapon.getData());
+            GameData data = weapon.getData();
 
             PolarVector pv = new PolarVector(data.getRotation(), weaponLength);
 
@@ -116,7 +116,7 @@ public class WeaponPresets {
 
                 float randomSpeed = (float) new Random().nextGaussian() * localSpeedDeviation - localSpeedDeviation / 2;
 
-                data.setRotation(data.getRotation() + randomAccuracy);
+                p.getData().setRotation(data.getRotation() + randomAccuracy);
                 p.setDrive(DrivePresets.createStraightDrive(projectileSpeed + randomSpeed, data.getRotation() + randomAccuracy));
                 world.addGameObject(p);
             }
@@ -127,7 +127,7 @@ public class WeaponPresets {
 
     public static ShotInterface createAIControlledSingleShotInterface(BufferedImage texture, float travelSpeed, long travelDistance, float deviationPerSide, int weaponLength, LogicInterface c) {
         ShotInterface si = (Weapon weapon, long tick, ImpactInterface impactInterface, World world) -> {
-            GameData data = ((GameData) weapon.getData());
+            GameData data = weapon.getData();
 
             PolarVector pv = new PolarVector(data.getRotation(), weaponLength);
 
@@ -136,7 +136,7 @@ public class WeaponPresets {
                                           texture, GraphicsPresets.ROTATION, c);
 
             double random = generateGaussianRandom(deviationPerSide);
-            data.setRotation(data.getRotation() + random);
+            p.getData().setRotation(data.getRotation() + random);
             Drive d = DrivePresets.createRocketDrive(travelSpeed, 0.01);
             p.setDrive(d);
             world.addGameObject(p);

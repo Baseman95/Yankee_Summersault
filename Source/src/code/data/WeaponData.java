@@ -34,7 +34,7 @@ public class WeaponData extends GameData {
     }
 
     public WeaponData(Vehicle vehicle, long cooldown, float x, float y, BufferedImage image) {
-        this(vehicle, cooldown, x, y, 0, 0, image);
+        this(vehicle, cooldown, x, y, image.getWidth(), image.getHeight(), image);
     }
 
     public Vehicle getVehicle() {
@@ -99,6 +99,11 @@ public class WeaponData extends GameData {
 
     public void setRelativeY(float relativeY) {
         this.relativeY = relativeY;
+    }
+
+    @Override
+    public String toString() {
+        return "WeaponData{" + super.toString() + "vehicle=" + vehicle + ", shooting=" + shooting + ", reloading=" + reloading + ", cooldown=" + cooldown + ", nextShotReadyTick=" + nextShotReadyTick + ", relativeRotation=" + relativeRotation + ", relativeX=" + relativeX + ", relativeY=" + relativeY + '}';
     }
 
     @Override

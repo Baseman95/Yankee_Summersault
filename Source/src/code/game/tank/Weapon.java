@@ -53,6 +53,8 @@ public class Weapon extends GameObject implements NetworkSerializable {
         }
         if (reloadFunction != null && data.isReloading())
             reloadFunction.doLogic(gameObject, tick, world, manager);
+        
+       // System.out.println(data);
     }
 
     public ShotInterface getShotFunction() {
