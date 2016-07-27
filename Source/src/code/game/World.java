@@ -45,12 +45,20 @@ public class World implements LogicLooper {
             if (ci != null)
                 ci.doLogic(gameObject, tick, this, keyManager);
             moveGameObject(gameObject);
-            if (network != null && network.getId() == 0 && gameObject.getObjectId() != -1 && synchronizeTick < tick) {
-                ArrayList<String> args = new ArrayList();
-                args.add(String.valueOf(gameObject.getObjectId()));
-                args.addAll(Arrays.asList(gameObject.networkSerialize()));
-                network.sendBroadcastCommand(CommandList.getCommandId(UpdateObjectCommand.class), args.toArray(new String[0]));
-            }
+
+            
+            if (network == null)
+                continue;
+            if (network.getClients().size() > gameObject.getObjectId() && network.getId() != gameObject.getObjectId())
+                continue;
+            if (gameObject.getObjectId() == -1)
+                continue;
+            if (synchronizeTick >= tick)
+                continue;
+            ArrayList<String> args = new ArrayList();
+            args.add(String.valueOf(gameObject.getObjectId()));
+            args.addAll(Arrays.asList(gameObject.networkSerialize()));
+            network.sendBroadcastCommand(CommandList.getCommandId(UpdateObjectCommand.class), args.toArray(new String[0]));
         }
         if (synchronizeTick < tick)
             synchronizeTick = tick + synchronizeTickDelay;
