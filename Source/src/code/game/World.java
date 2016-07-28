@@ -33,7 +33,7 @@ public class World implements LogicLooper {
     protected MasterKeyManager keyManager;
     protected Camera camera;
     protected Network network;
-    protected long synchronizeTickDelay = 200;
+    protected long synchronizeTickDelay = 25;
     protected long synchronizeTick = 0;
 
     public World(MasterKeyManager keyManager, Network network) {
