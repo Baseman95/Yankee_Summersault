@@ -46,7 +46,6 @@ public class World implements LogicLooper {
                 ci.doLogic(gameObject, tick, this, keyManager);
             moveGameObject(gameObject);
 
-            
             if (network == null)
                 continue;
             if (network.getClients().size() > gameObject.getObjectId() && network.getId() != gameObject.getObjectId())
@@ -55,6 +54,7 @@ public class World implements LogicLooper {
                 continue;
             if (synchronizeTick >= tick)
                 continue;
+
             ArrayList<String> args = new ArrayList();
             args.add(String.valueOf(gameObject.getObjectId()));
             args.addAll(Arrays.asList(gameObject.networkSerialize()));

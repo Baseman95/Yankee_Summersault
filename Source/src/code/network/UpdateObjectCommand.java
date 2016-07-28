@@ -16,7 +16,7 @@ import yansuen.network.commands.ClientCommand;
 public class UpdateObjectCommand implements ClientCommand {
 
     @Override
-    public void execute(String[] argument, Network network) {
+    public synchronized void execute(String[] argument, Network network) {
         network.getApplication().getWorld().getGameObject(Integer.parseInt(argument[0])).
                 networkDeserialize(Arrays.copyOfRange(argument, 1, argument.length));
     }
