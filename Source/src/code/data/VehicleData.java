@@ -2,10 +2,12 @@ package code.data;
 
 import java.awt.image.BufferedImage;
 import yansuen.data.GameData;
+import yansuen.data.GameDataListener;
 import yansuen.network.NetworkSerializable;
 
 /**
  * @author Link
+ * hier fehlt zeug für listener noch für vehiclelistener
  */
 public class VehicleData extends GameData {
 
@@ -66,8 +68,6 @@ public class VehicleData extends GameData {
         setMovementX(this.movementY + movementY);
     }
     
-    
-
     public float getMovementX() {
         return movementX;
     }

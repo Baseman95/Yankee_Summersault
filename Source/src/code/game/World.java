@@ -1,6 +1,8 @@
 package code.game;
 
 import code.data.VehicleData;
+import code.game.tank.Vehicle;
+import code.game.tank.Weapon;
 import yansuen.game.GameObject;
 import code.network.CommandList;
 import code.network.UpdateObjectCommand;
@@ -88,9 +90,19 @@ public class World implements LogicLooper {
 
     public void addGameObject(GameObject gameObject) {
         addObjects.add(gameObject);
+        if (gameObject instanceof Vehicle) {
+            ((Vehicle) gameObject).getWeapons().forEach((Weapon w) -> {
+                addObjects.add(w);
+            });
+        }
     }
 
     public void removeGameObject(GameObject gameObject) {
+        if (gameObject instanceof Vehicle) {
+            ((Vehicle) gameObject).getWeapons().forEach((Weapon w) -> {
+                removeObjects.add(w);
+            });
+        }
         removeObjects.add(gameObject);
         gameObject.destroy(this);
     }
