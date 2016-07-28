@@ -1,6 +1,7 @@
 package code.network;
 
 import java.util.Arrays;
+import yansuen.game.GameObject;
 import yansuen.network.Network;
 import yansuen.network.commands.ClientCommand;
 
@@ -13,8 +14,9 @@ public class UpdateObjectCommand implements ClientCommand {
     public void execute(String[] argument, Network network) {
         network.getApplication().getWorld().addNetworkAction(
                 new NetworkAction(network, argument, () -> {
-                              network.getApplication().getWorld().getGameObject(Integer.parseInt(argument[0])).
-                                      networkDeserialize(Arrays.copyOfRange(argument, 1, argument.length));
+                              GameObject gameObject = network.getApplication().getWorld().getGameObjectByObjectId(Integer.parseInt(argument[0]));
+                              if (gameObject != null)
+                                  gameObject.networkDeserialize(Arrays.copyOfRange(argument, 1, argument.length));
                           }));
     }
 

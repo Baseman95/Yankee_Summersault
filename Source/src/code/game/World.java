@@ -3,6 +3,7 @@ package code.game;
 import code.data.VehicleData;
 import code.game.tank.Vehicle;
 import code.game.tank.Weapon;
+import code.menu.GamePanel;
 import yansuen.game.GameObject;
 import code.network.CommandList;
 import code.network.NetworkAction;
@@ -15,7 +16,6 @@ import java.awt.Graphics2D;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Queue;
 import yansuen.logic.LogicInterface;
 import yansuen.network.Network;
 
@@ -31,7 +31,7 @@ public class World implements LogicLooper {
     protected ArrayDeque<NetworkAction> networkActions = new ArrayDeque<>();
 
     protected MasterKeyManager keyManager;
-    protected Camera camera;
+    protected Camera camera = null;
     protected Network network;
     protected long synchronizeTickDelay = 25;
     protected long synchronizeTick = 0;
@@ -93,7 +93,7 @@ public class World implements LogicLooper {
         }
     }
 
-    public GameObject getGameObject(int objectId) {
+    public GameObject getGameObjectByObjectId(int objectId) {
         return (GameObject) gameObjects.stream().filter((gameObject) -> (gameObject.getObjectId() == objectId)).findAny().get();
     }
 
@@ -127,5 +127,10 @@ public class World implements LogicLooper {
     public boolean addNetworkAction(NetworkAction e) {
         return networkActions.add(e);
     }
+
+    public void setGamePanel(GamePanel gamePanel) {
+        camera = new Camera(gamePanel);
+    }
+
 
 }

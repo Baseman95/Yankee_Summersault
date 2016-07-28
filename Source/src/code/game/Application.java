@@ -45,6 +45,7 @@ public class Application implements ServerListener {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyManager.getLocalKeyManager());
         world = new World(keyManager, network);
         gamePanel = new GamePanel(world);
+        world.setGamePanel(gamePanel);
         graphicsLoop.setRepaintTarget(screen);
         logicLoop.setLogic(world);
         logicLoop.start();
@@ -97,7 +98,6 @@ public class Application implements ServerListener {
             Logger.getLogger(Application.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public void onConnectionLost() {
