@@ -1,0 +1,24 @@
+-Movement
+
+Forward		W
+Backward	S
+Left		A
+Right		D
+TurnLeft	Q
+TurnRight	E
+Handbrake	SPACE
+
+-Weapon
+
+Select Weapon	1..0
+TurnLeft	Q
+TurnRight	E
+Reload		R
+
+-Other
+
+Take Pilotseat	^
+Vehicle E/E	F	
+
+
+

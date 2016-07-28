@@ -15,7 +15,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import yansuen.game.GameObject;
 
@@ -65,7 +64,7 @@ public class LinkTest extends Application {
     public void start() {
         super.start();
         Vehicle zank = new Vehicle(50, 50, ImagePresets.Vehicle.Land.TECHNICAL_B, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
-        zank.getWeapons().add(WeaponPresets.createRocketLauncher(zank));
+        zank.getWeapons().add(WeaponPresets.createWeaponMG762(zank, GraphicsPresets.ROTATION));
         zank.setDrive(DrivePresets.createSimpleDrive());
         world.addGameObject(zank);
 

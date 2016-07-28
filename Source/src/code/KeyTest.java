@@ -1,14 +1,11 @@
 package code;
 
 import code.menu.GamePanel;
-import yansuen.controller.ControllerInterface;
 import yansuen.data.GameData;
-import yansuen.data.ImageData;
-import yansuen.data.MovementData;
-import yansuen.data.PositionData;
 import code.game.World;
 import code.game.tank.Vehicle;
 import code.presets.GraphicsPresets;
+import com.sun.scenario.effect.ImageData;
 import yansuen.graphics.GraphicsLoop;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;
@@ -27,7 +24,7 @@ import yansuen.physic.PolarVector;
  * @author Link162534
  */
 public class KeyTest {
-
+/*
     public static long bulletTick = 0;
 
     public static void main(String[] args) throws IOException {
@@ -62,7 +59,7 @@ public class KeyTest {
                 /*bullet.setLogicInterface((GameObject gameObject2, long t2, World w2, KeyManager m2) -> {
                     if (t2 - tick > 200)
                         w2.removeGameObject(bullet);
-                });*/
+                });*//*
                 CartesianVector hostMovement = new CartesianVector(data.getMovementData().getMovementX(),
                         data.getMovementData().getMovementY());
                 CartesianVector bulletTrajectory = new CartesianVector(
@@ -124,5 +121,5 @@ public class KeyTest {
         GameObject tank2 = new GameObject(500, 300, tankImg, GraphicsPresets.ROTATION, null);
         world.getGameObjects().add(tank);
         world.getGameObjects().add(tank2);
-    }
+    }*/
 }

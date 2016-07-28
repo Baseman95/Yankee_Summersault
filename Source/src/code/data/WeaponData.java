@@ -1,48 +1,86 @@
 package code.data;
 
 import code.game.tank.Vehicle;
+import code.game.tank.projectile.Projectile;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
-import yansuen.data.GameData;
 
 /**
  * @author Link
  */
-public class WeaponData extends GameData {
+public class WeaponData extends VehicleData {
 
-    protected Vehicle vehicle;
+    //WeaponData check
+    protected Vehicle parent;
+    protected float length;
+    protected float relativeX;
+    protected float relativeY;
+    protected float relativeZ;
+    protected double relativeRotation;
+    protected boolean useParentRotation;
+    protected long projectileLoadTicks;
+    protected int magazineSize;
+    protected long magazineLoadTicks;
+    protected boolean autoReload;
+    protected float deviationPerSide;
+
+    protected Projectile projectile;
 
     protected boolean shooting = false;
     protected boolean reloading = false;
-    protected long cooldown;
-    protected long nextShotReadyTick = 0;
-    protected double relativeRotation = 0;
-    protected float relativeX = 0;
-    protected float relativeY = 0;
+    protected long nextShotReadyTick;
+    protected int roundsInMagazine;
 
-    public WeaponData(Vehicle vehicle, long cooldown, float x, float y, float width, float height, double rotation, BufferedImage image) {
-        super(vehicle.getData().getX() + vehicle.getData().getWidth() / 2 + x - width / 2,
-              vehicle.getData().getY() + vehicle.getData().getHeight() / 2 + y - height / 2,
-              width, height, rotation, image);
-        this.vehicle = vehicle;
+    public WeaponData(Vehicle parent, float length, BufferedImage image, float imageSizeMultiplier, 
+            float relativeX, float relativeY, float relativeZ, double relativeRotation, boolean useParentRotation,
+            long projectileLoadTicks, int magazineSize, long magazineLoadTicks, boolean autoReload, float deviationPerSide, Projectile projectile) {
+        super(0, 0, 0, 0, imageSizeMultiplier * image.getWidth(), imageSizeMultiplier * image.getHeight(), relativeRotation, image);
+
+        this.parent = parent;
+        this.length = length;
+        this.relativeX = relativeX;
+        this.relativeY = relativeY;
+        this.relativeZ = relativeZ;
+        this.relativeRotation = relativeRotation;
+        this.useParentRotation = useParentRotation;
+        this.projectileLoadTicks = projectileLoadTicks;
+        this.magazineSize = magazineSize;
+        this.magazineLoadTicks = magazineLoadTicks;
+        this.autoReload=autoReload;
+        this.deviationPerSide = deviationPerSide;
+        
+        this.projectile = projectile;
+
+        this.roundsInMagazine = magazineSize;
+
+    }
+
+    /*
+    public WeaponData(Vehicle parent, long cooldown, float x, float y, float width, float height, double rotation, BufferedImage image) {
+        super(parent.getData().getX() + parent.getData().getWidth() / 2 + x - width / 2,
+                parent.getData().getY() + parent.getData().getHeight() / 2 + y - height / 2,
+                width, height, rotation, image);
+        this.parent = parent;
         this.cooldown = cooldown;
     }
-
-    public WeaponData(Vehicle vehicle, long cooldown, float x, float y, float width, float height, BufferedImage image) {
-        this(vehicle, cooldown, x, y, width, height, 0, image);
+     */
+ /*
+    public WeaponData(Vehicle parent, long cooldown, float x, float y, float width, float height, BufferedImage image) {
+        this(parent, cooldown, x, y, width, height, 0, image);
+    }
+     */
+ /*
+    public WeaponData(Vehicle parent, long cooldown, float x, float y, BufferedImage image) {
+        this(parent, cooldown, x, y, image.getWidth(), image.getHeight(), image);
+    }
+     */
+    public Vehicle getParent() {
+        return parent;
     }
 
-    public WeaponData(Vehicle vehicle, long cooldown, float x, float y, BufferedImage image) {
-        this(vehicle, cooldown, x, y, image.getWidth(), image.getHeight(), image);
-    }
-
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public void setParent(Vehicle parent) {
+        this.parent = parent;
     }
 
     public boolean isShooting() {
@@ -59,22 +97,6 @@ public class WeaponData extends GameData {
 
     public void setReload(boolean reload) {
         this.reloading = reload;
-    }
-
-    public long getCooldown() {
-        return cooldown;
-    }
-
-    public void setCooldown(long cooldown) {
-        this.cooldown = cooldown;
-    }
-
-    public long getNextShotReadyTick() {
-        return nextShotReadyTick;
-    }
-
-    public void setNextShotReadyTick(long nextShotReadyTick) {
-        this.nextShotReadyTick = nextShotReadyTick;
     }
 
     public double getRelativeRotation() {
@@ -101,9 +123,97 @@ public class WeaponData extends GameData {
         this.relativeY = relativeY;
     }
 
+    public float getLength() {
+        return length;
+    }
+
+    public void setLength(float length) {
+        this.length = length;
+    }
+
+    public float getRelativeZ() {
+        return relativeZ;
+    }
+
+    public void setRelativeZ(float relativeZ) {
+        this.relativeZ = relativeZ;
+    }
+
+    public boolean isUseParentRotation() {
+        return useParentRotation;
+    }
+
+    public void setUseParentRotation(boolean useParentRotation) {
+        this.useParentRotation = useParentRotation;
+    }
+
+    public long getProjectileLoadTicks() {
+        return projectileLoadTicks;
+    }
+
+    public void setProjectileLoadTicks(long projectileLoadTicks) {
+        this.projectileLoadTicks = projectileLoadTicks;
+    }
+
+    public int getMagazineSize() {
+        return magazineSize;
+    }
+
+    public void setMagazineSize(int magazineSize) {
+        this.magazineSize = magazineSize;
+    }
+
+    public long getMagazineLoadTicks() {
+        return magazineLoadTicks;
+    }
+
+    public void setMagazineLoadTicks(long magazineLoadTicks) {
+        this.magazineLoadTicks = magazineLoadTicks;
+    }
+
+    public float getDeviationPerSide() {
+        return deviationPerSide;
+    }
+
+    public void setDeviationPerSide(float deviationPerSide) {
+        this.deviationPerSide = deviationPerSide;
+    }
+
+    public Projectile getProjectile() {
+        return projectile;
+    }
+
+    public void setProjectile(Projectile projectile) {
+        this.projectile = projectile;
+    }
+
+    public long getNextShotReadyTick() {
+        return nextShotReadyTick;
+    }
+
+    public void setNextShotReadyTick(long nextShotReadyTick) {
+        this.nextShotReadyTick = nextShotReadyTick;
+    }
+
+    public int getRoundsInMagazine() {
+        return roundsInMagazine;
+    }
+
+    public void setRoundsInMagazine(int roundsInMagazine) {
+        this.roundsInMagazine = roundsInMagazine;
+    }
+
+    public boolean hasAutoReload() {
+        return autoReload;
+    }
+
+    public void setAutoReload(boolean autoReload) {
+        this.autoReload = autoReload;
+    }   
+
     @Override
     public String toString() {
-        return "WeaponData{" + super.toString() + "vehicle=" + vehicle + ", shooting=" + shooting + ", reloading=" + reloading + ", cooldown=" + cooldown + ", nextShotReadyTick=" + nextShotReadyTick + ", relativeRotation=" + relativeRotation + ", relativeX=" + relativeX + ", relativeY=" + relativeY + '}';
+        return "WeaponData{" + super.toString() + "vehicle=" + parent + ", shooting=" + shooting + ", reloading=" + reloading + ", cooldown=" + projectileLoadTicks + ", nextShotReadyTick=" + magazineLoadTicks + ", relativeRotation=" + relativeRotation + ", relativeX=" + relativeX + ", relativeY=" + relativeY + '}';
     }
 
     @Override

@@ -13,7 +13,6 @@ import yansuen.logic.LogicInterface;
 import yansuen.logic.LogicLoop;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -27,11 +26,11 @@ import yansuen.data.GameData;
 public class GameTest {
 
     public static boolean shoot = false;
-
+/*
     public static void main(String[] args) throws IOException {
         LogicLoop ll = new LogicLoop(50000000L, 10);
         GraphicsLoop gl = new GraphicsLoop(33);
-        World world = new World(null);
+        World world = new World(keyManager, network);
         GamePanel screen = new GamePanel(world);
 
         ll.setLogic(world);
@@ -63,7 +62,7 @@ public class GameTest {
             //data.setX(data.getX() + 1);
             /*if (shoot) {
              tankData.setX(tankData.getX() + 1);
-             }*/
+             }*//*
         };
         LogicInterface projectile = (GameData data, long tick) -> {
             //data.setX(data.getX() + 1);
@@ -83,5 +82,5 @@ public class GameTest {
         world.getGameObjects().add(playerPanzer0);
 
     }
-
+*/
 }

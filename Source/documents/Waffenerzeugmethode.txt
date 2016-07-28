@@ -1,0 +1,30 @@
+--Weapon
+
+Vehicle	parent
+BI	turretImage
+float	imageSizeMultiplier
+float 	relativeX
+float 	relativeY
+float 	relativeZ
+double 	rotation
+bool 	useparentrotation
+long	cooldown
+int 	clipsize
+long	reloadtime
+
+SI	shotInterface
+or
+BI 	projectile
+float	speed
+float 	tickstoLive
+float 	deviationPerSide
+(LI)	(Controller)
+
+new Weapon(s.o.)
+new Weapon(1st part,SI interface)
+
+
+
+LI	controller
+Drive	weaponDrive
+String 	shotInterface

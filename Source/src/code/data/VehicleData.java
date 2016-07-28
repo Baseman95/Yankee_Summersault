@@ -2,7 +2,6 @@ package code.data;
 
 import java.awt.image.BufferedImage;
 import yansuen.data.GameData;
-import yansuen.data.GameDataListener;
 import yansuen.network.NetworkSerializable;
 
 /**

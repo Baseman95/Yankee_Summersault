@@ -81,7 +81,7 @@ public class GameData extends Data {
         listenerList.stream().forEach((dol) -> {
             dol.onPositionChanged(this, this.y, old);
         });
-    }
+    }   
 
     public void increaseX(float x) {
         setX(this.x + x);

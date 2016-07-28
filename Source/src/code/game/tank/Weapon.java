@@ -1,92 +1,73 @@
 package code.game.tank;
 
 import code.data.WeaponData;
-import yansuen.data.GameData;
 import code.game.World;
-import code.game.tank.projectile.ImpactInterface;
-import java.awt.image.BufferedImage;
+import code.presets.ShotInterfacePresets;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;
-import code.game.tank.projectile.ShotInterface;
 import yansuen.network.NetworkSerializable;
 
 /**
  * @author Link
  */
-public class Weapon extends GameObject implements NetworkSerializable {
+public class Weapon extends Vehicle implements NetworkSerializable {
 
-    protected ShotInterface shotFunction;
-    protected LogicInterface reloadFunction;
-    protected ImpactInterface impactBehavior;
-    protected LogicInterface projectileBehavior;
+    protected LogicInterface shotInterface;
+    protected LogicInterface reloadInterface;
+    protected LogicInterface hitInterface;
 
-    public Weapon(Vehicle vehicle, long cooldown, ShotInterface shotFunction, LogicInterface reloadFunction,
-            ImpactInterface impactBehavior, LogicInterface projectileBehavior, float x, float y, float w, float h,
-            BufferedImage img, GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {
-        super(new WeaponData(vehicle, cooldown, x, y, w, h, img), graphicsInterface, controllerInterface);
-        this.data = new GameData(x, y, w, h, img);
-        this.shotFunction = shotFunction;
-        this.reloadFunction = reloadFunction;
-        this.impactBehavior = impactBehavior;
-        this.projectileBehavior = projectileBehavior;
+    public Weapon(WeaponData weaponData, GraphicsInterface graphicsInterface, LogicInterface controllerInterface,
+            LogicInterface shotInterface, LogicInterface reloadInterface, LogicInterface hitInterface) {
+        super(weaponData, graphicsInterface, controllerInterface);
+        this.shotInterface = shotInterface;
+        this.reloadInterface = reloadInterface;
+        this.hitInterface = hitInterface;
     }
 
-    public Weapon(Vehicle vehicle, long cooldown, ShotInterface shootFunction, LogicInterface reloadFunction,
-            ImpactInterface impactBehavior, LogicInterface projectileBehavior, float x, float y,
-            BufferedImage img, GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {
-        super(new WeaponData(vehicle, cooldown, x, y, img), graphicsInterface, controllerInterface);
-        this.shotFunction = shootFunction;
-        this.reloadFunction = reloadFunction;
-        this.impactBehavior = impactBehavior;
-        this.projectileBehavior = projectileBehavior;
+    //Weapon(VehicleData,)
+    //MACH KONSTRUKTORRRRRR MIT WEAPON DATA ALS ÜBERGABEPARAMENTER; GGF ANDERE LÖSCHEN
+    /*
+    public Weapon(Vehicle parent, long cooldown, ShotInterface shotFunction, LogicInterface reloadFunction,
+            LogicInterface impactBehavior, LogicInterface projectileBehavior, float x, float y,
+            BufferedImage img, GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {        
+        this(parent, cooldown, shotFunction, reloadFunction, impactBehavior, projectileBehavior, x, y, img.getWidth(), img.getHeight(), img, graphicsInterface, controllerInterface);
     }
-
+     */   
     @Override
     public void doLogic(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
-        super.doLogic(gameObject, tick, world, manager);
-        WeaponData data = (WeaponData)getData();
-        if (shotFunction != null && data.isShooting() && data.getNextShotReadyTick() < tick) {
-            shotFunction.onShotCreation(this, tick, impactBehavior, world);
-            data.setNextShotReadyTick(tick + data.getCooldown());
-        }
-        if (reloadFunction != null && data.isReloading())
-            reloadFunction.doLogic(gameObject, tick, world, manager);
-        
-       // System.out.println(data);
-    }
+        super.doLogic(gameObject, tick, world, manager); 
+        checkAmmo(gameObject, tick, world, manager);
 
-    public ShotInterface getShotFunction() {
-        return shotFunction;
+        /*if (shotInterface != null && data.isShooting() && data.getNextShotReadyTick() < tick) {
+            shotInterface.doLogic(this, tick, world, manager);
+            //shotInterface.(this, tick, hitInterface, world);
+            data.setNextShotReadyTick(tick + data.getCooldown());*/
     }
-
-    public void setShotFunction(ShotInterface shotFunction) {
-        this.shotFunction = shotFunction;
+    private void checkAmmo(GameObject gameObject, long tick, World world, MasterKeyManager manager)
+    {       
+        WeaponData data = (WeaponData) gameObject.getData();
+        if (shotInterface == null)
+            return;
+        if (!data.isShooting())
+            return;
+        if (data.getRoundsInMagazine() == 0)
+            return;
+        if (data.getNextShotReadyTick() > tick)
+            return;
+        shotInterface.doLogic(this, tick, world, manager);
+        data.setRoundsInMagazine(data.getRoundsInMagazine() - 1);
+        data.setNextShotReadyTick(tick + data.getProjectileLoadTicks()); //Wird überschrieben wenn nxt. if nicht zutrifft
+        if (data.getRoundsInMagazine() > 0)
+            return;
+        if (data.hasAutoReload())
+            data.setNextShotReadyTick(tick + data.getMagazineLoadTicks());
     }
+    
+    /*if (reloadInterface!= null && data.isReloading ()){
+            reloadInterface.doLogic(gameObject, tick, world, manager);
 
-    public LogicInterface getReloadFunction() {
-        return reloadFunction;
-    }
-
-    public void setReloadFunction(LogicInterface reloadFunction) {
-        this.reloadFunction = reloadFunction;
-    }
-
-    public ImpactInterface getImpactBehavior() {
-        return impactBehavior;
-    }
-
-    public void setImpactBehavior(ImpactInterface impactBehavior) {
-        this.impactBehavior = impactBehavior;
-    }
-
-    public LogicInterface getProjectileBehavior() {
-        return projectileBehavior;
-    }
-
-    public void setProjectileBehavior(LogicInterface projectileBehavior) {
-        this.projectileBehavior = projectileBehavior;
-    }
-
+        // System.out.println(data);
+    }*/
 }
