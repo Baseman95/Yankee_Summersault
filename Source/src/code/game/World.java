@@ -51,8 +51,8 @@ public class World implements LogicLooper {
             moveGameObject(gameObject);
 
             if (network == null)
-                continue;
-            if (network.getClients().size() > gameObject.getNetworkProjectionId() && network.getId() != gameObject.getObjectId())
+                continue; 
+            if (network.getClients().size() > gameObject.getNetworkProjectionId() && network.getId() != gameObject.getNetworkProjectionId())
                 continue;
             if (gameObject.getObjectId() == -1)
                 continue;
