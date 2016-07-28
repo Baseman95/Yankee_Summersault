@@ -5,14 +5,17 @@ import code.game.tank.Vehicle;
 import code.game.tank.Weapon;
 import yansuen.game.GameObject;
 import code.network.CommandList;
+import code.network.NetworkAction;
 import code.network.UpdateObjectCommand;
 import yansuen.graphics.Camera;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicLooper;
 import java.awt.Graphics2D;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Queue;
 import yansuen.logic.LogicInterface;
 import yansuen.network.Network;
 
@@ -25,6 +28,7 @@ public class World implements LogicLooper {
     protected ArrayList<GameObject> gameObjects = new ArrayList<>();
     protected ArrayList<GameObject> addObjects = new ArrayList<>();
     protected ArrayList<GameObject> removeObjects = new ArrayList<>();
+    protected ArrayDeque<NetworkAction> networkActions = new ArrayDeque<>() ;
 
     protected MasterKeyManager keyManager;
     protected Camera camera;
@@ -66,6 +70,9 @@ public class World implements LogicLooper {
         addObjects.clear();
         gameObjects.removeAll(removeObjects);
         removeObjects.clear();
+        while(!networkActions.isEmpty()){
+            networkActions.pop().execute();
+        }
     }
 
     protected void moveGameObject(GameObject gameObject) {
@@ -114,5 +121,10 @@ public class World implements LogicLooper {
         removeObjects.add(gameObject);
         gameObject.destroy(this);
     }
+
+    public boolean addNetworkAction(NetworkAction e) {
+        return networkActions.add(e);
+    }
+    
 
 }
