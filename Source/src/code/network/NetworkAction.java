@@ -8,17 +8,18 @@ import yansuen.network.Network;
  */
 public class NetworkAction {
 
-    private final Network network;
-    private final String[] argument;
+    public final Network network;
+    public final String[] argument;
+    public final Executable executable;
 
-    public NetworkAction(Network network, String[] argument) {
+    public NetworkAction(Network network, String[] argument, Executable executable) {
         this.network = network;
         this.argument = argument;
+        this.executable = executable;
     }
 
-    public void execute() {
-        network.getApplication().getWorld().getGameObject(Integer.parseInt(argument[0])).
-                networkDeserialize(Arrays.copyOfRange(argument, 1, argument.length));
-    }
+    public static interface Executable {
 
+        void execute();
+    }
 }

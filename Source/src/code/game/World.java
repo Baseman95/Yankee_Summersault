@@ -28,7 +28,7 @@ public class World implements LogicLooper {
     protected ArrayList<GameObject> gameObjects = new ArrayList<>();
     protected ArrayList<GameObject> addObjects = new ArrayList<>();
     protected ArrayList<GameObject> removeObjects = new ArrayList<>();
-    protected ArrayDeque<NetworkAction> networkActions = new ArrayDeque<>() ;
+    protected ArrayDeque<NetworkAction> networkActions = new ArrayDeque<>();
 
     protected MasterKeyManager keyManager;
     protected Camera camera;
@@ -70,8 +70,8 @@ public class World implements LogicLooper {
         addObjects.clear();
         gameObjects.removeAll(removeObjects);
         removeObjects.clear();
-        while(!networkActions.isEmpty()){
-            networkActions.pop().execute();
+        while (!networkActions.isEmpty()) {
+            networkActions.pop().executable.execute();
         }
     }
 
@@ -125,6 +125,5 @@ public class World implements LogicLooper {
     public boolean addNetworkAction(NetworkAction e) {
         return networkActions.add(e);
     }
-    
 
 }
