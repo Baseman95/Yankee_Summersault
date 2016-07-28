@@ -52,7 +52,7 @@ public class World implements LogicLooper {
 
             if (network == null)
                 continue;
-            if (network.getClients().size() > gameObject.getObjectId() && network.getId() != gameObject.getObjectId())
+            if (network.getClients().size() > gameObject.getNetworkProjectionId() && network.getId() != gameObject.getObjectId())
                 continue;
             if (gameObject.getObjectId() == -1)
                 continue;
