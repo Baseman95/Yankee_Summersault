@@ -19,6 +19,14 @@ public class ProjectilePresets {
      */
     public static final Projectile MASCHYNENGWER = new Projectile(0, 0, 0, ImagePresets.Projectile.MACHINEGUN,
             3, 500, HitInterfacePresets.NORMAL, ControllerPresets.HOLD_ACCELERATE,
-            DrivePresets.createStraightDrive(3, 0.006), GraphicsPresets.ROTATION);
+            null, GraphicsPresets.ROTATION);
+
+    public static final Projectile MG763 = new Projectile(0, 0, 0, ImagePresets.Projectile.MACHINEGUN,
+            5, 250, HitInterfacePresets.NORMAL, ControllerPresets.HOLD_ACCELERATE,
+            null, GraphicsPresets.ROTATION);
+
+    public static final Projectile MINIG = new Projectile(0, 0, 0, ImagePresets.Projectile.MACHINEGUN2,
+            6, 150, HitInterfacePresets.NORMAL, ControllerPresets.HOLD_ACCELERATE,
+            null, GraphicsPresets.ROTATION);
 
 }

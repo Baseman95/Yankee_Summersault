@@ -2,7 +2,6 @@ package code.game.tank;
 
 import code.data.WeaponData;
 import code.game.World;
-import code.presets.ShotInterfacePresets;
 import yansuen.game.GameObject;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;
@@ -34,10 +33,11 @@ public class Weapon extends Vehicle implements NetworkSerializable {
             BufferedImage img, GraphicsInterface graphicsInterface, LogicInterface controllerInterface) {        
         this(parent, cooldown, shotFunction, reloadFunction, impactBehavior, projectileBehavior, x, y, img.getWidth(), img.getHeight(), img, graphicsInterface, controllerInterface);
     }
-     */   
+     */
     @Override
     public void doLogic(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
-        super.doLogic(gameObject, tick, world, manager); 
+        super.doLogic(gameObject, tick, world, manager);
+        
         checkAmmo(gameObject, tick, world, manager);
 
         /*if (shotInterface != null && data.isShooting() && data.getNextShotReadyTick() < tick) {
@@ -45,14 +45,14 @@ public class Weapon extends Vehicle implements NetworkSerializable {
             //shotInterface.(this, tick, hitInterface, world);
             data.setNextShotReadyTick(tick + data.getCooldown());*/
     }
-    private void checkAmmo(GameObject gameObject, long tick, World world, MasterKeyManager manager)
-    {       
+
+    private void checkAmmo(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
         WeaponData data = (WeaponData) gameObject.getData();
         if (shotInterface == null)
             return;
         if (!data.isShooting())
             return;
-        if (data.getRoundsInMagazine() == 0)
+        if (data.getRoundsInMagazine() < 1)
             return;
         if (data.getNextShotReadyTick() > tick)
             return;
@@ -61,10 +61,11 @@ public class Weapon extends Vehicle implements NetworkSerializable {
         data.setNextShotReadyTick(tick + data.getProjectileLoadTicks()); //Wird überschrieben wenn nxt. if nicht zutrifft
         if (data.getRoundsInMagazine() > 0)
             return;
-        if (data.hasAutoReload())
-            data.setNextShotReadyTick(tick + data.getMagazineLoadTicks());
+        if (data.hasAutoReload())            
+            //data.setNextShotReadyTick(tick + data.getMagazineLoadTicks());        
+            reloadInterface.doLogic(gameObject, tick, world, manager);
     }
-    
+
     /*if (reloadInterface!= null && data.isReloading ()){
             reloadInterface.doLogic(gameObject, tick, world, manager);
 

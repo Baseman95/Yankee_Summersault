@@ -115,6 +115,7 @@ public class ImagePresets {
         public static BufferedImage MISSILE = ImagePresets.loadImg("textures/projectiles/missile.png");
         public static BufferedImage PROJECTILE = ImagePresets.loadImg("textures/projectiles/missile.png");
         public static BufferedImage MACHINEGUN = ImagePresets.loadImg("textures/projectiles/projectile_mini.png");
+        public static BufferedImage MACHINEGUN2 = ImagePresets.loadImg("textures/projectiles/projectile_mini2.png");
         public static BufferedImage SHELL = ImagePresets.loadImg("textures/projectiles/projectile_mini.png");
 
         private Projectile() {

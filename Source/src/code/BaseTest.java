@@ -39,20 +39,24 @@ public class BaseTest extends Application {
         
  </editor-fold>*/
         Vehicle zank = new Vehicle(10, 10, ImagePresets.Vehicle.Land.M1128, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
-        zank.setDrive(DrivePresets.createSimpleDrive());        
+        zank.setDrive(DrivePresets.createSimpleDrive());
 
-        Vehicle choppah = new Vehicle(300, 300, ImagePresets.Vehicle.Air.APACHE_B2, GraphicsPresets.ROTATION, null);
+        Vehicle choppah = new Vehicle(310, 300, ImagePresets.Vehicle.Air.APACHE_B2, GraphicsPresets.ROTATION, null);
         //choppah.setDrive(DrivePresets.createHeli(0.006f));
 
         Vehicle hydra = new Vehicle(1000, 10, ImagePresets.Vehicle.Air.HARRIER_R, GraphicsPresets.ROTATION, null);
-        
-        Weapon test1 = WeaponPresets.createWeaponMG762(zank, GraphicsPresets.ROTATION);
-        
-        zank.getWeapons().add(test1);
-        
-        world.addGameObject(test1);
 
-       /* Weapon mg = WeaponPresets.createMinigun(zank);
+        Weapon test1 = WeaponPresets.createWeaponMG762(zank, GraphicsPresets.ROTATION);
+        Weapon test2 = WeaponPresets.createWeaponMinig(zank, GraphicsPresets.ROTATION);
+
+        zank.getWeapons().add(test1);
+        zank.getWeapons().add(test2);
+
+        world.addGameObject(test1);
+        world.addGameObject(test2);
+
+
+        /* Weapon mg = WeaponPresets.createMinigun(zank);
         Weapon shotgun = WeaponPresets.createShotgun(zank);
         Weapon tvmissile = WeaponPresets.createUserControlledRocketLauncher(zank);
         Weapon smoke = WeaponPresets.createSmoke(zank);
@@ -61,7 +65,6 @@ public class BaseTest extends Application {
         zank.getWeapons().add(shotgun);
         zank.getWeapons().add(tvmissile);
         zank.getWeapons().add(smoke); */
-
         world.addGameObject(zank);
         world.addGameObject(choppah);
         world.addGameObject(hydra);
@@ -70,11 +73,9 @@ public class BaseTest extends Application {
         world.addGameObject(shotgun);
         world.addGameObject(tvmissile);
         world.addGameObject(smoke);
-        */
-        
+         */
         //zank.getWeapons.add(WeaponPresets.createMinigun(zank));
         //world.addGameObject(zank);
-
     }
 
 }
