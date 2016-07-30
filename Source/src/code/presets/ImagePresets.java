@@ -121,6 +121,9 @@ public class ImagePresets {
         public static BufferedImage GLKPR = ImagePresets.loadImg("textures/projectiles/glkpr.png");
         public static BufferedImage SHTGN = ImagePresets.loadImg("textures/projectiles/shtgn.png");
         
+        public static BufferedImage MK19 = ImagePresets.loadImg("textures/projectiles/mk19.png");
+        public static BufferedImage ABOMB = ImagePresets.loadImg("textures/projectiles/abomb.png");
+        
         public static BufferedImage MISSILE = ImagePresets.loadImg("textures/projectiles/missile.png");
         public static BufferedImage PROJECTILE = ImagePresets.loadImg("textures/projectiles/missile.png");
         public static BufferedImage MACHINEGUN = ImagePresets.loadImg("textures/projectiles/projectile_mini.png");

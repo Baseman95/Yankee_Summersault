@@ -50,7 +50,7 @@ public class WeaponPresets {
         
         WeaponData data = (WeaponData) gameObject.getData();
         data.setNextShotReadyTick(tick + data.getMagazineLoadTicks());
-        data.setRoundsInMagazine(data.getRoundsInMagazine() + 1);
+        data.setRoundsInMagazine(data.getRoundsInMagazine() + 1);        
     };
     
     public static LogicInterface FULL_RELOAD = (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
@@ -92,9 +92,35 @@ public class WeaponPresets {
     public static Weapon createWeaponShtgn(Vehicle v) {
         
         Projectile p = new Projectile(ProjectilePresets.SHTGN);
-        WeaponData wd = new WeaponData(v, 0, ImagePresets.Default.NO_IMAGE, 1, 0, 0, 0, 0, false, 100, 5, 500, false, 0.015f, p);
+        WeaponData wd = new WeaponData(v, 0, ImagePresets.Default.NO_IMAGE, 1, 0, 0, 0, 0, false, 325, 5, 350, false, 0.015f, p);
         return new Weapon(wd, GraphicsPresets.ROTATION, ControllerPresets.PLAYER, ShotInterfacePresets.MULTI_PROJECTILE, SINGLE_RELOAD, null);
     }
+    
+    public static Weapon createWeaponRshgn(Vehicle v) {
+        
+        Projectile p = new Projectile(ProjectilePresets.RSHGN);
+        WeaponData wd = new WeaponData(v, 0, ImagePresets.Default.NO_IMAGE, 1, 0, 0, 0, 0, false, 325, 2, 350, false, 1f, p);
+        return new Weapon(wd, GraphicsPresets.ROTATION, ControllerPresets.PLAYER, ShotInterfacePresets.MULTI_PROJECTILE, SINGLE_RELOAD, null);
+    }
+    
+    public static Weapon createWeaponMk19(Vehicle v) {
+        
+        Projectile p = new Projectile(ProjectilePresets.MK19);
+        WeaponData wd = new WeaponData(v, 0, ImagePresets.Default.NO_IMAGE, 1, 0, 0, 0, 0, false, 25, 4, 175, true, 0.001f, p);
+        return new Weapon(wd, GraphicsPresets.ROTATION, ControllerPresets.PLAYER, ShotInterfacePresets.SINGLE_PROJECTILE, FULL_RELOAD, null);
+    }
+    
+    public static Weapon createWeaponAbomb(Vehicle v) {
+        
+        Projectile p = new Projectile(ProjectilePresets.ABOMB);
+        WeaponData wd = new WeaponData(v, 0, ImagePresets.Default.NO_IMAGE, 1, 0, 0, 0, 0, false, 25, 5, 500, true, 0.001f, p);
+        return new Weapon(wd, GraphicsPresets.ROTATION, ControllerPresets.PLAYER, ShotInterfacePresets.AERIAL_BOMB, FULL_RELOAD, null);
+    }
+    
+    
+    
+    
+    
     
     public static Weapon createWaterCanon(Vehicle v, GraphicsInterface graphics) {
         

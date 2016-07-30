@@ -6,6 +6,7 @@
 package code.presets;
 
 import code.data.ProjectileData;
+import code.data.VehicleData;
 import code.data.WeaponData;
 import code.game.World;
 import code.game.tank.projectile.Projectile;
@@ -13,6 +14,7 @@ import java.util.Random;
 import yansuen.game.GameObject;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicInterface;
+import yansuen.physic.CartesianVector;
 import yansuen.physic.PolarVector;
 
 /**
@@ -43,8 +45,8 @@ public class ShotInterfacePresets {
     protected static LogicInterface MULTI_PROJECTILE = (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
         WeaponData weaponData = (WeaponData) gameObject.getData();
 
-        int projectiles = 20;
-        float speedDeviation = 0.5f;
+        int projectiles = 30;
+        float speedDeviation = 0.4f;
 
         PolarVector pv = new PolarVector(weaponData.getRotation(), weaponData.getLength());
 
@@ -67,6 +69,38 @@ public class ShotInterfacePresets {
                     DrivePresets.createStraightDrive(projectileData.getSpeed() + randomSpeed, weaponData.getRotation() + random));
             world.addGameObject(projectileObject);
         }
+    };
+
+    protected static LogicInterface AERIAL_BOMB = (GameObject gameObject, long tick, World world, MasterKeyManager manager) -> {
+        WeaponData weaponData = (WeaponData) gameObject.getData();
+        VehicleData vd = (VehicleData)weaponData.getParent().getData();
+        
+        PolarVector getSpeed = new PolarVector(new CartesianVector(vd.getMovementX(),vd.getMovementY()));       
+        
+
+        getSpeed.updateAngleRange2Pi();
+        System.out.println(getSpeed);
+        
+        float currentSpeed = (float)getSpeed.length; 
+        System.out.println(currentSpeed);
+
+        PolarVector pv = new PolarVector(weaponData.getRotation(), weaponData.getLength());
+
+        Projectile projectileObject = new Projectile(weaponData.getProjectile());
+        ProjectileData projectileData = (ProjectileData) projectileObject.getData();
+
+        projectileData.setX(weaponData.getX() + weaponData.getWidth() / 2 - projectileData.getWidth() / 2 + PolarVector.xFromPolar(pv));
+        projectileData.setY(weaponData.getY() + weaponData.getHeight() / 2 - projectileData.getHeight() / 2 + PolarVector.yFromPolar(pv));
+
+        
+        projectileData.setRotation(weaponData.getRotation());
+
+        projectileData.setDeathTick(projectileData.getDeathTick() + tick);       
+
+        projectileObject.setDrive(
+                DrivePresets.createStraightDrive(currentSpeed, weaponData.getRotation()));
+        world.addGameObject(projectileObject);
+
     };
 
     private static double generateGaussianRandom(double averageDeviationInPi) {

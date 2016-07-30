@@ -46,8 +46,8 @@ public class BaseTest extends Application {
 
         Vehicle hydra = new Vehicle(1000, 10, ImagePresets.Vehicle.Air.HARRIER_R, GraphicsPresets.ROTATION, null);
 
-        Weapon test1 = WeaponPresets.createWeaponShtgn(zank);
-        Weapon test2 = WeaponPresets.createWeaponMinig(zank);
+        Weapon test1 = WeaponPresets.createWeaponMk19(zank);
+        Weapon test2 = WeaponPresets.createWeaponAbomb(zank);
         Weapon test3 = WeaponPresets.createWeaponPerID(WeaponPresets.WeaponIdentification.HELCN, zank);
 
         zank.getWeapons().add(test1);

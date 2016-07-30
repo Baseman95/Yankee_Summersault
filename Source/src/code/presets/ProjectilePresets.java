@@ -34,15 +34,27 @@ public class ProjectilePresets {
             null, GraphicsPresets.ROTATION);
     
     public static final Projectile SHTGN = new Projectile(0, 0, 0, ImagePresets.Projectile.SHTGN,
-            5, 200, HitInterfacePresets.NORMAL, ControllerPresets.HOLD_ACCELERATE,
+            4, 200, HitInterfacePresets.NORMAL, ControllerPresets.HOLD_ACCELERATE,
+            null, GraphicsPresets.ROTATION);
+    
+    public static final Projectile RSHGN = new Projectile(0, 0, 0, ImagePresets.Projectile.SHTGN,
+            2, 300, HitInterfacePresets.NORMAL, ControllerPresets.HOLD_ACCELERATE,
+            null, GraphicsPresets.ROTATION);
+    
+    public static final Projectile MK19 = new Projectile(0, 0, 0, ImagePresets.Projectile.MK19,
+            2, 250, HitInterfacePresets.NORMAL, ControllerPresets.HOLD_ACCELERATE,
+            null, GraphicsPresets.ROTATION);
+    
+    public static final Projectile ABOMB = new Projectile(0, 0, 0, ImagePresets.Projectile.ABOMB,
+            2, 250, HitInterfacePresets.NORMAL, null,
             null, GraphicsPresets.ROTATION);
     
     
     
     
     
-    
-    
+    //ROUNDHOUSE_SHOTINTERFACE = createSimpleMultiShotInterface(ImagePresets.Projectile.MACHINEGUN, 3f, 200, 1f, WEAPON_MG_LENGTH, 50, null)
+    //(BufferedImage texture, float projectileSpeed, long ticksToLive, float deviationPerSide, int weaponLength, int projectileCount, Float speedDeviation)
     
     
     
