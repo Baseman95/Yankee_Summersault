@@ -35,7 +35,7 @@ public class ImagePresets {
         public static BufferedImage TURRET_A = ImagePresets.loadImg("textures/weapons_beta/turrets/turretA.png");
         public static BufferedImage TRACER = ImagePresets.loadImg("textures/projectiles/tracer.png");
         public static BufferedImage SMOKE = ImagePresets.loadImg("textures/weapons_beta/shots/smoke.png");
-
+        public static BufferedImage BLACK_SQUARE = ImagePresets.loadImg("textures/test.png");
         private Test() {
         }
     }

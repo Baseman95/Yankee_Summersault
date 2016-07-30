@@ -50,13 +50,29 @@ public class GraphicsPresets {
         at.rotate(d.getRotation(), d.getWidth() / 2, d.getHeight() / 2);
         AffineTransformOp ato = new AffineTransformOp(at, AffineTransformOp.TYPE_BICUBIC);
         BufferedImage after = new BufferedImage(d.getImage().getColorModel(),
-                d.getImage().copyData(null),
-                d.getImage().isAlphaPremultiplied(), null);
+                                                d.getImage().copyData(null),
+                                                d.getImage().isAlphaPremultiplied(), null);
         ato.filter(d.getImage(), after);
         g2d.drawImage(after, (int) d.getX(),
-                (int) d.getY(),
-                (int) d.getWidth(),
-                (int) d.getHeight(), null);
+                      (int) d.getY(),
+                      (int) d.getWidth(),
+                      (int) d.getHeight(), null);
+    };
+
+    public static GraphicsInterface ROTATION_WITHOUT_CAMERA = (GameData data, Camera camera, Graphics2D g2d) -> {
+        GameData d = (GameData) data;
+        configureGraphics2D(g2d);
+        AffineTransform at = new AffineTransform();
+        at.rotate(d.getRotation(), d.getWidth() / 2, d.getHeight() / 2);
+        AffineTransformOp ato = new AffineTransformOp(at, AffineTransformOp.TYPE_BICUBIC);
+        BufferedImage after = new BufferedImage(d.getImage().getColorModel(),
+                                                d.getImage().copyData(null),
+                                                d.getImage().isAlphaPremultiplied(), null);
+        ato.filter(d.getImage(), after);
+        g2d.drawImage(after, (int) d.getX(),
+                      (int) d.getY(),
+                      (int) d.getWidth(),
+                      (int) d.getHeight(), null);
     };
 
     public static GraphicsInterface ROTATION = (GameData data, Camera camera, Graphics2D g2d) -> {
@@ -66,13 +82,14 @@ public class GraphicsPresets {
         at.rotate(d.getRotation(), d.getWidth() / 2, d.getHeight() / 2);
         AffineTransformOp ato = new AffineTransformOp(at, AffineTransformOp.TYPE_BICUBIC);
         BufferedImage after = new BufferedImage(d.getImage().getColorModel(),
-                d.getImage().copyData(null),
-                d.getImage().isAlphaPremultiplied(), null);
+                                                d.getImage().copyData(null),
+                                                d.getImage().isAlphaPremultiplied(), null);
         ato.filter(d.getImage(), after);
-        g2d.drawImage(after, (int) d.getX(),
-                (int) d.getY(),
-                (int) d.getWidth(),
-                (int) d.getHeight(), null);
+        g2d.drawImage(after,
+                      camera.transformX(d.getX()),
+                      camera.transformY(d.getY()),
+                      camera.transformWidth(d.getWidth()),
+                      camera.transformHeight(d.getHeight()), null);
     };
 
 }

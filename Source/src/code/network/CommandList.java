@@ -18,7 +18,6 @@ public class CommandList {
     public static Class[] COMMAND_ARRAY = {SetIdCommand.class,
                                            UpdateIdListCommand.class,
                                            BroadcastCommand.class,
-                                           ReceiveTextCommand.class,
                                            KeyPressedCommand.class,
                                            UpdateObjectCommand.class};
 

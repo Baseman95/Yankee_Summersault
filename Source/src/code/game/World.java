@@ -3,14 +3,17 @@ package code.game;
 import code.data.VehicleData;
 import code.game.tank.Vehicle;
 import code.game.tank.Weapon;
+import code.menu.GamePanel;
 import yansuen.game.GameObject;
 import code.network.CommandList;
+import code.network.NetworkAction;
 import code.network.UpdateObjectCommand;
 import yansuen.graphics.Camera;
 import yansuen.graphics.GraphicsInterface;
 import yansuen.key.MasterKeyManager;
 import yansuen.logic.LogicLooper;
 import java.awt.Graphics2D;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import yansuen.logic.LogicInterface;
@@ -25,11 +28,12 @@ public class World implements LogicLooper {
     protected ArrayList<GameObject> gameObjects = new ArrayList<>();
     protected ArrayList<GameObject> addObjects = new ArrayList<>();
     protected ArrayList<GameObject> removeObjects = new ArrayList<>();
+    protected ArrayDeque<NetworkAction> networkActions = new ArrayDeque<>();
 
     protected MasterKeyManager keyManager;
-    protected Camera camera;
+    protected Camera camera = null;
     protected Network network;
-    protected long synchronizeTickDelay = 200;
+    protected long synchronizeTickDelay = 25;
     protected long synchronizeTick = 0;
 
     public World(MasterKeyManager keyManager, Network network) {
@@ -45,12 +49,22 @@ public class World implements LogicLooper {
             if (ci != null)
                 ci.doLogic(gameObject, tick, this, keyManager);
             moveGameObject(gameObject);
-            if (network != null && network.getId() == 0 && gameObject.getObjectId() != -1 && synchronizeTick < tick) {
-                ArrayList<String> args = new ArrayList();
-                args.add(String.valueOf(gameObject.getObjectId()));
-                args.addAll(Arrays.asList(gameObject.networkSerialize()));
-                network.sendBroadcastCommand(CommandList.getCommandId(UpdateObjectCommand.class), args.toArray(new String[0]));
-            }
+
+            if (network == null)
+                continue;
+            if (network.getId() == 0 && network.getClients().size() < gameObject.getNetworkProjectionId() && gameObject.getNetworkProjectionId() != 0)
+                continue;
+            if (network.getId() != 0 && network.getId() != gameObject.getNetworkProjectionId())
+                continue;
+            if (gameObject.getObjectId() == -1)
+                continue;
+            if (synchronizeTick >= tick)
+                continue;
+
+            ArrayList<String> args = new ArrayList();
+            args.add(String.valueOf(gameObject.getObjectId()));
+            args.addAll(Arrays.asList(gameObject.networkSerialize()));
+            network.sendBroadcastCommand(CommandList.getCommandId(UpdateObjectCommand.class), args.toArray(new String[0]));
         }
         if (synchronizeTick < tick)
             synchronizeTick = tick + synchronizeTickDelay;
@@ -58,6 +72,9 @@ public class World implements LogicLooper {
         addObjects.clear();
         gameObjects.removeAll(removeObjects);
         removeObjects.clear();
+        while (!networkActions.isEmpty()) {
+            networkActions.pop().executable.execute();
+        }
     }
 
     protected void moveGameObject(GameObject gameObject) {
@@ -76,7 +93,7 @@ public class World implements LogicLooper {
         }
     }
 
-    public GameObject getGameObject(int objectId) {
+    public GameObject getGameObjectByObjectId(int objectId) {
         return (GameObject) gameObjects.stream().filter((gameObject) -> (gameObject.getObjectId() == objectId)).findAny().get();
     }
 
@@ -106,5 +123,14 @@ public class World implements LogicLooper {
         removeObjects.add(gameObject);
         gameObject.destroy(this);
     }
+
+    public boolean addNetworkAction(NetworkAction e) {
+        return networkActions.add(e);
+    }
+
+    public void setGamePanel(GamePanel gamePanel) {
+        camera = new Camera(gamePanel);
+    }
+
 
 }

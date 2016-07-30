@@ -83,7 +83,17 @@ public class LinkTest extends Application {
         julia.setObjectId(GameObject.getNewObjectID());
         peter.setNetworkProjectionId(2);
         peter.setObjectId(GameObject.getNewObjectID());
-
+        switch (network.getId()) {
+            case 0:
+                world.getCamera().setGameObject(zank);
+                break;
+            case 1:
+                world.getCamera().setGameObject(julia);
+                break;
+            case 2:
+                world.getCamera().setGameObject(peter);
+                break;
+        }
     }
 
 }

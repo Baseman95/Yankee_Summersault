@@ -7,7 +7,7 @@ import yansuen.network.NetworkSerializable;
 /**
  * @author Link162534
  */
-public class GameData extends Data {
+public class GameData implements NetworkSerializable {
 
     protected float x;
     protected float y;
