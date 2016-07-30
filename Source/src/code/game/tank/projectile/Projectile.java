@@ -22,7 +22,7 @@ public class Projectile extends Vehicle {
 
     public LogicInterface hitInterface;
 
-    public Projectile(float x, float y, double rotation, BufferedImage image, long speed, long deathTick,
+    public Projectile(float x, float y, double rotation, BufferedImage image, float speed, long deathTick,
             LogicInterface impactInterface, LogicInterface projectileController, LogicInterface projectileDrive, GraphicsInterface graphics) {
         super(new ProjectileData(x, y, rotation, image, speed, deathTick), graphics, projectileController);
         this.graphicsInterface = graphics;

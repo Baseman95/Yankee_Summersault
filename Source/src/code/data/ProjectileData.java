@@ -13,21 +13,21 @@ import java.awt.image.BufferedImage;
  */
 public class ProjectileData extends VehicleData {
 
-    protected long speed;
+    protected float speed;
     protected long deathTick;
     protected boolean hit = false;
 
-    public ProjectileData(float x, float y, double rotation, BufferedImage image, long speed, long deathTick) {
+    public ProjectileData(float x, float y, double rotation, BufferedImage image, float speed, long deathTick) {
         super(0, 0, x, y, image.getWidth(), image.getHeight(), rotation, image);
         this.speed = speed;
         this.deathTick = deathTick;
     }
 
-    public long getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
-    public void setSpeed(long speed) {
+    public void setSpeed(float speed) {
         this.speed = speed;
     }
 

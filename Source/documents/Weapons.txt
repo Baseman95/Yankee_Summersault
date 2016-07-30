@@ -3,59 +3,30 @@
 IGNAME		DESC
 
 MG762		PK machine gun
-Minig		Minigun, MG Spray
-20mmC		20mm Canon Heli MG
-30mmC		30mm Anti Air Canon
+MINIG		Minigun, MG Spray
+HELCN		20mm Canon Heli MG
+GLKPR		Goalkeeper CIWS, 30mm Anti Air Canon, 75 RPS
 
-Shtgn		Shotgun, mehrere Projektile verschiedene Geschwindigkeiten
-Rshgn
+SHTGN		Shotgun, mehrere Projektile verschiedene Geschwindigkeiten
+RSHGN		Shotgun ums Fahrzeug gleichverteilt
 
 MK19		60RPM 40mm Grenadelauncher
+ABOMB		Aerial Bomb for Groundattack
 SMAW		Shoulder-Launched Multipurpose Assault Weapon (Raketenwerfer)
+TANKS		Panzerschuss
 ATGM		anti tank guided missle
-SHELL		Panzerschuss
+PTRKT		Pointrocket, Fliegt zu Makierung
+MLTGM		Mehrere Lenkbare Raketen (Spawnt 5 schwache lenkraketen mit dem selben controller)
+FFRKT		Fire and Forget Rocket (Selbstzielsuchend)
+
+
+FLMTH		Flamethrower
+EMPGN		EMP-Gun
+FLSGN		Flashgun
+
+WLDTL		Weldingtool zum Zusammenhängen/abschleppen
+
+TRACR		Tracer
 
 --Ideas
-
-TankShell
-
-ShotGun
-
-RoundShotgun 
-
-Welding Tool zum Abschleppen
-
-Flametrhower
-EMP
-Flashgun
-<<Smoke
-<<Tracer
-
-
-
-UZI 
--
-CANON
--
-PLASMA
-MAGNUM
--
-SHELL
-GOLIATH
--
-ROCKET
-GUIDED
--
-AGM
--
-
-
-Welding Tool xD
-Flametrhower
-PointRocket
-Roundhouseshotgun
-EMP
-Multiguidedshells	(Spawnt 5 schwache lenkraketen mit dem selben controller)
-
-
 

@@ -64,7 +64,7 @@ public class LinkTest extends Application {
     public void start() {
         super.start();
         Vehicle zank = new Vehicle(50, 50, ImagePresets.Vehicle.Land.TECHNICAL_B, GraphicsPresets.ROTATION, ControllerPresets.PLAYER);
-        zank.getWeapons().add(WeaponPresets.createWeaponMG762(zank, GraphicsPresets.ROTATION));
+        zank.getWeapons().add(WeaponPresets.createWeaponMG762(zank));
         zank.setDrive(DrivePresets.createSimpleDrive());
         world.addGameObject(zank);
 

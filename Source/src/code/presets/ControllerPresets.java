@@ -70,7 +70,12 @@ public class ControllerPresets {
         data.strafeLeft = manager.isKeyPressed(KeyEvent.VK_Q, c.getNetworkProjectionId());
         data.strafeRight = manager.isKeyPressed(KeyEvent.VK_E, c.getNetworkProjectionId());
         for (int i = 0; i < c.getWeapons().size(); i++) {
-            ((WeaponData) c.getWeapons().get(i).getData()).setShooting(manager.isKeyPressed(KeyEvent.VK_1 + i, gameObject.getNetworkProjectionId()));
+            ((WeaponData) c.getWeapons().get(i).getData()).setReloading(manager.isKeyPressed(KeyEvent.VK_R, c.getNetworkProjectionId()));
+        }
+
+        for (int i = 0; i < c.getWeapons().size(); i++) {
+            ((WeaponData) c.getWeapons().get(i).getData()).setShooting(manager.isKeyPressed(KeyEvent.VK_1 + i, c.getNetworkProjectionId()));
+            //((WeaponData) c.getWeapons().get(i).getData()).setReloading(manager.isKeyPressed(KeyEvent.VK_R, gameObject.getNetworkProjectionId()));
         }
     };
 

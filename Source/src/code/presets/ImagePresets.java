@@ -103,7 +103,10 @@ public class ImagePresets {
 
     public static class Weapon {
 
-        public static BufferedImage MG762 = ImagePresets.loadImg("textures/weapons/turretB.png");
+        public static BufferedImage MG762 = ImagePresets.loadImg("textures/weapons/mg762.png");
+        public static BufferedImage MINIG = ImagePresets.loadImg("textures/weapons/minigun.png");
+        
+        
         public static BufferedImage SHELL = ImagePresets.loadImg("textures/weapons/turretA.png");
 
         private Weapon() {
@@ -111,7 +114,13 @@ public class ImagePresets {
     }
 
     public static class Projectile {
-
+        
+        public static BufferedImage MG762 = ImagePresets.loadImg("textures/projectiles/mg762.png");
+        public static BufferedImage MINIG = ImagePresets.loadImg("textures/projectiles/minig.png");
+        public static BufferedImage HELCN = ImagePresets.loadImg("textures/projectiles/helcn.png");
+        public static BufferedImage GLKPR = ImagePresets.loadImg("textures/projectiles/glkpr.png");
+        public static BufferedImage SHTGN = ImagePresets.loadImg("textures/projectiles/shtgn.png");
+        
         public static BufferedImage MISSILE = ImagePresets.loadImg("textures/projectiles/missile.png");
         public static BufferedImage PROJECTILE = ImagePresets.loadImg("textures/projectiles/missile.png");
         public static BufferedImage MACHINEGUN = ImagePresets.loadImg("textures/projectiles/projectile_mini.png");

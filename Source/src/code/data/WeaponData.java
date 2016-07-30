@@ -95,7 +95,7 @@ public class WeaponData extends VehicleData {
         return reloading;
     }
 
-    public void setReload(boolean reload) {
+    public void setReloading(boolean reload) {
         this.reloading = reload;
     }
 

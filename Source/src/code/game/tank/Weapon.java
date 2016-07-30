@@ -38,15 +38,15 @@ public class Weapon extends Vehicle implements NetworkSerializable {
     public void doLogic(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
         super.doLogic(gameObject, tick, world, manager);
         
-        checkAmmo(gameObject, tick, world, manager);
-
+        tryToShoot(gameObject, tick, world, manager);
+        tryToReload(gameObject, tick, world, manager);
         /*if (shotInterface != null && data.isShooting() && data.getNextShotReadyTick() < tick) {
             shotInterface.doLogic(this, tick, world, manager);
             //shotInterface.(this, tick, hitInterface, world);
             data.setNextShotReadyTick(tick + data.getCooldown());*/
     }
 
-    private void checkAmmo(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
+    private void tryToShoot(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
         WeaponData data = (WeaponData) gameObject.getData();
         if (shotInterface == null)
             return;
@@ -61,9 +61,18 @@ public class Weapon extends Vehicle implements NetworkSerializable {
         data.setNextShotReadyTick(tick + data.getProjectileLoadTicks()); //Wird überschrieben wenn nxt. if nicht zutrifft
         if (data.getRoundsInMagazine() > 0)
             return;
-        if (data.hasAutoReload())            
-            //data.setNextShotReadyTick(tick + data.getMagazineLoadTicks());        
+        if (data.hasAutoReload())        
             reloadInterface.doLogic(gameObject, tick, world, manager);
+    }    
+    private void tryToReload(GameObject gameObject, long tick, World world, MasterKeyManager manager) {
+        WeaponData data = (WeaponData) gameObject.getData();
+        if (reloadInterface == null)
+            return;        
+        if (!data.isReloading())
+            return;
+        if (data.getRoundsInMagazine() >= data.getMagazineSize())
+            return; 
+        reloadInterface.doLogic(gameObject, tick, world, manager);
     }
 
     /*if (reloadInterface!= null && data.isReloading ()){
